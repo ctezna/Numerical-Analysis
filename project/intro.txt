@@ -1,0 +1,6 @@
+2019-1 Final Project - ST0256 - ANÁLISIS NUMÉRICO - UNIVERSIDAD EAFIT 
+Collaborators:
+    Carlos Tezna 
+    Nicolas Gonzalez
+    Andres Pulgarin
+    Camilo Naranjo
