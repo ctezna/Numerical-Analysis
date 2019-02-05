@@ -1,4 +1,4 @@
-# Autores: Carlos Tezna / Andres Pulgarin
+# Autores: Carlos Tezna / Andres Pulgarin / Nicolas Gonzalez / Camilo Naranjo
 import math, sys, time
 
 def epsilon():
@@ -6,7 +6,20 @@ def epsilon():
     while float(1) + float(x) != float(1):
         eps = x
         x = float(x) / float(2)
-    return eps
+    while float(eps) + float(1) != float(1):
+        epss = eps
+        eps = float(eps) / float(1.0005)
+    while float(epss) + float(1) != float(1):
+        eps1 = epss
+        epss = float(epss) / float(1.000005)
+    while float(eps1) + float(1) != float(1):
+        eps2 = eps1
+        eps1 = float(eps1) / float(1.0000000001)
+    while float(eps2) + float(1) != float(1):
+        eps3 = eps2
+        eps2 = float(eps2) / float(1.00000000000001)
+    return eps3
+
 start = time.time()
 eps = epsilon()
 end = time.time()
