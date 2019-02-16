@@ -7,6 +7,7 @@ class Bmachine():
         self.e = e
         self.max_num = 0
 
+
     def max_number(self):
         root = [1] * self.m
         exp = [1] * self.e
@@ -20,6 +21,7 @@ class Bmachine():
         self.max_num = max_num
         max_num = '%.10E' % Decimal(str(max_num))
         return max_num
+
 
     def epsilon(self):
         root = [0] * self.m
@@ -35,6 +37,16 @@ class Bmachine():
         eps = eps_root * (10 ** eps_exp)
         return eps
 
+
+    def dec_to_machine(self): # It's still incomplete
+        print("input integer: ")
+        number = input()
+        if type(number) == type(()):
+            number = Decimal("%s.%s" % (str(number[0]), str(number[1])))
+
+        return number
+
+
 def userInput():
     print("input # of bits for mantis (m): ")
     mantis = int(input())
@@ -48,7 +60,9 @@ def userInput():
     print("*Rounded simetrically to 10 decimal places")
     print("Max Number (Normal): ".upper(), bm.max_num)
     print("Epsilon: ".upper(), bm.epsilon())
+    print("Number: " + str(bm.dec_to_machine()))
     print("Press 0 to quit, Press enter to continue")
+
 
 while True:
     userInput()
