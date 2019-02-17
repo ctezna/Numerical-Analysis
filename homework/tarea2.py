@@ -38,13 +38,65 @@ class Bmachine():
         return eps
 
 
-    def dec_to_machine(self): # It's still incomplete
-        print("input integer: ")
-        number = input()
-        if type(number) == type(()):
-            number = Decimal("%s.%s" % (str(number[0]), str(number[1])))
+    def dec_to_machine(self, units, dec): # It's still incomplete
+        sig_exp = ""
+        mant = ""
+        sig_mant = ""
+        units = str(units)
+        dec = self.dec_to_bin(dec, 10)
+        units = bin(int(units))[2:]
+        number = "%s.%s" % (units, dec)
+        pos_point = len(units)
+        if units[0] == "1":
+            exp = pos_point
+            sig_exp = "1"
+        else:
+            mant_aux = units + dec
+            exp = mant_aux.index("1") - 1
+            sig_exp = "0"
 
-        return number
+        sig_mant = "0" if float(number) < 0 else "1"
+        #Condiciones para controlar el exponente
+        exp_bin = bin(exp)[2:]
+        if len(exp_bin) < self.e:
+            exp_bin = exp_bin + "0" * (self.e - len(exp_bin))
+        elif len(exp_bin) > self.e:
+            exp_bin = exp_bin[:len(exp_bin) - self.e]
+
+        #Condiciones para controlar la mantiza
+        if len(units) - 1 == self.m:
+            mant = units[1:]
+        elif len(units) - 1 > self.m:
+            mant = units[1:self.m - len(units)]
+        else:
+            mant = units[1:] + self.dec_to_bin(dec, self.m-(len(units) - 1))
+
+        print("units: " + units)
+        print("dec: " + dec)
+        print("sig_mant: " + sig_mant)
+        print("sig_exp: " + sig_exp)
+        print("exp_bin: " + exp_bin)
+        print("mant: " + mant)
+
+        return sig_mant + sig_exp + exp_bin + mant
+
+
+    def dec_to_bin(self, dec, rang):
+        bin_dec = ""
+        number = "0.%s" % (str(dec))
+
+        for digit in range(rang):
+            mult = float(number) * 2
+            mult = str(mult)
+            bin_dec += mult[0]
+
+            if mult >= 1:
+                number = "0.%s" % str(mult[-1])
+            else:
+                number = mult
+
+        return bin_dec
+
 
 
 def userInput():
@@ -60,7 +112,8 @@ def userInput():
     print("*Rounded simetrically to 10 decimal places")
     print("Max Number (Normal): ".upper(), bm.max_num)
     print("Epsilon: ".upper(), bm.epsilon())
-    print("Number: " + str(bm.dec_to_machine()))
+    #print("prueba: " + bm.dec_to_bin(40))
+    print("Number: " + str(bm.dec_to_machine(20,40)))
     print("Press 0 to quit, Press enter to continue")
 
 
