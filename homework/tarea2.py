@@ -39,6 +39,7 @@ class Bmachine():
 
 
     def dec_to_machine(self, units, dec): # It's still incomplete
+        dec_number = dec
         sig_exp = ""
         mant = ""
         sig_mant = ""
@@ -53,13 +54,14 @@ class Bmachine():
         else:
             mant_aux = units + dec
             exp = mant_aux.index("1") - 1
+            print (exp)
             sig_exp = "0"
 
         sig_mant = "0" if float(number) < 0 else "1"
         #Condiciones para controlar el exponente
         exp_bin = bin(exp)[2:]
         if len(exp_bin) < self.e:
-            exp_bin = exp_bin + "0" * (self.e - len(exp_bin))
+            exp_bin = "0" * (self.e - len(exp_bin))  + exp_bin 
         elif len(exp_bin) > self.e:
             exp_bin = exp_bin[:len(exp_bin) - self.e]
 
@@ -69,7 +71,9 @@ class Bmachine():
         elif len(units) - 1 > self.m:
             mant = units[1:self.m - len(units)]
         else:
-            mant = units[1:] + self.dec_to_bin(dec, self.m-(len(units) - 1))
+            mant = units[1:] + self.dec_to_bin(dec_number, self.m-(len(units) - 1))
+
+
 
         print("units: " + units)
         print("dec: " + dec)
@@ -90,8 +94,9 @@ class Bmachine():
             mult = str(mult)
             bin_dec += mult[0]
 
-            if mult >= 1:
-                number = "0.%s" % str(mult[-1])
+            if float(mult) >= 1:
+                index = mult.index(".")
+                number = "0.%s" % mult[index + 1:]
             else:
                 number = mult
 
@@ -112,8 +117,8 @@ def userInput():
     print("*Rounded simetrically to 10 decimal places")
     print("Max Number (Normal): ".upper(), bm.max_num)
     print("Epsilon: ".upper(), bm.epsilon())
-    #print("prueba: " + bm.dec_to_bin(40))
-    print("Number: " + str(bm.dec_to_machine(20,40)))
+    #print("prueba: " + bm.dec_to_bin(40, 5))
+    print("Number: " + str(bm.dec_to_machine(0,23)))
     print("Press 0 to quit, Press enter to continue")
 
 
