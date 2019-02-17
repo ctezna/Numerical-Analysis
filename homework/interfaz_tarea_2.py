@@ -1,7 +1,7 @@
 '''
 Variables a considerar:
 
-- (int) opcion: itera por las diferentes opciones que el usuario puede escoger [1¦2¦9¦0]
+- (int) opcion: itera por las diferentes opciones que el usuario puede escoger
 - (int) numBits: bits totales de la maquina
 - (int) numBitsMantisa: numero de bits para la mantisa
 - (int) numBitsExponente: numero de bits para el exponente
@@ -21,6 +21,9 @@ def inicio():
                     if type(numBits) != type(1):
                             print('\nError: Porfavor ingrese un numero entero de bits.')
                             return 0
+                if (numBits <= 0):
+                    print("Error, no se puede crear un maquina con esta cantidad de bits")
+                    return 0
 
                 print("Ingrese el numero de bits destinados a la mantisa: ")
                 try:
@@ -30,7 +33,10 @@ def inicio():
                     if type(numBits) != type(1):
                             print('\nError: Porfavor ingrese un numero entero de bits.')
                             return 0
-
+                if (numBitsMantisa <= 0):
+                    print("Error, no se puede crear un maquina con una mantisa de esta cantidad de bits")
+                    return 0
+                    
                 print("Ingrese el numero de bits destinados al exponente: ")
                 try:
                     #numero de bits para el exponente
