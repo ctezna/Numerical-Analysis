@@ -56,12 +56,19 @@ def inicio():
 
             #convertir numero decimal -> maquina
             if (opcion == 1):
-                print("Ingrese el numero decimal a convertir a maquina.")
-                print("Numero Maquina: ")
+                print("Ingrese el numero decimal a convertir a maquina. (Use por favor el punto como separador decimal.)")
+                num = input()
+                if ',' in num:
+                    print("ERROR: INVALID NUMBER")
+                    return 0
+                if '.' not in num:
+                    num += '.0'
+                print("Numero Maquina: ", bm.dec_to_machine(num.split('.')[0], num.split('.')[1]))
 
             #convertir numero maquina -> decimal
             if (opcion == 2):
                 print("Ingrese el numero maquina a convertir a decimal. (Siguiendo la estructura de la maquina.)")
+                # FALTA HACER CHEQUEO POR INPUT ERRONEO
                 print("Numero Decimal: ", bm.machine_to_dec(input()))
 
             #salir del programa
