@@ -58,12 +58,18 @@ def inicio():
             if (opcion == 1):
                 print("Ingrese el numero decimal a convertir a maquina. (Use por favor el punto como separador decimal.)")
                 num = input()
-                if ',' in num:
-                    print("ERROR: INVALID NUMBER")
-                    return 0
-                if '.' not in num:
-                    num += '.0'
-                print("Numero Maquina: ", bm.dec_to_machine(num.split('.')[0], num.split('.')[1]))
+                if ',' in str(num):
+                    num = num.replace(',', '.')
+
+                else:
+                    if '.' not in str(num):
+                        num = "%s.0" % (str(num))
+
+                numbers = str(num).split('.')
+                units = int(numbers[0])
+                decimal = int(numbers[1])
+
+                print("Numero Maquina: ", bm.dec_to_machine(units, decimal))
 
             #convertir numero maquina -> decimal
             if (opcion == 2):

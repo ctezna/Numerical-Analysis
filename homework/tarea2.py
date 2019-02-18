@@ -75,7 +75,7 @@ class Bmachine():
         
 
 
-    def dec_to_machine(self, units, dec): # It's still incomplete
+    def dec_to_machine(self, units, dec):
         dec_number = dec
         sig_exp = ""
         mant = ""
@@ -95,6 +95,7 @@ class Bmachine():
             sig_exp = "0"
 
         sig_mant = "0" if float(number) < 0 else "1"
+
         #Condiciones para controlar el exponente
         exp_bin = bin(exp)[2:]
         if len(exp_bin) < self.e:
@@ -109,15 +110,6 @@ class Bmachine():
             mant = units[1:self.m - len(units)]
         else:
             mant = units[1:] + self.dec_to_bin(dec_number, self.m-(len(units) - 1))
-
-
-
-        print("units: " + units)
-        print("dec: " + dec)
-        print("sig_mant: " + sig_mant)
-        print("sig_exp: " + sig_exp)
-        print("exp_bin: " + exp_bin)
-        print("mant: " + mant)
 
         return sig_mant + sig_exp + exp_bin + mant
 
