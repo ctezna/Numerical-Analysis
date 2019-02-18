@@ -75,24 +75,20 @@ def inicio():
                 units = int(numbers[0])
                 decimal = int(numbers[1])
 
-                print("Numero Maquina: ", bm.dec_to_machine(units, decimal))
+                print("\nNumero Maquina: ", bm.dec_to_machine(units, decimal))
 
             #convertir numero maquina -> decimal
             if (opcion == 2):
                 print("Ingrese el numero maquina a convertir a decimal. (Siguiendo la estructura de la maquina.)")
-
                 a = input()
                 str(a)
                 if ('2' in a or '3' in a or '4' in a or '5' in a or '6' in a or '7' in a or '8' in a or '9' in a):
                     print("Error: Porfavor solo ingresa cero (0) o uno (1).")
-                    return 0
-                
-                # FALTA HACER CHEQUEO POR INPUT ERRONEO
-                print("Numero Decimal: ", bm.machine_to_dec(input()))
+                print("\nNumero Decimal: ", bm.machine_to_dec(a))
 
             #salir del programa
             if(opcion == 9):
                 print('\n\n\nChao ¯\_(ツ)_/¯',)
                 return
 
-inicio()
+inicio()    
