@@ -14,7 +14,7 @@ class Bmachine():
         exp = [1] * self.e
         max_exp = 0
         max_root =  0
-        for idx, val in enumerate(exp):
+        for idx, val in enumerate(reversed(exp)):
             max_exp += (val * (2**idx))
         root_units = [1] * max_exp
         root_dec = [1] * (self.m + 1 - max_exp)
@@ -32,19 +32,47 @@ class Bmachine():
         exp = [1] * self.e
         eps_exp = 0
         eps_root = 0
-        for idx, val in enumerate(exp):
+        for idx, val in enumerate(reversed(exp)):
             eps_exp += (val * (2**idx))
         root_dec = [0] * (self.m + eps_exp + 1)
         root_dec[-1] = 1
         root_dec[eps_exp] = 1
-        print(root_dec)
         for idx, val in enumerate(root_dec):
             idx += 1
             idx *= -1
-            print(idx)
             eps_root += (val * (2**(idx)))
         self.eps = eps_root
         return eps_root
+
+    def machine_to_dec(self, machine):
+        signM = int(machine[0])
+        signE = int(machine[1])
+        if signM == 0:
+            signM = -1
+        if signE == 0:
+            signE = -1
+        exp_bin = machine[2:self.e+2]
+        root_bin = "1" + machine[self.e+2:self.m+self.e+2]
+        root_bin = list(root_bin)
+        mach_exp = 0
+        result = 0
+        for idx, val in enumerate(reversed(exp_bin)):
+            mach_exp += (int(val) * (2**(idx)))
+        mach_exp *= signE
+        if mach_exp >= 0:
+            root_units = root_bin[:mach_exp]
+            root_dec = root_bin[mach_exp:]
+        else:
+            root_units = [0]
+            root_dec = ([0] * abs(mach_exp)) + root_bin
+        for idx, val in enumerate(reversed(root_units)):
+            result += (int(val) * (2**idx))
+        for idx, val in enumerate(root_dec):
+            idx += 1
+            idx *= -1
+            result += (int(val) * (2**(idx)))
+        return result
+        
 
 
     def dec_to_machine(self, units, dec): # It's still incomplete
@@ -111,33 +139,6 @@ class Bmachine():
 
         return bin_dec
 
-def binaryToDecimal(binary, length) :      
-    # Fetch the radix point  
-    point = binary.find('.') 
-    # Update point if not found  
-    if (point == -1) : 
-        point = length  
-    intDecimal = 0
-    fracDecimal = 0
-    twos = 1
-    # Convert integral part of binary  
-    # to decimal equivalent  
-    for i in range(point-1, -1, -1) :         
-        # Subtract '0' to convert  
-        # character into integer  
-        intDecimal += ((ord(binary[i]) - ord('0')) * twos)  
-        twos *= 2
-    # Convert fractional part of binary  
-    # to decimal equivalent  
-    twos = 2    
-    for i in range(point + 1, length):         
-        fracDecimal += ((ord(binary[i]) -
-                            ord('0')) / twos);  
-        twos *= 2.0 
-    # Add both integral and fractional part  
-    ans = intDecimal + fracDecimal     
-    return ans 
-
 
 
 def userInput():
@@ -155,6 +156,9 @@ def userInput():
     print("Epsilon: ".upper(), bm.eps)
     # #print("prueba: " + bm.dec_to_bin(40, 5))
     # print("Number: " + str(bm.dec_to_machine(0,23)))
+    print("enter machine number: ")
+    machine = input()
+    print("machine to decimal: ", bm.machine_to_dec(machine))
     print("Press 0 to quit, Press enter to continue")
 
 
