@@ -85,7 +85,8 @@ def inicio():
                 str(a)
                 if ('2' in a or '3' in a or '4' in a or '5' in a or '6' in a or '7' in a or '8' in a or '9' in a):
                     print("Error: Porfavor solo ingresa cero (0) o uno (1).")
-
+                    return 0
+                
                 # FALTA HACER CHEQUEO POR INPUT ERRONEO
                 print("Numero Decimal: ", bm.machine_to_dec(input()))
 
