@@ -141,31 +141,31 @@ class Bmachine():
 
 
 
-def userInput():
-    print("input # of bits for mantis (m): ")
-    mantis = int(input())
-    print("input # of bits for exponent (e): ")
-    exp = int(input())
-    bm = Bmachine((mantis + exp + 2), mantis, exp)
-    print()
-    print("You have created a new machine with {} bits, {} designated for the mantis and {} designated for the exponents.".format(bm.bits,bm.m,bm.e))
-    print()
-    print("Max Number (Scientific Notation*): ".upper(), '%.10E' % Decimal(str(bm.max_num)))
-    print("*Rounded simetrically to 10 decimal places")
-    print("Max Number (Normal): ".upper(), bm.max_num)
-    print("Epsilon: ".upper(), bm.eps)
-    # #print("prueba: " + bm.dec_to_bin(40, 5))
-    # print("Number: " + str(bm.dec_to_machine(0,23)))
-    print("enter machine number: ")
-    machine = input()
-    print("machine to decimal: ", bm.machine_to_dec(machine))
-    print("Press 0 to quit, Press enter to continue")
+# def userInput():
+#     print("input # of bits for mantis (m): ")
+#     mantis = int(input())
+#     print("input # of bits for exponent (e): ")
+#     exp = int(input())
+#     bm = Bmachine((mantis + exp + 2), mantis, exp)
+#     print()
+#     print("You have created a new machine with {} bits, {} designated for the mantis and {} designated for the exponents.".format(bm.bits,bm.m,bm.e))
+#     print()
+#     print("Max Number (Scientific Notation*): ".upper(), '%.10E' % Decimal(str(bm.max_num)))
+#     print("*Rounded simetrically to 10 decimal places")
+#     print("Max Number (Normal): ".upper(), bm.max_num)
+#     print("Epsilon: ".upper(), bm.eps)
+#     # #print("prueba: " + bm.dec_to_bin(40, 5))
+#     # print("Number: " + str(bm.dec_to_machine(0,23)))
+#     print("enter machine number: ")
+#     machine = input()
+#     print("machine to decimal: ", bm.machine_to_dec(machine))
+#     print("Press 0 to quit, Press enter to continue")
 
 
-while True:
-    userInput()
-    try:
-        if int(input()) == 0:
-            break
-    except ValueError:
-        pass
+# while True:
+#     userInput()
+#     try:
+#         if int(input()) == 0:
+#             break
+#     except ValueError:
+#         pass
