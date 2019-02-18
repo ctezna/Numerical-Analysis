@@ -2,7 +2,6 @@
 Variables a considerar:
 
 - (int) opcion: itera por las diferentes opciones que el usuario puede escoger [1¦2¦9¦0]
-- (int) numBits: bits totales de la maquina
 - (int) numBitsMantisa: numero de bits para la mantisa
 - (int) numBitsExponente: numero de bits para el exponente
 
