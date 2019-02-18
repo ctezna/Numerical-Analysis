@@ -6,36 +6,45 @@ class Bmachine():
         self.m = m
         self.e = e
         self.max_num = 0
-
+        self.eps = 0
+        self.max_number()
+        self.epsilon()
 
     def max_number(self):
-        root = [1] * self.m
         exp = [1] * self.e
-        max_root = 0
         max_exp = 0
-        for idx, val in enumerate(reversed(root)):
-            max_root += (val * (2**idx))
+        max_root =  0
         for idx, val in enumerate(exp):
             max_exp += (val * (2**idx))
-        max_num = max_root * (10 ** max_exp)
-        self.max_num = max_num
-        max_num = '%.10E' % Decimal(str(max_num))
-        return max_num
-
-
+        root_units = [1] * max_exp
+        root_dec = [1] * (self.m + 1 - max_exp)
+        root_units[self.m+1:] = [0] * (max_exp-self.m-1)
+        for idx, val in enumerate(reversed(root_units)):
+            max_root += (val * (2**idx))
+        for idx, val in enumerate(root_dec):
+            idx += 1
+            idx *= -1
+            max_root += (val * (2**(idx)))
+        self.max_num = max_root
+        return max_root
+        
     def epsilon(self):
-        root = [0] * self.m
-        root[self.m-1] = 1
         exp = [1] * self.e
-        eps_root = 0
         eps_exp = 0
-        for idx, val in enumerate(reversed(root)):
-            eps_root += (val * (2**idx))
+        eps_root = 0
         for idx, val in enumerate(exp):
             eps_exp += (val * (2**idx))
-        eps_exp *= -1
-        eps = eps_root * (10 ** eps_exp)
-        return eps
+        root_dec = [0] * (self.m + eps_exp + 1)
+        root_dec[-1] = 1
+        root_dec[eps_exp] = 1
+        print(root_dec)
+        for idx, val in enumerate(root_dec):
+            idx += 1
+            idx *= -1
+            print(idx)
+            eps_root += (val * (2**(idx)))
+        self.eps = eps_root
+        return eps_root
 
 
     def dec_to_machine(self, units, dec): # It's still incomplete
@@ -102,6 +111,33 @@ class Bmachine():
 
         return bin_dec
 
+def binaryToDecimal(binary, length) :      
+    # Fetch the radix point  
+    point = binary.find('.') 
+    # Update point if not found  
+    if (point == -1) : 
+        point = length  
+    intDecimal = 0
+    fracDecimal = 0
+    twos = 1
+    # Convert integral part of binary  
+    # to decimal equivalent  
+    for i in range(point-1, -1, -1) :         
+        # Subtract '0' to convert  
+        # character into integer  
+        intDecimal += ((ord(binary[i]) - ord('0')) * twos)  
+        twos *= 2
+    # Convert fractional part of binary  
+    # to decimal equivalent  
+    twos = 2    
+    for i in range(point + 1, length):         
+        fracDecimal += ((ord(binary[i]) -
+                            ord('0')) / twos);  
+        twos *= 2.0 
+    # Add both integral and fractional part  
+    ans = intDecimal + fracDecimal     
+    return ans 
+
 
 
 def userInput():
@@ -113,12 +149,12 @@ def userInput():
     print()
     print("You have created a new machine with {} bits, {} designated for the mantis and {} designated for the exponents.".format(bm.bits,bm.m,bm.e))
     print()
-    print("Max Number (Scientific Notation*): ".upper(), bm.max_number())
+    print("Max Number (Scientific Notation*): ".upper(), '%.10E' % Decimal(str(bm.max_num)))
     print("*Rounded simetrically to 10 decimal places")
     print("Max Number (Normal): ".upper(), bm.max_num)
-    print("Epsilon: ".upper(), bm.epsilon())
-    #print("prueba: " + bm.dec_to_bin(40, 5))
-    print("Number: " + str(bm.dec_to_machine(0,23)))
+    print("Epsilon: ".upper(), bm.eps)
+    # #print("prueba: " + bm.dec_to_bin(40, 5))
+    # print("Number: " + str(bm.dec_to_machine(0,23)))
     print("Press 0 to quit, Press enter to continue")
 
 
