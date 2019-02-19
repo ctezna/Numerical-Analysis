@@ -12,31 +12,36 @@ def inicio():
             #creacion de la maquina
             if (opcion == 0):
                 print("Ingrese el numero de bits destinados a la mantisa: ")
-                try:
-                    #numero de bits para la mantisa
-                    numBitsMantisa = int(input())
-                except ValueError as e:
-                    if type(numBitsMantisa) != type(1):
-                        print('\nError: Porfavor ingrese un numero entero de bits.')
-                        return 0
-                if (numBitsMantisa <= 0):
+                #numero de bits para la mantisa
+                numBitsMantisa = input()
+                if(',' in numBitsMantisa):
+                    print("Error: Ingresa un numero entero de bits")
+                    return 0
+                if(float(numBitsMantisa)%1 != 0):
+                    print("Error: Ingresa un numero entero de bits")
+                    return 0
+
+                if (float(numBitsMantisa) <= 0):
                     print("Error: No se puede crear un maquina con una mantisa de esta cantidad de bits")
                     return 0
                     
                 print("Ingrese el numero de bits destinados al exponente: ")
-                try:
-                    #numero de bits para el exponente
-                    numBitsExponente = int(input())
-                except ValueError as e:
-                    if type(numBitsExponente) != type(1):
-                        print('\nError: Porfavor ingrese un numero entero de bits.')
-                        return 0
-                if (numBitsExponente <= 0):
+                #numero de bits para el exponente
+                numBitsExponente = input()
+                if(',' in numBitsExponente):
+                    print("Error: Ingresa un numero entero de bits")
+                    return 0
+                if(float(numBitsExponente)%1 != 0):
+                    print("Error: Ingresa un numero entero de bits")
+                    return 0
+                    
+                if (float(numBitsExponente) <= 0):
                     print("Error: No se puede crear un maquina con un exponente de esta cantidad de bits")
                     return 0
-
-                if ((numBitsExponente + numBitsMantisa + 2) < 8):
-                    print("Error: Recuerda que la maquina debe ser por lo minimo de 8 bits.")
+                numBitsExponente = int(numBitsExponente)
+                numBitsMantisa = int(numBitsMantisa)
+                if ((numBitsExponente + numBitsMantisa + 2) < 3):
+                    print("Error: Recuerda que la maquina debe ser por lo minimo de 3 bits.")
                     return 0
 
                 #informacion sobre la maquina creada
@@ -51,6 +56,7 @@ def inicio():
                 print("\n\nAqui algunos datos interesantes de la maquina que creaste !","\U0001F603", \
                         "\nEpsilon de la maquina: ", bm.eps, \
                         "\nNumero mas grande que tu maquina soporta: ", bm.max_num)
+                print("Underflow of the machine: ", bm.under)
 
             #opciones
             print('\nOpciones:\n                   1. Para converitr de numero decimal -> numero maquina.\n \

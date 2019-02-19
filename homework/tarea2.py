@@ -7,8 +7,10 @@ class Bmachine():
         self.e = e
         self.max_num = 0
         self.eps = 0
+        self.under = 0
         self.max_number()
         self.epsilon()
+        self.underflow()
 
     def max_number(self):
         exp = [1] * self.e
@@ -43,6 +45,14 @@ class Bmachine():
             eps_root += (val * (2**(idx)))
         self.eps = eps_root
         return eps_root
+    
+    def underflow(self):
+        exp = [1] * self.e
+        eps_exp = 0
+        for idx, val in enumerate(reversed(exp)):
+            eps_exp += (val * (2**idx))
+        self.under = (2 ** (-1 * (eps_exp+1)))
+        return self.under
 
     def machine_to_dec(self, machine):
         signM = int(machine[0])
@@ -130,34 +140,3 @@ class Bmachine():
                 number = mult
 
         return bin_dec
-
-
-
-# def userInput():
-#     print("input # of bits for mantis (m): ")
-#     mantis = int(input())
-#     print("input # of bits for exponent (e): ")
-#     exp = int(input())
-#     bm = Bmachine((mantis + exp + 2), mantis, exp)
-#     print()
-#     print("You have created a new machine with {} bits, {} designated for the mantis and {} designated for the exponents.".format(bm.bits,bm.m,bm.e))
-#     print()
-#     print("Max Number (Scientific Notation*): ".upper(), '%.10E' % Decimal(str(bm.max_num)))
-#     print("*Rounded simetrically to 10 decimal places")
-#     print("Max Number (Normal): ".upper(), bm.max_num)
-#     print("Epsilon: ".upper(), bm.eps)
-#     # #print("prueba: " + bm.dec_to_bin(40, 5))
-#     # print("Number: " + str(bm.dec_to_machine(0,23)))
-#     print("enter machine number: ")
-#     machine = input()
-#     print("machine to decimal: ", bm.machine_to_dec(machine))
-#     print("Press 0 to quit, Press enter to continue")
-
-
-# while True:
-#     userInput()
-#     try:
-#         if int(input()) == 0:
-#             break
-#     except ValueError:
-#         pass
