@@ -1,37 +1,48 @@
 '''
 Variables a considerar:
-
 - (int) opcion: itera por las diferentes opciones que el usuario puede escoger [1¦2¦9¦0]
 - (int) numBitsMantisa: numero de bits para la mantisa
 - (int) numBitsExponente: numero de bits para el exponente
-
 '''
 from tarea2 import Bmachine
+
 def inicio():
     opcion = 0
     while (True):
             #creacion de la maquina
             if (opcion == 0):
                 print("Ingrese el numero de bits destinados a la mantisa: ")
-                try:
-                    #numero de bits para la mantisa
-                    numBitsMantisa = int(input())
-                except ValueError as e:
-                    if type(numBitsMantisa) != type(1):
-                            print('\nError: Porfavor ingrese un numero entero de bits.')
-                            return 0
-                if (numBitsMantisa <= 0):
-                    print("Error, no se puede crear un maquina con una mantisa de esta cantidad de bits")
+                #numero de bits para la mantisa
+                numBitsMantisa = input()
+                if(',' in numBitsMantisa):
+                    print("Error: Ingresa un numero entero de bits")
+                    return 0
+                if(float(numBitsMantisa)%1 != 0):
+                    print("Error: Ingresa un numero entero de bits")
+                    return 0
+
+                if (float(numBitsMantisa) <= 0):
+                    print("Error: No se puede crear un maquina con una mantisa de esta cantidad de bits")
                     return 0
                     
                 print("Ingrese el numero de bits destinados al exponente: ")
-                try:
-                    #numero de bits para el exponente
-                    numBitsExponente = int(input())
-                except ValueError as e:
-                    if type(numBitsExponente) != type(1):
-                            print('\nError: Porfavor ingrese un numero entero de bits.')
-                            return 0
+                #numero de bits para el exponente
+                numBitsExponente = input()
+                if(',' in numBitsExponente):
+                    print("Error: Ingresa un numero entero de bits")
+                    return 0
+                if(float(numBitsExponente)%1 != 0):
+                    print("Error: Ingresa un numero entero de bits")
+                    return 0
+                    
+                if (float(numBitsExponente) <= 0):
+                    print("Error: No se puede crear un maquina con un exponente de esta cantidad de bits")
+                    return 0
+                numBitsExponente = int(numBitsExponente)
+                numBitsMantisa = int(numBitsMantisa)
+                if ((numBitsExponente + numBitsMantisa + 2) < 3):
+                    print("Error: Recuerda que la maquina debe ser por lo minimo de 3 bits.")
+                    return 0
 
                 #informacion sobre la maquina creada
                 print("\n\n\nFelicitaciones! Has construido una maquina de", (numBitsExponente + numBitsMantisa + 2), "bits.")
@@ -45,6 +56,7 @@ def inicio():
                 print("\n\nAqui algunos datos interesantes de la maquina que creaste !","\U0001F603", \
                         "\nEpsilon de la maquina: ", bm.eps, \
                         "\nNumero mas grande que tu maquina soporta: ", bm.max_num)
+                print("Underflow of the machine: ", bm.under)
 
             #opciones
             print('\nOpciones:\n                   1. Para converitr de numero decimal -> numero maquina.\n \
@@ -69,17 +81,20 @@ def inicio():
                 units = int(numbers[0])
                 decimal = int(numbers[1])
 
-                print("Numero Maquina: ", bm.dec_to_machine(units, decimal))
+                print("\nNumero Maquina: ", bm.dec_to_machine(units, decimal))
 
             #convertir numero maquina -> decimal
             if (opcion == 2):
                 print("Ingrese el numero maquina a convertir a decimal. (Siguiendo la estructura de la maquina.)")
-                # FALTA HACER CHEQUEO POR INPUT ERRONEO
-                print("Numero Decimal: ", bm.machine_to_dec(input()))
+                a = input()
+                str(a)
+                if ('2' in a or '3' in a or '4' in a or '5' in a or '6' in a or '7' in a or '8' in a or '9' in a):
+                    print("Error: Porfavor solo ingresa cero (0) o uno (1).")
+                print("\nNumero Decimal: ", bm.machine_to_dec(a))
 
             #salir del programa
             if(opcion == 9):
                 print('\n\n\nChao ¯\_(ツ)_/¯',)
                 return
 
-inicio()
+inicio()    
