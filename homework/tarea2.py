@@ -86,14 +86,16 @@ class Bmachine():
 
 
     def dec_to_machine(self, units, dec):
+        units_str = str(units)
         dec_number = dec
         sig_exp = ""
         mant = ""
         sig_mant = ""
         units = str(units)
         dec = self.dec_to_bin(dec, 10)
+        units = units.replace("-", "")
         units = bin(int(units))[2:]
-        number = "%s.%s" % (units, dec)
+        number = "%s.%s" % (units_str, dec)
         pos_point = len(units)
         if units[0] == "1":
             exp = pos_point
@@ -101,7 +103,6 @@ class Bmachine():
         else:
             mant_aux = units + dec
             exp = mant_aux.index("1") - 1
-            print (exp)
             sig_exp = "0"
 
         sig_mant = "0" if float(number) < 0 else "1"
