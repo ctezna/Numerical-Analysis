@@ -12,10 +12,11 @@ import math
 #fa = funcion evaluada en a
 #fb = funcion evaluada en b
 
+print("\nIncremental Search Method\n")
+
 x = sympy.symbols('x')  
 fx = parse_expr(input("Introduce the function \n> "))
-
-
+    
 a = int(input("Introduce the first interval value (a) \n> "))
 b = int(input("Introduce the last interval value (b) \n> "))
 delta = float(input("Introduce the Delta wanted \n> "))
@@ -46,35 +47,27 @@ while fa * fxi > 0 and a < b:
 
 #       METODO DE BISECCION
 
-#Programa principal
-#xi = a
-#xs = b
+print("\nBisection Method\n")
 
-fa = sympy.sympify(fx).subs(x, a)
-
-error = float((input('Introduce the error \n> ')))
-xa = (a+Xi)/2.00000000
-fxa = sympy.sympify(fx).subs(x, xa)
+tol = float(input("Introduce the tolerance (tol) \n> "))
 iterations = 0
-print('{:^10}{:^10}{:^10}{:^10}{:^10}{:^10}{:^10}'.format('iterations','a','Xi','xa','sign','change','error'))
-
-while abs(fxa) > error:
-      iterations = iterations+1
-      xa = (a+Xi)/2.0
-      if (fa*fxa) < 0:
-          b = xa
-          signo = "negative"
-          limite = "higher"
-          #print(" The root found by the bisection method is: %f" % (xa))         
-      else:
-          a = xa
-          signo = "positive"
-          limite = "lower"   
-          #print(" The root found by the bisection method is: %f" % (xa))
-      print('{:^10}{:^10.4f}{:^10.4f}{:^10.4f}{:^10}{:^10}{:^10.4f}'.format(iterations,float(a),float(Xi),float(xa),signo,limite,fxa))
-      if (a == Xi):
-        break
-
-print(" The root found by the bisection method is: %f \n" % (xa))
-
-print(" \nEnd of the program.")
+if fa*fb > 0:
+    #end function, no root.
+    print("No root found.")
+else:
+    print('\n{:^10}{:^10}{:^10}{:^10}'.format('iterations', 'a', 'b', 'mid point'))
+    while (b - a)/2.0 > tol:
+        iterations = iterations+1
+        xa = (a + b)/2.0
+        fxa = sympy.sympify(fx).subs(x, xa)
+        if fxa == 0:
+            answer = xa            
+            print("Answer:", answer)
+            break
+        elif fa*fxa < 0: # Increasing but below 0 case
+            b = xa
+        else:
+            a = xa
+    print('\n{:^10}{:^10.5f}{:^10.5f}{:^10.5f}'.format(iterations, float(a), float(b), float(xa)))
+    answer = xa
+    print("\nAnswer: ", answer)
