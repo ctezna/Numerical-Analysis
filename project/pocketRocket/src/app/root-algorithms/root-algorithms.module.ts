@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { RootAlgorithmsPage } from './root-algorithms.page';
+import { ModalTemplatePage } from '../modal-template/modal-template.page';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [RootAlgorithmsPage]
+  declarations: [RootAlgorithmsPage,ModalTemplatePage],
+  entryComponents: [ModalTemplatePage]
 })
 export class RootAlgorithmsPageModule {}

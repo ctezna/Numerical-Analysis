@@ -5,15 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { IncrementalPage } from './incremental.page';
-import { IncrementalModalPage } from '../incremental-modal/incremental-modal.page';
-
-
+import { IncrementalModalPage } from './incremental-modal.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: IncrementalPage
+    component: IncrementalModalPage
   }
 ];
 
@@ -24,9 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [IncrementalPage,IncrementalModalPage],
-  entryComponents: [IncrementalModalPage]
+  declarations: [IncrementalModalPage]
 })
-export class IncrementalPageModule {
-
-}
+export class IncrementalModalPageModule {}

@@ -11,5 +11,48 @@
 </ion-header>
 
 <ion-content padding>
-
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Bisection Method</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+          <ion-item>
+              <ion-label position="fixed">Enter f(x) = </ion-label>
+              <ion-input [(ngModel)]="eqBisection" autofocus></ion-input>
+              <a (click)="showModal('bisection')">
+                  <ion-icon name="help-circle"></ion-icon>
+              </a>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Enter left-side of interval (a)</ion-label>
+              <ion-input [(ngModel)]="aBisection"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Enter right-side of interval (b)</ion-label>
+              <ion-input [(ngModel)]="bBisection"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Enter tolerance</ion-label>
+              <ion-input [(ngModel)]="tolBisection"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Enter max iterations</ion-label>
+              <ion-input [(ngModel)]="nmaxBisection"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Enter precision</ion-label>
+              <ion-input [(ngModel)]="precBisection"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-button slot="end" size="default" color="primary" (click)="bisection()">
+                Evaluate
+              </ion-button>
+            </ion-item>
+        
+            <ion-item>
+              <ion-label position="stacked">Result</ion-label>
+              <ion-textarea [(ngModel)]="resultBisection" readonly></ion-textarea>
+            </ion-item>
+      </ion-card-content>
+    </ion-card>
 </ion-content>

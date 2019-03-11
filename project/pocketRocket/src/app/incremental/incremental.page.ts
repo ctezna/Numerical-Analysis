@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ModalTemplatePage } from '../modal-template/modal-template.page';
+import { IncrementalModalPage } from '../incremental-modal/incremental-modal.page';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class IncrementalPage implements OnInit {
 
   async showModal(){
     const modal = await this.modalController.create({
-      component: ModalTemplatePage,
+      component: IncrementalModalPage,
       componentProps: { method: 'incremental' }
     });
 
