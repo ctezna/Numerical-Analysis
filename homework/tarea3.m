@@ -1,8 +1,10 @@
 
+#@(x, y) (x - 2) .^ 2 + 2 * (y - 2) .^ 2 - 7
+
 f = input("Insert Function:");
 
 if (isreal(f)) 
-    disp("\nPorfavor inserta una funcion\n")
+    disp("\nPlease input a valid function\n")
     return ;
 endif
 
@@ -19,7 +21,7 @@ tol = input("Tolerance:");
 Nmax = input("Max iterations:");
 
 if  (Nmax < 10)
-    disp("\nPosiblemente el metodo no funcione\n")
+    disp("\nThe method might not work\n")
 endif
 
 function incremental2D(f, x0, y0, h, tol, Nmax)
@@ -78,7 +80,7 @@ tol = input("Insert Tolerance:");
 Nmax = input("Max iterations:");
 
 if  (Nmax < 10)
-    disp("\nPosiblemente el metodo no funcione\n")
+    disp("\nThe method might not work\n")
 endif
 
 function bisection2D(f, a, b, c, d, tol, Nmax)
