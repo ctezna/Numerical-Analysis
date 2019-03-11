@@ -1,4 +1,11 @@
+
 f = input("Insert Function:");
+
+if (isreal(f)) 
+    disp("\nPorfavor inserta una funcion\n")
+    return ;
+endif
+
 plot = input("Do you wish to plot function? (0-NO,1-YES)");
 if plot == 1
     ezplot(f,[0,10]);
@@ -10,6 +17,9 @@ h = input("Delta:");
 tol = input("Tolerance:");
 Nmax = input("Max iterations:");
 
+if  Nmax < 10
+    disp("\nPosiblemente el metodo no funcione\n")
+endif
 function incremental2D(f, x0, y0, h, tol, Nmax)
     format long;
     file_id = fopen('roots_2D.txt', 'w');
@@ -21,7 +31,7 @@ function incremental2D(f, x0, y0, h, tol, Nmax)
     fdisp(file_id, tol);
     fdisp(file_id, "Starting at (x0, y0):");
     fdisp(file_id, [x0, y0]);
-    fdisp(file_id, "ROOT INTERVALUES(A-B, C-D):");
+    fdisp(file_id, "ROOT INTERVALUES(x0-y0, x1-y1):");
 
     r0 = f(x0, y0);
     if abs(r0) <= tol
@@ -57,10 +67,10 @@ incremental2D(f,x0,y0,h,tol,Nmax);
 
 disp("Bisection 2D Method");
 disp("Reference Values in roots_2D.txt");
-a = input("Insert A:");
-b = input("Insert B:");
-c = input("Insert C:");
-d = input("Insert D:");
+a = input("Insert x0:");
+b = input("Insert y0:");
+c = input("Insert x1:");
+d = input("Insert y1:");
 tol = input("Insert Tolerance:");
 Nmax = input("Max iterations:");
 
