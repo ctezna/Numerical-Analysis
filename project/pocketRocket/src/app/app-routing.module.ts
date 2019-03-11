@@ -15,7 +15,8 @@ const routes: Routes = [
   { path: 'incremental', loadChildren: './incremental/incremental.module#IncrementalPageModule' },
   { path: 'help', loadChildren: './help/help.module#HelpPageModule' },
   { path: 'matrix', loadChildren: './matrix/matrix.module#MatrixPageModule' },
-  { path: 'root-algorithms', loadChildren: './root-algorithms/root-algorithms.module#RootAlgorithmsPageModule' }
+  { path: 'root-algorithms', loadChildren: './root-algorithms/root-algorithms.module#RootAlgorithmsPageModule' },
+  { path: 'modal-template', loadChildren: './modal-template/modal-template.module#ModalTemplatePageModule' }
 ];
 
 @NgModule({
