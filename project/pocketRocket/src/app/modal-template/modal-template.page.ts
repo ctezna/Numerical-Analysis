@@ -46,7 +46,7 @@ export class ModalTemplatePage implements OnInit {
                       ' both gave positive results, we generate new x0 and x1 values. x0 = x1 and x1 = x1 + Delta, which results'+
                       'in x0 = 2 and x1 = 3. Next, x0 and x1 are reevaluated in f(). f(x0): positive, f(x1): negative.'+
                       ' Here since f(x0) and f(x1) gave different signs, we can assure that there is at least one root between' +
-                      ' x0 and x1.';
+                      ' x0 and x1. In this case x0 = 2 and x1 = 3.';
     }
   }
 
