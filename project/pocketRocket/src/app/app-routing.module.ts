@@ -13,8 +13,9 @@ const routes: Routes = [
   },
   { path: 'welcome', loadChildren: './welcome/welcome.module#WelcomePageModule' },
   { path: 'incremental', loadChildren: './incremental/incremental.module#IncrementalPageModule' },
-  { path: 'bisection', loadChildren: './bisection/bisection.module#BisectionPageModule' },
-  { path: 'help', loadChildren: './help/help.module#HelpPageModule' }
+  { path: 'help', loadChildren: './help/help.module#HelpPageModule' },
+  { path: 'matrix', loadChildren: './matrix/matrix.module#MatrixPageModule' },
+  { path: 'root-algorithms', loadChildren: './root-algorithms/root-algorithms.module#RootAlgorithmsPageModule' }
 ];
 
 @NgModule({

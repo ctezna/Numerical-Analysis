@@ -5,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { BisectionPage } from './bisection.page';
+import { MatrixPage } from './matrix.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: BisectionPage
+    component: MatrixPage
   }
 ];
 
@@ -21,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [BisectionPage]
+  declarations: [MatrixPage]
 })
-export class BisectionPageModule {}
+export class MatrixPageModule {}

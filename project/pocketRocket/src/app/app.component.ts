@@ -21,9 +21,14 @@ export class AppComponent {
       icon: 'barcode'
     },
     {
-      title: 'Bisection Method',
-      url: '/bisection',
+      title: 'Root-Finding Algorithms',
+      url: '/root-algorithms',
       icon: 'code-download'
+    },
+    {
+      title: 'Matrix Calculator',
+      url: '/matrix',
+      icon: 'grid'
     },
     {
       title: 'Help and Documentation',
