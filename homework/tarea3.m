@@ -11,15 +11,17 @@ if plot == 1
     ezplot(f,[0,10]);
 endif
 disp("Incremental Search - f(x,y)");
-x0 = input("x0:");
-y0 = input("y0:");
+x0 = input("xi:");
+y0 = input("yi:");
 h = input("Delta:");
 tol = input("Tolerance:");
+
 Nmax = input("Max iterations:");
 
-if  Nmax < 10
+if  (Nmax < 10)
     disp("\nPosiblemente el metodo no funcione\n")
 endif
+
 function incremental2D(f, x0, y0, h, tol, Nmax)
     format long;
     file_id = fopen('roots_2D.txt', 'w');
@@ -65,15 +67,19 @@ endfunction
 
 incremental2D(f,x0,y0,h,tol,Nmax);
 
-disp("Bisection 2D Method");
+disp("\nBisection 2D Method");
 disp("Reference Values in roots_2D.txt");
 a = input("Insert x0:");
 b = input("Insert y0:");
 c = input("Insert x1:");
 d = input("Insert y1:");
 tol = input("Insert Tolerance:");
+
 Nmax = input("Max iterations:");
 
+if  (Nmax < 10)
+    disp("\nPosiblemente el metodo no funcione\n")
+endif
 
 function bisection2D(f, a, b, c, d, tol, Nmax)
     format long;
@@ -83,7 +89,9 @@ function bisection2D(f, a, b, c, d, tol, Nmax)
     fdisp(file_id, [a,b,c,d]);
     fdisp(file_id, "Tolerance:");
     fdisp(file_id, tol);
-    fdisp(file_id, "Root located at x,y (Approx.):");
+    fdisp(file_id, "Root located at [x,y] (Approx.):");
+    disp("\nRoot located at [x,y] (Approx.):");
+
 
     fab = f(a,b);
     fcd = f(c,d);
@@ -119,8 +127,11 @@ function bisection2D(f, a, b, c, d, tol, Nmax)
             endwhile
         endif
     endif
+    disp([mx,my]);    
     fdisp(file_id, [mx,my]);
-    fdisp(file_id, "f(x,y) - Absolute Error: ");
+    disp("Absolute Error of f(x,y):");
+    disp(fm);
+    fdisp(file_id, "Absolute Error of f(x,y): ");
     fdisp(file_id, fm);
     if ((abs(a-c) > tol) && (abs(b-d) > tol))
         fdisp(file_id, "TOLERANCE NOT REACHED: MAX ITERATIONS");
