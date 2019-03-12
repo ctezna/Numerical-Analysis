@@ -1,0 +1,8 @@
+INCREMENTAL SEARCH 2D
+Roots for function:
+@(x, y) (x - 9) .^ 2 + 7 * (y - 9) .^ 2 - 7
+Tolerance:
+   1.00000000000000e-06
+Starting at (x0, y0):
+   5   2
+ROOT INTERVALUES(x0-y0, x1-y1):
