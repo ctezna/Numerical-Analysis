@@ -11,7 +11,7 @@ def f(x):
 
 
 def f_1(x):
-    return 4*x**3 - 36*x
+    return 4*x**3 - 36*x 
 
 
 def f_2(x):
@@ -46,9 +46,9 @@ def multiple_roots(x_n, tol):
     f_x_1 = f_1(x_n)
     f_x_2 = f_2(x_n)
     data = {"Xn": [x_n], "f(x)": [f_x], "f(x)^1": [f_x_1], "f(x)^2": [f_x_2], "ER": [0], "EA": [0]}
-    abs_err = 100000
+    rel_err = 100000
 
-    while f(x_n) != 0 and abs_err > tol:
+    while f(x_n) != 0 and rel_err > tol:
         x_past = x_n
         x_n = x_future_multiple_roots(f_x, f_x_1, f_x_2, x_n)
         f_x = f(x_n)
@@ -70,10 +70,10 @@ def newton(x_n, tol, n):
     f_x = f(x_n)
     f_x_1 = f_1(x_n)
     data = {"Xn": [x_n], "f(x)": [f_x], "f(x)^1": [f_x_1], "ER": [0], "EA": [0]}
-    abs_err = 10000
+    rel_err = 10000
     count = 1
 
-    while f(x_n) != 0 and count < n and abs_err > tol:
+    while f(x_n) != 0 and count < n and rel_err > tol:
         x_past = x_n
         x_n = x_future_newton(f_x, f_x_1, x_n)
         f_x = f(x_n)
@@ -94,10 +94,10 @@ def secante(x_0, x_1, tol, n):
     f_x_0 = f(x_0)
     f_x_1 = f(x_1)
     data = {"Xn": [x_0, x_1], "f(x)": [f_x_0, f_x_1], "ER": [0,0], "EA": [0,0]}
-    abs_err = 100000
+    rel_err = 100000
     count = 1
 
-    while f(x_1) != 0 and count < n and abs_err > tol:
+    while f(x_1) != 0 and count < n and rel_err > tol:
         x_new = x_future_secante(x_0, x_1)
         x_0 = x_1
         x_1 = x_new
@@ -115,7 +115,7 @@ def secante(x_0, x_1, tol, n):
 tol = 0.5e-8
 xn = -2.5
 n = 10
-#multiple_roots(xn, tol)
+multiple_roots(xn, tol)
 #newton(xn, tol, n)
 #secante(1.3, 1.4, tol, n)
 #print (x_future_multiple_roots(0.001208993, -1*(0.054696496), 1.670346083, 0.5))
