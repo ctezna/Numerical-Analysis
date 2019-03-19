@@ -2,8 +2,12 @@
 ST0256 - ANÁLISIS NUMÉRICO - UNIVERSIDAD EAFIT  - Samir Posada
 
 # Usage:
-Tarea1: homework/tarea1.py -----> $python3 tarea1.py
+Tarea1: homework/tarea1/tarea1.py           -----> $python3 tarea1.py
 
-Tarea2: homework/interfaz_tarea_2.py -----> $python3 interfaz_tarea_2.py
+Tarea2: homework/tarea2/interfaz_tarea_2.py -----> $python3 interfaz_tarea_2.py
 
-Tarea3: homework/tarea3.m -----> $octave --no-gui tarea3.m
+Tarea3: homework/tarea3/tarea3.m            -----> $octave --no-gui tarea3.m
+
+Tarea4: homework/tarea4/aitken.m            -----> $octave --no-gui aitken.m
+        homework/tarea4/muller.m            -----> $octave --no-gui muller.m
+        homework/tarea4/steffensen.m        -----> $octave --no-gui steffensen.m
