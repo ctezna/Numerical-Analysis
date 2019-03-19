@@ -8,6 +8,4 @@ Tarea2: homework/tarea2/interfaz_tarea_2.py -----> $python3 interfaz_tarea_2.py
 
 Tarea3: homework/tarea3/tarea3.m            -----> $octave --no-gui tarea3.m
 
-Tarea4: homework/tarea4/aitken.m            -----> $octave --no-gui aitken.m
-        homework/tarea4/muller.m            -----> $octave --no-gui muller.m
-        homework/tarea4/steffensen.m        -----> $octave --no-gui steffensen.m
+Tarea4: homework/tarea4/aitken.m | muller.m | steffensen.m     -----> $octave --no-gui aitken.m | muller.m | steffensen.m
