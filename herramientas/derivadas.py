@@ -27,13 +27,14 @@ decisionFuncion = int(input("\n¿Desea evaluar la funcion ingresada?\n1 = Si / 2
 if decisionFuncion != 1 and decisionFuncion != 2:
     print("Error, favor solo ingresar alguna opción valida")
     sys.exit()
+if decisionFuncion == 2:
+    sys.exit()
 while decisionFuncion == 1:
     valorAevaluar = int(input("\nvalor a evaluar en la funcion ingresada: "))
     resultado = sympy.sympify(ps).subs(x, valorAevaluar)
     print("\nResultado = ", resultado)
     break
-while decisionFuncion == 2:
-    break
+
 
 decisionDerivada = int(input("\n¿Que derivada desea evaluar? (1, 2, 3, 4) : "))
 
