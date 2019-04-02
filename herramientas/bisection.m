@@ -27,8 +27,12 @@ function bisection(f, a, b, tol, Nmax)
             fc = f(c);
             count = 0;
             res = strcat("i:\t ", num2str(count));
+            res = strcat(res,"  a =\t");
+            res = strcat(res, num2str(a,5));
             res = strcat(res, "     x0 =\t");
             res = strcat(res, num2str(c,16));
+            res = strcat(res,"  b =\t");
+            res = strcat(res, num2str(b,5));
             res = strcat(res,"   f(xi)=\t");
             res = strcat(res, num2str(fc,16));
             res = strcat(res,"   Err=\t");
@@ -48,8 +52,12 @@ function bisection(f, a, b, tol, Nmax)
                     fc = f(c);
                 endif
                 res = strcat("i:\t ", num2str(count));
+                res = strcat(res,"  a =\t");
+                res = strcat(res, num2str(a,5));
                 res = strcat(res, "     x0 =\t");
                 res = strcat(res, num2str(c,16));
+                res = strcat(res,"  b =\t");
+                res = strcat(res, num2str(b,5));
                 res = strcat(res,"   f(xi)=\t");
                 res = strcat(res, num2str(fc,16));
                 res = strcat(res,"   Err=\t");
@@ -69,6 +77,5 @@ function bisection(f, a, b, tol, Nmax)
     endif
     fclose(file_id);
 endfunction
-
 
     
