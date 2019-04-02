@@ -14,7 +14,9 @@ function bisection(f, a, b, tol, Nmax)
 
     fa = f(a);
     fb = f(b);
-
+    c = 0;
+    errAbs = 100;
+    count = 0;
     if abs(fa) <= tol
         fdisp(file_id, a);
     else
@@ -23,23 +25,36 @@ function bisection(f, a, b, tol, Nmax)
         else
             c = (a+b)/2;
             fc = f(c);
+            count = 0;
+            res = strcat("i:\t ", num2str(count));
+            res = strcat(res, "     x0 =\t");
+            res = strcat(res, num2str(c,16));
+            res = strcat(res,"   f(xi)=\t");
+            res = strcat(res, num2str(fc,16));
+            res = strcat(res,"   Err=\t");
+            fdisp(file_id, res);
+            errAbs = 100;
             count = 1;
-            while (count < Nmax && (abs(a-b) > tol))
+            while (count < Nmax && (errAbs > tol))
                 if((fa*fc) < 0)
                     b = c;
                     fb = f(b);
                     c = (a+b)/2;
                     fc = f(c);
-                endif
-                if((fb*fc) < 0)
+                else
                     a = c;
                     fa = f(a);
                     c = (a+b)/2;
                     fc = f(c);
                 endif
-                res = strcat("i: ", num2str(count));
+                res = strcat("i:\t ", num2str(count));
                 res = strcat(res, "     x0 =\t");
                 res = strcat(res, num2str(c,16));
+                res = strcat(res,"   f(xi)=\t");
+                res = strcat(res, num2str(fc,16));
+                res = strcat(res,"   Err=\t");
+                errAbs = abs(fb-fa);
+                res = strcat(res, num2str(errAbs,16));
                 fdisp(file_id, res);
                 count++;
             endwhile
@@ -49,7 +64,7 @@ function bisection(f, a, b, tol, Nmax)
     fdisp(file_id, c);
     fdisp(file_id, "Iteration: ");
     fdisp(file_id,count);
-    if (abs(a-b) > tol)
+    if (errAbs > tol)
         fdisp(file_id, "TOLERANCE NOT REACHED: MAX ITERATIONS");
     endif
     fclose(file_id);

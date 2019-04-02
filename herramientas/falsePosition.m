@@ -15,6 +15,16 @@ function falsePosition(f, xl, xr, tol, Nmax)
     fxr = f(xr);
     xm = ((xl*fxr) - (xr*fxl))/(fxr - fxl);
     fxm = f(xm);
+    count = 0;
+    res = strcat("i: \t", num2str(count));
+    res = strcat(res, "     x0 =\t");
+    res = strcat(res, num2str(xm,16));
+    res = strcat(res, "     f(xi) =\t");
+    res = strcat(res, num2str(fxm,16));
+    res = strcat(res,"   Err=\t");
+    errAbs = abs(xr -xm);
+    
+    fdisp(file_id, res);
     count = 1;
     if abs(fxl) <= tol
         fdisp(file_id,[xl]);
@@ -22,7 +32,7 @@ function falsePosition(f, xl, xr, tol, Nmax)
         if abs(fxr) <= tol
             fdisp(file_id,[xr]);
         else
-            while(count < Nmax && abs(fxm) >= tol)
+            while(count < Nmax && errAbs > tol)
                 if ((fxl*fxm) < 0)
                     xr = xm;
                     fxr = f(xr);
@@ -35,9 +45,14 @@ function falsePosition(f, xl, xr, tol, Nmax)
                     xm = ((xl*fxr) - (xr*fxl))/(fxr - fxl);
                     fxm = f(xm);
                 endif
-                res = strcat("i: ", num2str(count));
+                res = strcat("i: \t", num2str(count));
                 res = strcat(res, "     x0 =\t");
                 res = strcat(res, num2str(xm,16));
+                res = strcat(res, "     f(xi) =\t");
+                res = strcat(res, num2str(fxm,16));
+                res = strcat(res,"   Err=\t");
+                errAbs = abs(xr -xm);
+                res = strcat(res, num2str(errAbs,16));
                 fdisp(file_id, res);
                 count++;
             endwhile

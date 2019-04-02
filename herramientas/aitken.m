@@ -30,16 +30,19 @@ function aitken(f, x0, tol, nMax)
         % endif
 
         aitkenX = x2 - ( (x2 - x1).^2 )/denominator;
-        res = strcat("i: ", num2str(count));
+        res = strcat("i:\t ", num2str(count));
         res = strcat(res, "     x0 =\t");
         res = strcat(res, num2str(aitkenX,16));
+        res = strcat(res,"   Err=\t");
+        errAbs(abs(aitkenX - x2));
+        res = strcat(res, num2str(errAbs,16));
         fdisp(file_id, res);
 
         if (abs(aitkenX - x2) < tol)
             fdisp(file_id, "Fixed Point (Approx.):");
             fdisp(file_id,aitkenX);
             fdisp(file_id, "Iteration: ");
-            fdisp(file_id,count);
+            fdisp(file_id,count+1);
             break;
         endif
 

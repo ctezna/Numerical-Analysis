@@ -18,7 +18,7 @@ function incremental(f, x0, h, tol, Nmax)
     endif
 
     x1 = x0 + h;
-    count = 1;
+    count = 0;
     r1 = f(x1);
 
     if abs(r1) <= tol
@@ -37,6 +37,6 @@ function incremental(f, x0, h, tol, Nmax)
         count++;
     endwhile
     fdisp(file_id, "Iteration: ");
-    fdisp(file_id,count);
+    fdisp(file_id,count+1);
     fclose(file_id);
 endfunction

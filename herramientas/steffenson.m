@@ -19,9 +19,12 @@ function steffenson(f,p0,tol,nMax)
             break;
         endif
         p0=p;
-        res = strcat("i: ", num2str(i));
+        res = strcat("i:\t ", num2str(i));
         res = strcat(res, "     x0 =\t");
         res = strcat(res, num2str(p0,16));
+        res = strcat(res,"   Err=\t");
+        errAbs = abs(p-p0);
+        res = strcat(res, num2str(errAbs,16));
         fdisp(file_id, res);     
     endfor
     if abs(p-p0)>tol  
