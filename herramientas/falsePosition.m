@@ -38,8 +38,7 @@ function falsePosition(f, xl, xr, tol, Nmax)
                     fxr = f(xr);
                     xm = ((xl*fxr) - (xr*fxl))/(fxr - fxl);
                     fxm = f(xm);
-                endif
-                if ((fxr*fxm) < 0)
+                else
                     xl = xm;
                     fxl = f(xl);
                     xm = ((xl*fxr) - (xr*fxl))/(fxr - fxl);
