@@ -17,8 +17,12 @@ function falsePosition(f, xl, xr, tol, Nmax)
     fxm = f(xm);
     count = 0;
     res = strcat("i: \t", num2str(count));
+    res = strcat(res,"  xl=\t");
+    res = strcat(res,num2str(xl,5));
     res = strcat(res, "     x0 =\t");
     res = strcat(res, num2str(xm,16));
+    res = strcat(res,"  xr=\t");
+    res = strcat(res,num2str(xr,5));
     res = strcat(res, "     f(xi) =\t");
     res = strcat(res, num2str(fxm,16));
     res = strcat(res,"   Err=\t");
