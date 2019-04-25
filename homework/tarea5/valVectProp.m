@@ -23,7 +23,8 @@ function valVectProp(A)
         endfor
     endfor
 
-    valProp = diag(roots([1 coef]));
+    raiz = roots([1 coef]);
+    valProp = diag(raiz);
     vectProp = zeros(n);
     tempvap = -1.*A(2:n,1);
     tempvep = zeros(n,1); 
@@ -31,14 +32,14 @@ function valVectProp(A)
     for i=1 :length(valProp)
         temp = A(2:n,2:n) - valProp(i,i) * eye(n-1); 
         tempvep = [1 (temp\tempvap)']; 
-        vectProp(1:n,i) = ((tempvep / norm(tempvep)) *-1); 
+        vectProp(1:n,i) = tempvep/norm(tempvep);
     endfor
 
     disp(' ');
     disp('Valores proprios');
     disp(diag(valProp));
     disp(' ');
-    disp('Valores proprios');
+    disp('Vectores proprios');
     disp(vectProp);
     disp(' ');
 endfunction
