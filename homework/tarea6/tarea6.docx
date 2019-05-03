@@ -1,9 +1,0 @@
-﻿Tarea 6 - Análisis Numérico 
-
-1. Dado conjunto de puntos -> polinomio interpolante de Vandermonde (pivoteo total), Newton, y Lagrange.
-2. Coger polinomio uno por uno y se aplica Búsquedas Incrementales (h=0.001) -> intervalos donde existen raíces.
-3. Aplique bisección a los intervalos hasta encontrar a una raíz con tolerancia 10e-7.
-
-
-
-Como fue explicado en las instrucciones el propósito de este código es una forma genérica de obtener raíces de una función usando interpolación. Dado un método ya sea Lagrange, Newton o Vandermonde, se obtiene un grupo de puntos los cuales van a servirnos para encontrar las raíces. Obtenemos los puntos y se los pasamos a alguno de los métodos de interpolación. El método de interpolación nos retorna un polinomio el cual lo usamos para calcular los intervalos en los cuales dicho polinomio tenga una raíz, para esto usamos Búsquedas Incrementales con un paso de 0.001. Luego de obtener los intervalos podemos encontrar las raíces usando el método de Bisección hasta alcanzar una tolerancia de 10e-7. De esta forma podemos obtener las raíces de la función a evaluar.
