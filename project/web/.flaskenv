@@ -1,0 +1,2 @@
+FLASK_APP=pocketRocket
+FLASK_ENV=development
