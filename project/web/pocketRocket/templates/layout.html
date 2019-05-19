@@ -31,23 +31,73 @@
         </div>
     </head>
     <body>
-        <header class="site-header"> 
-        <nav class="navbar navbar-dark bg-dark">
-            <a id="big" class="navbar-brand" href="{{url_for('index')}}">
-                <img src="{{url_for('static', filename='img/Logo_rocket.png')}}" width="35" height="35" style="border-radius: 50%" class="d-inline-block align-top" alt="Logo">
-                <text class="ml-2" id="two">Pocket Rocket</text>
-            </a>
-            <a id="small" class="navbar-brand" href="{{url_for('index')}}">
-                <img id="small" src="{{url_for('static', filename='img/Logo_rocket.png')}}" width="70" height="45" style="border-radius: 20%"class="d-inline-block align-top" alt="Logo">
-            </a>
-            <div class="navbar-nav">
-                
-            </div>
+        <header class="site-header">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a id="big" class="navbar-brand" href="{{url_for('index')}}">
+                    <img src="{{url_for('static', filename='img/Logo_rocket.png')}}" width="35" height="35" style="border-radius: 50%" class="d-inline-block align-top" alt="Logo">
+                    <text class="ml-2" id="two">Pocket Rocket</text>
+                </a>
+                <a id="small" class="navbar-brand" href="{{url_for('index')}}">
+                    <img id="small" src="{{url_for('static', filename='img/Logo_rocket.png')}}" width="70" height="65" style="border-radius: 20%"class="d-inline-block align-top" alt="Logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Grapher <span class="sr-only">(current)</span></a>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Root Algorithms
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Incremental Search</a>
+                        <a class="dropdown-item" href="#">Bisection</a>
+                        <a class="dropdown-item" href="#">False Position</a>
+                        <a class="dropdown-item" href="#">Fixed Point</a>
+                        <a class="dropdown-item" href="#">Secant</a>
+                        <a class="dropdown-item" href="#">Newton</a>
+                        <a class="dropdown-item" href="#">Multiple Roots</a>
+                        <a class="dropdown-item" href="#">Aitken</a>
+                        <a class="dropdown-item" href="#">Muller</a>
+                        <a class="dropdown-item" href="#">Steffenson</a>
+                        </div>
+                    </li>
 
-            <div class="navbar-nav">
-                
-            </div> 
-        </nav>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Matrix Calculator
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Gauss Elimination</a>
+                        <a class="dropdown-item" href="#">LU Factorization</a>
+                        <a class="dropdown-item" href="#">PA=LU Factorization</a>
+                        <a class="dropdown-item" href="#">Direct Factorization</a>
+                        <a class="dropdown-item" href="#">Jacobi</a>
+                        <a class="dropdown-item" href="#">Gauss-Seidel</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Interpolation
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">LaGrange Polynomial</a>
+                        <a class="dropdown-item" href="#">Newton Polynomial</a>
+                        <a class="dropdown-item" href="#">Vandermonde Polynomial</a>
+                        <a class="dropdown-item" href="#">Splines</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Documentation</a>
+                    </li>
+                    </ul>
+                </div>
+            </nav>
         </header>
         <main role="main" class="container">
         <!-- <div class="container-fluid"> -->

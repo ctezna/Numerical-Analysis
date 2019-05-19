@@ -1,4 +1,4 @@
-from math import sqrt
+from cmath import sqrt
 import numpy as np
 
 #                   PYTHON 3.7 !!!
@@ -16,12 +16,12 @@ def cholesky(A,n):
             suma2 = 0
             for p in range(k):
                 suma2+=L[i][p]*U[p][k]
-            L[i][k] = (A[i][k]-suma2)/float(U[k][k])
+            L[i][k] = (A[i][k]-suma2)/(U[k][k])
         for j in range(k+1,n):
             suma3 = 0
             for p in range(k):
                 suma3+= L[k][p]*U[p][j]
-            U[k][j]= (A[k][j]-suma3)/float(L[k][k])
+            U[k][j]= (A[k][j]-suma3)/(L[k][k])
         print("\nEtapa ",  k, ":" )
         print("\nMatriz L")
         print(L)
@@ -43,12 +43,12 @@ def crout(A,n):
             suma2 = 0.0
             for p in range(k):
                 suma2 += L[i][p]*U[p][k]
-            L[i][k] = (A[i][k]-suma2)/float(U[k][k])
+            L[i][k] = (A[i][k]-suma2)/(U[k][k])
         for j in range(k+1,n):
             suma3 = 0.0
             for p in range(k):
                 suma3 += L[k][p]*U[p][j]
-            U[k][j]= (A[k][j]-suma3)/float(L[k][k])
+            U[k][j]= (A[k][j]-suma3)/(L[k][k])
         print("\nEtapa ",  k )
         print("\nL:\n")
         print(L)
@@ -68,12 +68,12 @@ def doolittle(A,n):
             suma2 = 0.0
             for p in range(k):
                 suma2 += L[i][p]*U[p][k]
-            L[i][k] = (A[i][k]-suma2)/float(U[k][k])
+            L[i][k] = (A[i][k]-suma2)/(U[k][k])
         for j in range(k+1,n):
             suma3 = 0.0
             for p in range(k):
                 suma3 += L[k][p]*U[p][j]
-            U[k][j]= (A[k][j]-suma3)/float(L[k][k])
+            U[k][j]= (A[k][j]-suma3)/(L[k][k])
         print("\nEtapa ",  k )
         print("\nL:\n")
         print(L)
@@ -105,9 +105,9 @@ def inicializa(n,metodo):
 # n es el orden de la matriz !!!
 
 #K = [[4,-2,1],[20,-7,12],[-8,13,17]]
-K = [[3,4,-2],[4,8,-2],[-2,-2,4],[-2,-2,4]]
-s = [-1,0,1]  
-n = 3
+K = [[4,-1,0,3],[1,15.5,3,8],[0,-1.3,-4,1.1],[14,5,-2,30]]
+#s = [-1,0,1]  
+n = 4
 
 
 #crout(K,n)
