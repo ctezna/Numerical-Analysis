@@ -12,6 +12,6 @@ Tarea4: homework/tarea4/aitken.m | muller.m | steffensen.m     -----> $octave --
 
 Tarea5: homework/tarea5/valVectProp.m       -----> $octave --no-gui valVectProp.m
 
-Tarea6: homework/tarea6/lagrange interpolacion.py              -----> $python3 lagrange interpolacion.py  
-                       | newton interpolacion.py               -----> $python3 newton interpolacion.py  
-                       | vandermonde interpolacion.py          -----> $python3 vandermonde interpolacion.py  
+Tarea6: homework/tarea6/lagrang_interpolacion.py              -----> $python3 lagrange interpolacion.py  
+                       | newton_interpolacion.py               -----> $python3 newton interpolacion.py  
+                       | vandermonde_interpolacion.py          -----> $python3 vandermonde interpolacion.py  
