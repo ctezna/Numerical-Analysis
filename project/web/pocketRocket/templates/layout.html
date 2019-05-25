@@ -54,16 +54,16 @@
                         Root Algorithms
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Incremental Search</a>
-                        <a class="dropdown-item" href="#">Bisection</a>
-                        <a class="dropdown-item" href="#">False Position</a>
-                        <a class="dropdown-item" href="#">Fixed Point</a>
-                        <a class="dropdown-item" href="#">Secant</a>
-                        <a class="dropdown-item" href="#">Newton</a>
-                        <a class="dropdown-item" href="#">Multiple Roots</a>
-                        <a class="dropdown-item" href="#">Aitken</a>
-                        <a class="dropdown-item" href="#">Muller</a>
-                        <a class="dropdown-item" href="#">Steffenson</a>
+                        <a class="dropdown-item" href="{{ url_for('incremental_search') }}">Incremental Search</a>
+                        <a class="dropdown-item" href="{{ url_for('bisection') }}">Bisection</a>
+                        <a class="dropdown-item" href="{{ url_for('false_position') }}">False Position</a>
+                        <a class="dropdown-item" href="{{ url_for('fixed_point') }}">Fixed Point</a>
+                        <a class="dropdown-item" href="{{ url_for('secant') }}">Secant</a>
+                        <a class="dropdown-item" href="{{ url_for('newton') }}">Newton</a>
+                        <a class="dropdown-item" href="{{ url_for('multiple_roots') }}">Multiple Roots</a>
+                        <a class="dropdown-item" href="{{ url_for('aitken') }}">Aitken</a>
+                        <a class="dropdown-item" href="{{ url_for('muller') }}">Muller</a>
+                        <a class="dropdown-item" href="{{ url_for('steffenson') }}">Steffenson</a>
                         </div>
                     </li>
 
@@ -72,6 +72,7 @@
                         Matrix Calculator
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+<<<<<<< HEAD
                         <a class="dropdown-item" href="#">Gauss Elimination</a>
                         <a class="dropdown-item" href="#">LU Factorization</a>
                         <a class="dropdown-item" href="#">PA=LU Factorization</a>
@@ -79,6 +80,14 @@
                         <a class="dropdown-item" href="#">Jacobi</a>
                         <a class="dropdown-item" href="#">Gauss-Seidel</a>
                         <a class="dropdown-item" href="#">SOR</a>
+=======
+                        <a class="dropdown-item" href="{{ url_for('gauss_simple') }}">Gauss Elimination</a>
+                        <a class="dropdown-item" href="{{ url_for('lu_factorization') }}">LU Factorization</a>
+                        <a class="dropdown-item" href="{{ url_for('pa') }}">PA=LU Factorization</a>
+                        <a class="dropdown-item" href="{{ url_for('direct_factorization') }}">Direct Factorization</a>
+                        <a class="dropdown-item" href="{{ url_for('jacobi') }}">Jacobi</a>
+                        <a class="dropdown-item" href="{{ url_for('gauss_seidel') }}">Gauss-Seidel</a>
+>>>>>>> 970003c3225271d9bc9b62418e986057c9cb0a88
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -86,10 +95,10 @@
                         Interpolation
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">LaGrange Polynomial</a>
-                        <a class="dropdown-item" href="#">Newton Polynomial</a>
-                        <a class="dropdown-item" href="#">Vandermonde Polynomial</a>
-                        <a class="dropdown-item" href="#">Splines</a>
+                        <a class="dropdown-item" href="{{ url_for('lagrange') }}">LaGrange Polynomial</a>
+                        <a class="dropdown-item" href="{{ url_for('newton_interpolation') }}">Newton Polynomial</a>
+                        <a class="dropdown-item" href="{{ url_for('vandermorde') }}">Vandermonde Polynomial</a>
+                        <a class="dropdown-item" href="{{ url_for('splines') }}">Splines</a>
                         </div>
                     </li>
 
@@ -127,6 +136,9 @@
         <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
         <!-- Icons -->
         <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+        <!-- Plotter -->
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="https://mauriciopoppe.github.io/function-plot/js/function-plot.js"></script>
         <script>
             feather.replace()
         </script>

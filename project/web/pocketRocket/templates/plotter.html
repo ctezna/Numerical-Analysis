@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block refresh %}
+
+{% endblock %}
+
+{% block style%}
+
+{% endblock %}
+
+{% block body %}
+<script src="{{url_for('static', filename='js/plotter.js')}}"></script>
+<body onload="plot();">
+    <div class="layer">
+    <section id="plotSettings">
+      <label for="xMin">xMin: </label> value: <input type=number id="xMin" value=-5 step=0.5 oninput="plot();">
+      <p></p>
+      <label for="xMin">xMax: </label> value: <input type=number id="xMax" value=6.28 step=0.5 oninput="plot();">
+  
+      <p></p>
+      <label for="yMin">yMin: </label> value: <input type=number id="yMin" value=-6 step=0.5 oninput="plot();">
+      <p></p>
+      <label for="yMax">yMax: </label> value: <input type=number id="yMax" value=6 step=0.5 oninput="plot();">
+      <p></p>
+      <label for="color">Color: </label> value: <input type=color id="color" onchange="plot();">
+      <p></p>
+      <label for="function">Function to plot: </label>
+      <input id="function" type="text" value="sin(x)" onchange="plot();">
+      <p></p>
+      <button onclick="plot();">Plot it!</button>
+  
+    </section>
+  
+    <section id="plot">
+      <div id="myFunction"></div>
+    </section>
+    </div>
+  </body>
+{% endblock %}
