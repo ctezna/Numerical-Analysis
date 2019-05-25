@@ -45,4 +45,4 @@ def imprimirTabla(tabla,n):
 
 
 
-newton(4,[-5,-1,0,2],[-2,6,1,3])
+newton(4,[0,1,3,5],[0,2,1,-1])

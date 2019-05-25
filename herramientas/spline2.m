@@ -1,6 +1,6 @@
 
-x = [-1  0 3 4];
-y = [15.5 3 8 1];
+x = [0 1 3 5];
+y = [0 2 1 -1];
 N = length(x)-1;
 V = [0;zeros(2*N,1);zeros(N-1,1)];
 Z = zeros(length(V),length(V));

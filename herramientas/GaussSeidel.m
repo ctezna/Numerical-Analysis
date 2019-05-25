@@ -1,9 +1,9 @@
 %matriz
-a = [3 -1 1; 3 6 2; 3 3 7];
+a = [4 -1 -1 0; -1 4 0 -1; -1 0 4 -1; 0 -1 -1 4];
 %solucion
-b = [1;0;4];
+b = [50;60;30;40];
 %aproximacimaciones
-x = [0;0;0];
+x = [0;0;0;0];
 %num iteraciones
 iter = 100
 %tolerancia
