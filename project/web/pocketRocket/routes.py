@@ -6,6 +6,7 @@ from sympy import *
 from sympy.parsing.sympy_parser import parse_expr
 from pocketRocket.methods.bincremental import busqueda_incremental
 from pocketRocket.methods.biseccion import biseccion
+from pocketRocket.methods.regla_falsa import regla_falsa
 import os
 
 @app.route('/', methods=['GET'])
@@ -53,9 +54,20 @@ def incremental_search():
     return render_template("incremental_search.html", form=form)
 
 
-@app.route('/falsePosition')
+@app.route('/falsePosition', methods=['GET', 'POST'])
 def false_position():
-    return render_template("false_position.html")
+    form = rootAlgorithms()
+    if request.method == 'POST':
+        f_x = form.function.data
+        x_0 = form.x_0.data
+        x_1 = form.x_1.data
+        n = form.n_max.data
+        tol = form.tol.data
+        x = symbols('x', real=True)
+        parser = parse_expr(f_x, locals())
+        result = regla_falsa(parser, x_0, x_1, tol, n)
+        form.result.data = result
+    return render_template("false_position.html", form=form)
 
 
 @app.route('/fixedPoint')

@@ -1,10 +1,16 @@
-from sympy import symbols, diff, pprint, factorial, ln, exp, sin, log , cos
+from sympy import symbols, diff, pprint, factorial, ln, exp, sin, log , cos, sympify
 import numpy as np
 
 def regla_falsa (f,x0,x1,tol,nmax):
     temp,err,cont,xcentro = 0,0,1,0
-    xant = f(x0)
-    xact = f(x1)
+    x0 = float(x0)
+    x1 = float(x1)
+    tol = float(tol)
+    nmax = float(nmax)
+    x = symbols('x', real=True)
+    xant = sympify(f).subs(x, x0)
+    xact = sympify(f).subs(x, x1)
+    data = {"iter": [], 'xmedio': [], 'fcentro': [], "error": []}
     if (xant == 0):
         print(x0, "es raiz")
     else:
@@ -13,12 +19,12 @@ def regla_falsa (f,x0,x1,tol,nmax):
         else:
             if (xant*xact < 0):
                 xcentro = x0 - (xant*(x1-x0)/(xact-xant))
-                fcentro = f(xcentro)
+                fcentro = sympify(f).subs(x, xcentro)
                 err = tol + 1
-                print("\n-------------------------------------------------------")
-                print("iteracion | xMedio | fcentro | error absoluto")
-                #print(cont, "|", x0,"|",x1,"|",xcentro,"|",fcentro,"|",err)
-                print(cont, "|",xcentro,"|",fcentro,"|",err)
+                data['iter'].append(cont)
+                data['xmedio'].append(xcentro)
+                data['fcentro'].append(fcentro)
+                data['error'].append(err)
                 while((err > tol) and (fcentro != 0) and cont < nmax):
                     if (xant*fcentro < 0):
                         x1 = xcentro
@@ -28,11 +34,13 @@ def regla_falsa (f,x0,x1,tol,nmax):
                         xant = fcentro
                     temp = xcentro
                     xcentro = x0 - (xant*(x1-x0)/(xact-xant))
-                    fcentro = f(xcentro)
+                    fcentro = sympify(f).subs(x, xcentro)
                     err = abs(xcentro - temp)
                     cont += 1
-                    #print(cont, "|", x0,"|",x1,"|",xcentro,"|",fcentro,"|",err)
-                    print(cont, "|",xcentro,"|",fcentro,"|",err)
+                    data['iter'].append(cont)
+                    data['xmedio'].append(xcentro)
+                    data['fcentro'].append(fcentro)
+                    data['error'].append(err)
                 if (fcentro == 0):
                     print(xcentro,"es raiz")
                 else:
@@ -44,9 +52,12 @@ def regla_falsa (f,x0,x1,tol,nmax):
                         print("el metodo fracaso")
             else:
                 print("el intervalo no sirve")
+    
+    print (data)
+    return data
 
 def f(x):
     return exp(-x+1) - x**2 + 4*x + (7*(cos(x**2 - 4)**2)) -7
 
 #          (f,x0,x1,tol,nmax):
-regla_falsa(f,0.0,3.3,1e-7,100)
+#regla_falsa(f,0.0,3.3,1e-7,100)
