@@ -2,6 +2,9 @@ from pocketRocket import app
 from flask import render_template, request, redirect, flash, url_for, Markup
 from werkzeug.urls import url_parse
 from pocketRocket.forms import rootAlgorithms
+from sympy import *
+from sympy.parsing.sympy_parser import parse_expr
+from pocketRocket.methods.bincremental import busqueda_incremental
 import os
 
 @app.route('/', methods=['GET'])
@@ -10,8 +13,8 @@ def index():
     return render_template("plotter.html")
 
 
-@app.route('/plotter', methods=['GET', 'POST'])
-def plotter():
+@app.route('/grapher', methods=['GET', 'POST'])
+def grapher():
     return render_template("plotter.html")
 
 
@@ -24,8 +27,17 @@ def bisection():
 def incremental_search():
     form = rootAlgorithms()
     if request.method == 'POST':
-        
-        form.result.data = 3.14
+        f_x = form.function.data
+        x_0 = form.x_0.data
+        h = form.inter_h.data
+        n = form.n_max.data
+        tol = form.tol.data
+        x = symbols('x', real=True)
+        parser = parse_expr(f_x, locals())
+        result = busqueda_incremental(parser, x_0, h, n, tol)
+        form.result.data = result
+
+
     return render_template("incremental_search.html", form=form)
 
 
