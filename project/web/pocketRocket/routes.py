@@ -1,6 +1,7 @@
 from pocketRocket import app
 from flask import render_template, request, redirect, flash, url_for, Markup
 from werkzeug.urls import url_parse
+from pocketRocket.forms import rootAlgorithms
 import os
 
 @app.route('/', methods=['GET'])
@@ -19,9 +20,13 @@ def bisection():
     return render_template("bisection.html")
 
 
-@app.route('/incrementalSearch')
+@app.route('/incrementalSearch', methods=['GET', 'POST'])
 def incremental_search():
-    return render_template("incremental_search.html")
+    form = rootAlgorithms()
+    if request.method == 'POST':
+        
+        form.result.data = 3.14
+    return render_template("incremental_search.html", form=form)
 
 
 @app.route('/falsePosition')

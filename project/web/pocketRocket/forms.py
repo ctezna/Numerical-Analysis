@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, TextAreaField
 
 class rootAlgorithms(FlaskForm):
     function = StringField('f(x)')
@@ -7,8 +7,9 @@ class rootAlgorithms(FlaskForm):
     inter_h = StringField('h')
     inter_a = StringField('a')
     inter_b = StringField('b')
-    tol = StringField('tol')
+    tol = StringField('Tol')
     n_max = StringField('n')
+    result = TextAreaField('Result')
     calculate = SubmitField('Calculate')
 
 
@@ -21,6 +22,7 @@ class matrixAlgorithms(FlaskForm):
     x_0 =  StringField('x0')
     x_points = StringField('x_points')
     y_points = StringField('y_points')
+    result = TextAreaField('Result')
     calculate = SubmitField('Calculate')
 
 
@@ -28,5 +30,6 @@ class interpolationeAlgorithms(FlaskForm):
     n_max = StringField('n')
     x_points = StringField('x_points')
     y_points = StringField('y_points')
-    value = StringField('value')
+    value = StringField('Value')
+    result = TextAreaField('Result')
     calculate = SubmitField('Calculate')    
