@@ -3,6 +3,9 @@ from wtforms import StringField, SubmitField, TextAreaField
 
 class rootAlgorithms(FlaskForm):
     function = StringField('f(x)')
+    first_derivate = StringField('f`(x)')
+    second_derivate = StringField('f``(x)')
+    g_function = StringField('g(x)')
     x_0 = StringField('X0')
     x_1 = StringField('X1')
     inter_h = StringField('h')

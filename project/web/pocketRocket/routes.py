@@ -109,10 +109,19 @@ def steffenson():
 def gauss_simple():
     return render_template("gauss_simple.html")
 
+@app.route('/gaussTotalPivot')
+def gauss_totalpivot():
+    return render_template("gauss_totalpivot.html")
 
-@app.route('/lu')
-def lu_factorization():
-    return render_template("lu_factorization.html")
+
+@app.route('/gaussPartialPivot')
+def gauss_partialpivot():
+    return render_template("gauss_partialpivot.html")
+
+
+@app.route('/luSimpleGaussian')
+def lu_simple_gaussian():
+    return render_template("lu_simple_gaussian.html")
 
 
 @app.route('/pa')
@@ -120,10 +129,24 @@ def pa():
     return render_template("pa_factorization.html")
 
 
-@app.route('/directFactorization')
-def direct_factorization():
-    return render_template("direct_factorization.html")
+@app.route('/luPivoting')
+def lu_pivoting():
+    return render_template("lu_pivoting.html")
 
+
+@app.route('/crout')
+def crout():
+    return render_template("crout.html")
+
+
+@app.route('/doolittle')
+def doolittle():
+    return render_template("doolittle.html")
+
+
+@app.route('/cholesky')
+def lucholeskypivoting():
+    return render_template("cholesky.html")
 
 @app.route('/jacobi')
 def jacobi():
