@@ -5,6 +5,7 @@ from pocketRocket.forms import rootAlgorithms
 from sympy import *
 from sympy.parsing.sympy_parser import parse_expr
 from pocketRocket.methods.bincremental import busqueda_incremental
+from pocketRocket.methods.biseccion import biseccion
 import os
 
 @app.route('/', methods=['GET'])
@@ -18,9 +19,20 @@ def grapher():
     return render_template("plotter.html")
 
 
-@app.route('/bisection')
+@app.route('/bisection', methods=['GET', 'POST'])
 def bisection():
-    return render_template("bisection.html")
+    form = rootAlgorithms()
+    if request.method == 'POST':
+        inter_a = form.inter_a.data
+        inter_b = form.inter_b.data
+        f_x = form.function.data
+        n = form.n_max.data
+        tol = form.tol.data
+        x = symbols('x', real=True)
+        parser = parse_expr(f_x, locals())
+        result = biseccion(parser, inter_a, inter_b, n, tol)
+        form.result.data = result
+    return render_template("bisection.html", form=form)
 
 
 @app.route('/incrementalSearch', methods=['GET', 'POST'])
