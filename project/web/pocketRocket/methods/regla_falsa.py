@@ -53,7 +53,6 @@ def regla_falsa (f,x0,x1,tol,nmax):
             else:
                 print("el intervalo no sirve")
     
-    print (data)
     return data
 
 def f(x):
