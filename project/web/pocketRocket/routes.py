@@ -3,10 +3,10 @@ from flask import render_template, request, redirect, flash, url_for, Markup
 from werkzeug.urls import url_parse
 import os
 
-
+@app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    return render_template("index.html")
+    return render_template("plotter.html")
 
 
 @app.route('/plotter', methods=['GET', 'POST'])
@@ -92,6 +92,10 @@ def jacobi():
 @app.route('/gaussSeidel')
 def gauss_seidel():
     return render_template("gauss_seidel.html")
+
+@app.route('/sor')
+def sor():
+    return render_template("sor.html")
 
 
 @app.route('/lagrange')
