@@ -13,7 +13,7 @@ def newton(n, x, y):
 		tabla[i][1] = y[i]
 
 	res = polinomioNewton(tabla,n).tolist()
-	print (res)
+	#print (res)
 	for i in range(len(res)):
 		res[i].pop(0)
 	res.pop()
@@ -37,12 +37,12 @@ def polinomioNewton(tabla,n):
     return tabla
 
 def imprimirTabla(tabla,n):
-    print(" n | xi | f[xi] | Primera | Segunda | Tercera | nCuarta | Quinta | Nesima |" )
+    print(" n | xi | Primera | Segunda | Tercera | nCuarta | Quinta | Nesima |" )
     for i in range(n):
-        print(str(i) + "     " + str(tabla[i]).replace("'"," ").replace(",","       ").replace("["," ").replace("]"," ").replace(" 0 ", " "))
+        print(str(i) + "   " + str(tabla[i]).replace(",","    ").replace("["," ").replace("]"," ").replace(" 0 ", " "))
         print("\n")
 
 
 
 
-newton(4,[0,1,3,5],[0,2,1,-1])
+newton(5,[1,3,4,5,7],[4.31,1.5,3.2,2.6,1.8])
