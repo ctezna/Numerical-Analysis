@@ -73,9 +73,11 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{ url_for('gauss_simple') }}">Gauss Elimination</a>
-                        <a class="dropdown-item" href="{{ url_for('lu_factorization') }}">LU Factorization</a>
+                        <a class="dropdown-item" href="{{ url_for('lu_simple_gaussian') }}">LU Factorization</a>
                         <a class="dropdown-item" href="{{ url_for('pa') }}">PA=LU Factorization</a>
-                        <a class="dropdown-item" href="{{ url_for('direct_factorization') }}">Direct Factorization</a>
+                        <a class="dropdown-item" href="{{ url_for('lucholeskypivoting') }}">Cholesky</a>
+                        <a class="dropdown-item" href="{{ url_for('crout') }}">Crout</a>
+                        <a class="dropdown-item" href="{{ url_for('doolittle') }}">Doolittle</a>
                         <a class="dropdown-item" href="{{ url_for('jacobi') }}">Jacobi</a>
                         <a class="dropdown-item" href="{{ url_for('gauss_seidel') }}">Gauss-Seidel</a>
                         <a class="dropdown-item" href="{{ url_for('sor') }}">SOR</a>

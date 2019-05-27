@@ -42,19 +42,22 @@ def absolute_err(x, x_n):
     return abs(x_n - x)
 
 
-def multiple_roots(x_n, tol):   
-    f_x = f(x_n)
-    f_x_1 = f_1(x_n)
-    f_x_2 = f_2(x_n)
+def multiple_roots(x_n, tol, f, f_derivate_1, f_derivate_2):   
+    x = symbols('x', real=True)
+    tol = float(tol)
+    x_n = float(x_n)
+    f_x = sympify(f).subs(x, x_n)
+    f_x_1 = sympify(f_derivate_1).subs(x, x_n)
+    f_x_2 = sympify(f_derivate_2).subs(x, x_n)
     data = {"Xn": [x_n], "f(x)": [f_x], "f(x)^1": [f_x_1], "f(x)^2": [f_x_2], "ER": [0], "EA": [0]}
     rel_err = 100000
 
     while f(x_n) != 0 and rel_err > tol:
         x_past = x_n
         x_n = x_future_multiple_roots(f_x, f_x_1, f_x_2, x_n)
-        f_x = f(x_n)
-        f_x_1 = f_1(x_n)
-        f_x_2 = f_2(x_n)
+        f_x = sympify(f).subs(x, x_n)
+        f_x_1 = sympify(f_derivate_1).subs(x, x_n)
+        f_x_2 = sympify(f_derivate_2).subs(x, x_n)
         abs_err = absolute_err(x_past, x_n)
         rel_err = relative_err(x_past, x_n)
         data["Xn"].append(x_n)
@@ -64,12 +67,13 @@ def multiple_roots(x_n, tol):
         data["ER"].append(rel_err)
         data["EA"].append(abs_err)
 
-    print (pd.DataFrame(data=data))
+    return data
 
-def newton(x_n, tol, n):
+def newton(x_n, tol, n, f, f_derivate_1):
     print("\n NEWTON")
-    f_x = f(x_n)
-    f_x_1 = f_1(x_n)
+    x = symbols(x, real=True)
+    f_x = sympify(f).subs(x, x_n)
+    f_x_1 = sympify(f_derivate_1).subs(x, x_n)
     data = {"Xn": [x_n], "f(x)": [f_x], "f(x)^1": [f_x_1], "ER": [0], "EA": [0]}
     rel_err = 10000
     count = 1
@@ -77,8 +81,8 @@ def newton(x_n, tol, n):
     while f(x_n) != 0 and count < n and rel_err > tol:
         x_past = x_n
         x_n = x_future_newton(f_x, f_x_1, x_n) #xn+1
-        f_x = f(x_n)
-        f_x_1 = f_1(x_n)
+        f_x = sympify(f).subs(x. x_n)
+        f_x_1 = sympify(f_derivate_1).subs(x, x_n)
         abs_err = absolute_err(x_past, x_n)
         rel_err = relative_err(x_past, x_n)
         data["Xn"].append(x_n)
@@ -89,22 +93,27 @@ def newton(x_n, tol, n):
         count += 1
         print("iteracion:",count,"valor ampliado xi:",x_n)
 
-    print (pd.DataFrame(data=data))
+    return data
 
 
 
-def secante(x_0, x_1, tol, n):
+def secante(x_0, x_1, tol, n, f):
     print("\n SECANTE")
-    f_x_0 = f(x_0)
-    f_x_1 = f(x_1)
+    x_0 = float(x_0)
+    x_1 = float(x_1)
+    tol = float(tol)
+    n = float(n)
+    x = symbols('x', real=True)
+    f_x_0 = sympify(f).subs(x, x_0)
+    f_x_1 = sympify(f).subs(x, x_1)
     data = {"Xn": [x_0, x_1], "f(x)": [f_x_0, f_x_1], "ER": [0,0], "EA": [0,0]}
     rel_err = 100000
     count = 1
-    while f(x_1) != 0 and count < n and rel_err > tol:
+    while sympify(f).subs(x, x_1) != 0 and count < n and rel_err > tol:
         x_new = x_future_secante(x_0, x_1) #xn+1
         x_0 = x_1
         x_1 = x_new
-        f_x = f(x_1)
+        f_x = sympify(f).subs(x, x_1)
         abs_err = absolute_err(x_0, x_1)
         rel_err = relative_err(x_0, x_1)
         data["Xn"].append(x_1)
@@ -115,14 +124,14 @@ def secante(x_0, x_1, tol, n):
         print("iteracion:",count,"valor ampliado xi:",x_1)
 
 
-    print(pd.DataFrame(data=data))
+    return data
 
 tol = 1e-7
 xn = -0.5
 n = 100
 #multiple_roots(xn, tol)
 #newton(xn, tol, n)
-secante(0, 3, tol, n)
+#ecante(0, 3, tol, n)
 #print (x_future_multiple_roots(0.001208993, -1*(0.054696496), 1.670346083, 0.5))
 #print(f(xn))
 

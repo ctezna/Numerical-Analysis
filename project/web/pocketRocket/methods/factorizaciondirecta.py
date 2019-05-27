@@ -28,10 +28,10 @@ def cholesky(A,n):
         print("\nMatriz U")
         print(U)
     print ("\n\n\n Prueba: (analiza con la matriz ingresada)\n", np.dot(L,U))
-    return L,U
+    return {'L': L, 'U': U}
 
 
-def crout(A,n):
+def crout_method(A,n):
     L,U = inicializa(n,1)
 
     for k in range(n):
@@ -49,20 +49,16 @@ def crout(A,n):
             for p in range(k):
                 suma3 += L[k][p]*U[p][j]
             U[k][j]= (A[k][j]-suma3)/(L[k][k])
-        print("\nEtapa ",  k )
-        print("\nL:\n")
-        print(L)
-        print("\nU:\n")
-        print(U)#imprimir L  U y k etapa
-    print ("\n\n\n Prueba: (analiza con la matriz ingresada)\n", np.dot(L,U))
-    return L,U
 
-def doolittle(A,n):
+    return {'L': L, 'U': U}
+
+def doolittle_method(A,n):
     L,U = inicializa(n,0)
     for k in range(n):
         suma1 = 0.0
         for p in range(0,k):
             suma1 += L[k][p]*U[p][k]
+
         U[k][k] = A[k][k]-suma1
         for i in range(k+1,n):
             suma2 = 0.0
@@ -80,7 +76,7 @@ def doolittle(A,n):
         print("\nU:\n")
         print(U)#imprimir L  U y k etapa
     print ("\n\n\n Prueba: (analiza con la matriz ingresada)\n", np.dot(L,U))
-    return L,U
+    return {'L': L,'U': U}
 #Doolittle == 0, Crout == 1, Cholesky == 2
 def inicializa(n,metodo):
     L , U = [] , []
@@ -93,7 +89,7 @@ def inicializa(n,metodo):
     elif metodo == 2:
         L = [[0 for j in range(n)] for i in range(n)]
         U = [[0 for j in range(n)] for i in range(n)]
-    return L , U
+    return L,U
 
 
 #       PYTHON 3.7 !!!
@@ -111,5 +107,5 @@ n = 4
 
 
 #crout(K,n)
-#doolittle(K,n)
+#oolittle_method(K,n)
 cholesky(K,n)

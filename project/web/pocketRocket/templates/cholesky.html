@@ -15,16 +15,17 @@
                     <div class="col-md-3 col-sm-3">
                         <br><br>
                         <legend class="border-bottom mb-4">Cholesky</legend>
-                        <form action="{{ url_for('cholesky') }}" method="post">
+                        <form action="{{ url_for('lucholeskypivoting') }}" method="post">
                             {{ form.hidden_tag() }}
                             <p>
                                 {{ form.matrix_a.label }} 
                                 {{ form.matrix_a(class="form-control",size=32) }}
                             </p>
                             <p>
-                                {{ form.b_solution.label }} 
-                                {{ form.b_solution(class="form-control",size=32) }}
+                                {{ form.n_max.label }} 
+                                {{ form.n_max(class="form-control",size=32) }}
                             </p>
+                            <p>{{ form.calculate(class="btn btn-primary btn-block") }}</p>
                         </form>
                     </div>
                     <div class="col-md-9 col-sm-9">

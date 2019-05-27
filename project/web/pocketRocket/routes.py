@@ -1,12 +1,16 @@
 from pocketRocket import app
 from flask import render_template, request, redirect, flash, url_for, Markup
 from werkzeug.urls import url_parse
-from pocketRocket.forms import rootAlgorithms
+from pocketRocket.forms import rootAlgorithms, matrixAlgorithms
 from sympy import *
+import numpy as np
 from sympy.parsing.sympy_parser import parse_expr
 from pocketRocket.methods.bincremental import busqueda_incremental
 from pocketRocket.methods.biseccion import biseccion
 from pocketRocket.methods.regla_falsa import regla_falsa
+from pocketRocket.methods.puntoFijo import puntoFijo
+from pocketRocket.methods.newton_raices_secante import secante, newton, multiple_roots
+from pocketRocket.methods.factorizaciondirecta import crout_method, doolittle_method, cholesky
 import os
 
 @app.route('/', methods=['GET'])
@@ -33,6 +37,7 @@ def bisection():
         parser = parse_expr(f_x, locals())
         result = biseccion(parser, inter_a, inter_b, n, tol)
         form.result.data = result
+
     return render_template("bisection.html", form=form)
 
 
@@ -50,7 +55,6 @@ def incremental_search():
         result = busqueda_incremental(parser, x_0, h, n, tol)
         form.result.data = result
 
-
     return render_template("incremental_search.html", form=form)
 
 
@@ -67,27 +71,80 @@ def false_position():
         parser = parse_expr(f_x, locals())
         result = regla_falsa(parser, x_0, x_1, tol, n)
         form.result.data = result
+
     return render_template("false_position.html", form=form)
 
 
-@app.route('/fixedPoint')
+@app.route('/fixedPoint', methods=['GET', 'POST'])
 def fixed_point():
-    return render_template("fixed_point.html")
+    form = rootAlgorithms()
+    if request.method == 'POST':
+        f_x = form.function.data
+        g_x = form.function_g.data
+        x_0 = form.x_0.data
+        tol = form.tol.data
+        n = form.tol.data
+        x = symbols('x', real=True)
+        parser_f = parse_expr(f_x, locals())
+        parser_g = parse_expr(g_x, locals())
+        result = puntoFijo(parser_f, parser_g, x_0, tol, n)
+        form.result.data = result
+
+    return render_template("fixed_point.html", form=form)
 
 
-@app.route('/secant')
+@app.route('/secant', methods=['GET', 'POST'])
 def secant():
-    return render_template("secant.html")
+    form = rootAlgorithms()
+    if request.method == 'POST':
+        f_x = form.function.data
+        x_0 = form.x_0.data
+        x_1 = form.x_1.data
+        tol = form.tol.data
+        n = form.n_max.data
+        x = symbols('x', real=True)
+        parser = parse_expr(f_x, locals())
+        result = secante(x_0, x_1, tol, n, parser)
+        form.result.data = result
+
+    return render_template("secant.html", form=form)
 
 
-@app.route('/newton')
+@app.route('/newton', methods=['GET', 'POST'])
 def newton():
-    return render_template("newton.html")
+    form = rootAlgorithms()
+    if request.method == 'POST':
+        f_x = form.function.data
+        f_x_derivate = form.first_derivate.data
+        x_n = form.x_0.data
+        tol = form.tol.data
+        n = form.n_max.data
+        x = symbols('x', real=True)
+        parser_f = parse_expr(f_x, locals())
+        parser_f_derivate = parse_expr(f_x_derivate, locals())
+        result = newton(x_n, tol, n, f_x, f_x_derivate)
+        form.result.data = result
+
+    return render_template("newton.html", form=form)
 
 
-@app.route('/multipleRoots')
+@app.route('/multipleRoots', methods=['GET', 'POST'])
 def multiple_roots():
-    return render_template("multiple_roots.html")
+    form = rootAlgorithms()
+    if request.method == 'POST':
+        f_x = form.function.data
+        f_x_derivate = form.first_derivate.data
+        f_x_derivate_2 = form.second_derivate.data
+        x_n = form.x_0.data
+        tol = form.tol.data
+        x = symbols('x', real=True)
+        parser_f = parse_expr(f_x, locals())
+        parser_f_derivate = parse_expr(f_x_derivate, locals())
+        parser_f_derivate_2 = parse_expr(f_x_derivate_2, locals())
+        result = multipleRoots(x_n, tol, f_x, f_x_derivate, f_x_derivate_2)
+        form.result.data = result
+
+    return render_template("multiple_roots.html", form=form)
 
 
 @app.route('/aitken')
@@ -134,19 +191,43 @@ def lu_pivoting():
     return render_template("lu_pivoting.html")
 
 
-@app.route('/crout')
+@app.route('/crout', methods=['GET', 'POST'])
 def crout():
-    return render_template("crout.html")
+    form = matrixAlgorithms()
+    if request.method == 'POST':
+        matrix_a = np.matrix(form.matrix_a.data)
+        matrix_a = np.array(matrix_a)
+        n = form.n_max.data
+        result = crout_method(matrix_a, int(n))
+        form.result.data = result
+
+    return render_template("crout.html", form=form)
 
 
-@app.route('/doolittle')
+@app.route('/doolittle', methods=['GET', 'POST'])
 def doolittle():
-    return render_template("doolittle.html")
+    form = matrixAlgorithms()
+    if request.method == 'POST':
+        matrix_a = np.matrix(form.matrix_a.data)
+        matrix_a = np.array(matrix_a)
+        n = form.n_max.data
+        result = doolittle_method(matrix_a, int(n))
+        form.result.data = result
+
+    return render_template("doolittle.html", form=form)
 
 
-@app.route('/cholesky')
+@app.route('/cholesky', methods=['GET', 'POST'])
 def lucholeskypivoting():
-    return render_template("cholesky.html")
+    form = matrixAlgorithms()
+    if request.method == 'POST':
+        matrix_a = np.matrix(form.matrix_a.data)
+        matrix_a = np.array(matrix_a)
+        n = form.n_max.data
+        result = cholesky(matrix_a, int(n))
+        form.result.data = result
+
+    return render_template("cholesky.html", form=form)
 
 @app.route('/jacobi')
 def jacobi():
