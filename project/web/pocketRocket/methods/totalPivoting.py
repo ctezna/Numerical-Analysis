@@ -1,117 +1,104 @@
 import math
 import numpy as np
 
+class totalPivoting():
+
+    def __init__(self, a):
+        self.a = a
+        self.n = len(self.a)
+        self.marcas = [i for i in range(0, self.n)]
 
 
-'''a = [
-        [14,6,-2,3,12],
-        [3,15,2,-5,32],
-        [-7,4,-23,2,-24],
-        [1,-3,-2,16,14]
-        ]'''
+    def inicializar_marcas(self):
+        self.n = len(self.a)
+        self.marcas = [i for i in range(0, self.n)]
 
 
-'''a = [
-        [1,1/2,1/3,1],
-        [1/2,1/3,1/4,0],
-        [1/3,1/4,1/5,0],
-        ]'''            
-a = [
-        [-7,2,-3,4,-12],
-        [5,-1,14,-1,13],
-        [1,9,-7,13,31],
-        [-12,13,-8,-4,-32]
-        ]
-
-n = len(a)
-marcas = [i for i in range(0,n)]
-
-
-def intercambioDeFilas(filaMayor,k):
-    for i in range(0,len(a)+1):
-        aux = a[k][i]
-        a[k][i] = a[filaMayor][i]
-        a[filaMayor][i]= aux
+    def intercambioDeFilas(self, filaMayor,k):
+        for i in range(0,len(self.a)+1):
+            aux = self.a[k][i]
+            self.a[k][i] = self.a[filaMayor][i]
+            self.a[filaMayor][i]= aux
     
-def intercambioDeColumnas(columnaMayor,k):
-    #print(marcas)
-    aux = marcas[k]
-    marcas[k] = marcas[columnaMayor]
-    marcas[columnaMayor] = aux
-    for j in range(0,len(a)):
-        aux = a[j][k]
-        a[j][k] = a[j][columnaMayor]
-        a[j][columnaMayor] = aux
+    def intercambioDeColumnas(self, columnaMayor,k):
+        #print(self.marcas)
+        aux = self.marcas[k]
+        self.marcas[k] = self.marcas[columnaMayor]
+        self.marcas[columnaMayor] = aux
+        for j in range(0,len(self.a)):
+            aux = self.a[j][k]
+            self.a[j][k] = self.a[j][columnaMayor]
+            self.a[j][columnaMayor] = aux
+        
+
+    def pivoteoTotal(self, k):
+        mayor = 0
+        filaMayor = k
+        columnaMayor = k
+        for r in range(k,self.n):
+            for s in range (k,self.n):
+                if (math.fabs(self.a[r][s]) > mayor):
+                    mayor = math.fabs(self.a[r][s])
+                    filaMayor = r
+                    columnaMayor = s
+        
+        if(mayor == 0):
+            print("division 0")
+            return;
+        else:
+            if(filaMayor != k):
+                self.intercambioDeFilas(filaMayor,k)
+            if(columnaMayor != k):
+                self.intercambioDeColumnas(columnaMayor,k)
+                #intercambioDeself.marcas()
+    
+
+    def elimination(self):
+        self.a = self.a.tolist()
+        for k  in range(0,self.n-1):
+            self.pivoteoTotal(k)
+            for i  in range (k + 1, self.n):    
+                multiplicador = self.a[i][k]/self.a[k][k]
+                for j in range (k,self.n + 1):
+                    self.a[i][j] = self.a[i][j]-(multiplicador*self.a[k][j])
+        
+
+        return self.sustitucion()
+
+
+    def orderning(self, x):
+        return [i for _,i in sorted(zip(self.marcas,x))]
         
 
 
-
-def pivoteoTotal(k):
-    mayor = 0
-    filaMayor = k
-    columnaMayor = k
-    for r in range(k,n):
-        for s in range (k,n):
-            if (math.fabs(a[r][s]) > mayor):
-                mayor = math.fabs(a[r][s])
-                filaMayor = r
-                columnaMayor = s
-        
-    if(mayor == 0):
-        print("division 0")
-        return;
-    else:
-        if(filaMayor != k):
-            intercambioDeFilas(filaMayor,k)
-        if(columnaMayor != k):
-            intercambioDeColumnas(columnaMayor,k)
-            #intercambioDeMarcas()
-    
-
-def elimination():
-    for k  in range(0,n-1):
-        pivoteoTotal(k)
-        for i  in range (k + 1, n):    
-            multiplicador = a[i][k]/a[k][k]
-            for j in range (k,n + 1):
-                a[i][j] = a[i][j]-(multiplicador*a[k][j])
-        
-
-    return sustitucion()
-
-
-def orderning(x):
-    return [i for _,i in sorted(zip(marcas,x))]
-        
-
-
-def sustitucion():
-    n = len(a) -1
-    x = [i for i in range(n+1)]
-    x[len(x)-1] = a[n][n+1]/a[n][n]
+    def sustitucion(self):
+        n = len(self.a) -1
+        x = [i for i in range(n+1)]
+        x[len(x)-1] = self.a[n][n+1]/self.a[n][n]
     
     
-    for i in range(0,n+1):
-        sumatoria = 0
-        auxi = n - i 
-        sumatoria = 0
-        for p in range(auxi+1,n+1):
-            sumatoria = sumatoria + a[auxi][p]*x[p]
-        x[auxi]=(a[auxi][n+1]-sumatoria)/a[auxi][auxi]
-    #print marcas
+        for i in range(0,n+1):
+            sumatoria = 0
+            auxi = n - i 
+            sumatoria = 0
+            for p in range(auxi+1,n+1):
+                sumatoria = sumatoria + self.a[auxi][p]*x[p]
+            x[auxi]=(self.a[auxi][n+1]-sumatoria)/self.a[auxi][auxi]
+    #print self.marcas
     #duda error numero proximo a cero
-    marcas.reverse()
-    x.reverse()
-    x = orderning(x)
-    for i in range(0,len(x)):
-        if(math.fabs(x[i]) < 10**-15):
-            x[i] = 0    
-    return x
+        self.marcas.reverse()
+        x.reverse()
+        x = self.orderning(x)
+        for i in range(0,len(x)):
+            if(math.fabs(x[i]) < 10**-15):
+                x[i] = 0   
+
+        return {'solution': x}
             
 
 
 
-#elimination()
+#elimination(a)
 #for i in a:
 #    print(i)
 #intercambioDeFilas(0,2)

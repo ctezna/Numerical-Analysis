@@ -15,7 +15,7 @@
                     <div class="col-md-3 col-sm-3">
                         <br><br>
                         <legend class="border-bottom mb-4">Gaussian Elimination Partial Pivoting</legend>
-                        <form action="{{ url_for('gaussPartialPivot') }}" method="post">
+                        <form action="{{ url_for('gauss_partialpivot') }}" method="post">
                             {{ form.hidden_tag() }}
                             <p>
                                 {{ form.matrix_a.label }} 
@@ -25,6 +25,7 @@
                                 {{ form.b_solution.label }} 
                                 {{ form.b_solution(class="form-control",size=32) }}
                             </p>
+                            <p>{{ form.calculate(class="btn btn-primary btn-block") }}</p>
                         </form>
                     </div>
                     <div class="col-md-9 col-sm-9">

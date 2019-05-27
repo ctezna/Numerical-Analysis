@@ -14,6 +14,12 @@ from pocketRocket.methods.factorizaciondirecta import crout_method, doolittle_me
 from pocketRocket.methods.sor import sor_method
 from pocketRocket.methods.steffenson import steff
 from pocketRocket.methods.vander_inter import vandermorde_method
+from pocketRocket.methods.factorizacionlu import lu_simple_gauss
+from pocketRocket.methods.factorizacionluparcial import lu_decomposition
+from pocketRocket.methods.elimGaussSimple import eliminacion
+from pocketRocket.methods.totalPivoting import totalPivoting
+from pocketRocket.methods.elimGaussPivPar import gaussPivPar
+from pocketRocket.methods.jacobi import jacobiClass
 import os
 
 @app.route('/', methods=['GET'])
@@ -174,29 +180,64 @@ def steffenson():
     return render_template("steffenson.html", form=form)
 
 
-@app.route('/gaussSimple')
+@app.route('/gaussSimple', methods=['GET', 'POST'])
 def gauss_simple():
-    return render_template("gauss_simple.html")
+    form = matrixAlgorithms()
+    if request.method == 'POST':
+        matrix_a = np.matrix(form.matrix_a.data)
+        b_solution = form.b_solution.data.split(" ")
+        result = eliminacion(matrix_a, b_solution)
+        form.result.data = result
 
-@app.route('/gaussTotalPivot')
+    return render_template("gauss_simple.html", form=form)
+
+
+@app.route('/gaussTotalPivot', methods=['GET', 'POST'])
 def gauss_totalpivot():
-    return render_template("gauss_totalpivot.html")
+    form = matrixAlgorithms()
+    if request.method == 'POST':
+        matrix_a = np.matrix(form.matrix_a.data)
+        instance = totalPivoting(matrix_a)
+        result = instance.elimination()
+        form.result.data = result
+
+    return render_template("gauss_totalpivot.html", form=form)
 
 
-@app.route('/gaussPartialPivot')
+@app.route('/gaussPartialPivot', methods=['GET', 'POST'])
 def gauss_partialpivot():
-    return render_template("gauss_partialpivot.html")
+    form = matrixAlgorithms()
+    if request.method == 'POST':
+        matrix_a = np.matrix(form.matrix_a.data)
+        b_solution = form.b_solution.data.split(" ")
+        result = gaussPivPar(matrix_a, b_solution)
+        form.result.data = result
+
+    return render_template("gauss_partialpivot.html", form=form)
 
 
-@app.route('/luSimpleGaussian')
+@app.route('/luSimpleGaussian', methods=['GET', 'POST'])
 def lu_simple_gaussian():
-    return render_template("lu_simple_gaussian.html")
+    form = matrixAlgorithms()
+    if request.method == 'POST':
+        matrix_a = np.matrix(form.matrix_a.data)
+        n = form.n_max.data
+        result = lu_simple_gauss(matrix_a, int(n))
+        form.result.data = result
+
+    return render_template("lu_simple_gaussian.html", form=form)
 
 
 
-@app.route('/luPivoting')
+@app.route('/luPivoting', methods=['GET', 'POST'])
 def lu_pivoting():
-    return render_template("lu_pivoting.html")
+    form = matrixAlgorithms()
+    if request.method == 'POST':
+        matrix_a = np.matrix(form.matrix_a.data)
+        result = lu_decomposition(matrix_a)
+        form.result.data = result
+
+    return render_template("lu_pivoting.html", form=form)
 
 
 @app.route('/crout', methods=['GET', 'POST'])
@@ -237,14 +278,25 @@ def lucholeskypivoting():
 
     return render_template("cholesky.html", form=form)
 
-@app.route('/jacobi')
+@app.route('/jacobi', methods=['GET', 'POST'])
 def jacobi():
-    return render_template("jacobi.html")
+    form = matrixAlgorithms()
+    if request.method == 'POST':
+        matrix_a = np.matrix(form.matrix_a.data)
+        x_0 = form.x_0.data.split(" ")
+        n_max = form.n_max.data
+        tol = form.tol.data
+        instance = jacobiClass(n_max, tol, x_0, matrix_a)
+        result = instance.jacobi_method()
+        form.result.data = result
+
+    return render_template("jacobi.html", form=form)
 
 
 @app.route('/gaussSeidel')
 def gauss_seidel():
     return render_template("gauss_seidel.html")
+
 
 @app.route('/sor', methods=['GET', 'POST'])
 def sor():

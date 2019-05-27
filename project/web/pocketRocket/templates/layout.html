@@ -73,6 +73,8 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="{{ url_for('gauss_simple') }}">Gauss Elimination</a>
+                        <a class="dropdown-item" href="{{ url_for('gauss_totalpivot') }}">Gauss Total Pivot</a>
+                        <a class="dropdown-item" href="{{ url_for('gauss_partialpivot') }}">Gauss Partial Pivot</a>
                         <a class="dropdown-item" href="{{ url_for('lu_simple_gaussian') }}">LU Factorization</a>
                         <a class="dropdown-item" href="{{ url_for('lu_pivoting') }}">PA=LU Factorization</a>
                         <a class="dropdown-item" href="{{ url_for('lucholeskypivoting') }}">Cholesky</a>

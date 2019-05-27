@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+# Python 2.7 !!
+
+from helpers import *
+import math
+
+def swap_points(x):
+    s = []
+    s = x
+    s.sort()
+    f = s[1]
+    sn = s[2]
+    t = s[0]
+    s[0] = f
+    s[1] = sn
+    s[2] = t
+    return s
+
+
+def func(x):
+    return x**(1/2) * math.cos(x) + 1
+
+def mullers_method(a, b, r, max_steps=10):
+    #print "Using Muller's method to solve %s\n" % func.__doc__
+    x = [a,b,r]
+    for loopCount in range(max_steps):
+        x = swap_points(x)
+        y = func(x[0]), func(x[1]), func(x[2])
+        h1 = x[1]-x[0]
+        h2 = x[0]-x[2]
+        lam = h2/h1
+        c = y[0]
+        a = (lam*y[1] - y[0]*((1.0+lam))+y[2])/(lam*h1**2.0*(1+lam))
+        b = (y[1] - y[0] - a*((h1)**2.0))/(h1)
+        if b > 0:
+            root = x[0] - ((2.0*c)/(b+ (b**2 - 4.0*a*c)**0.5))
+        else:
+            root = x[0] - ((2.0*c)/(b- (b**2 - 4.0*a*c)**0.5))
+        print ("a = %s  b = %s c = %s root = %s " % (str(a),str(b),str(c),str(root)))
+        print ("Current approximation is %s" % str(root))
+        if abs(func(root)) > x[0]:
+            x = [x[1],x[0],root]
+        else:
+            x = [x[2],x[0],root]
+        x = swap_points(x)
+
+if __name__ == '__main__':
+    mullers_method(0.0, 0.5, 1.0)

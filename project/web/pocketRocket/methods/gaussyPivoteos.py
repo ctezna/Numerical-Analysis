@@ -142,7 +142,7 @@ def pivoteo_escalonado(Ab,k, n, s):
 K = [[1, 0, 0], [1, 1, 1], [1, 2/3, 4/9]] 
 s = [1,0,1/2]  
 
-eliminacion_gaussiana_pivoteo(K,s,2)
+print(eliminacion_gaussiana_pivoteo(K,s,1))
 #eliminacion(K,s)
 
 #Ks = [[7, -1, 20, 0], [0, -13.85714286, 5.14285714, 1], [0, 0, 3.74226804, -0.8556701]] 
