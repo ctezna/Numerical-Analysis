@@ -31,7 +31,7 @@ class matrixAlgorithms(FlaskForm):
     calculate = SubmitField('Calculate')
 
 
-class interpolationeAlgorithms(FlaskForm):
+class interpolationAlgorithms(FlaskForm):
     n_max = StringField('n')
     x_points = StringField('x_points')
     y_points = StringField('y_points')

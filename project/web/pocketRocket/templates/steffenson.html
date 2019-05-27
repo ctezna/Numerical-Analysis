@@ -9,5 +9,40 @@
 {% endblock %}
 
 {% block body %}
-
+<body class="text-center">
+        <div class="fluid-container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3">
+                            <br><br>
+                            <legend class="border-bottom mb-4">Steffenson</legend>
+                            <form action="{{ url_for('steffenson') }}" method="post">
+                                {{ form.hidden_tag() }}
+                                <p>
+                                    {{ form.function.label }} {{ form.function(class="form-control",size=32) }}
+                                    <small class="text-muted">
+                                        {{'Use exp for euler function.'}}
+                                    </small><br>
+                                </p>
+                                <p>
+                                    {{ form.x_0.label }} {{ form.x_0(class="form-control",size=32) }}
+                                </p>
+                                <p>
+                                    {{ form.tol.label }}
+                                    {{ form.tol(class="form-control", placeholder="1e-5", size=32)}}
+                                </p>
+                                <p>
+                                    {{ form.n_max.label }}
+                                    {{ form.n_max(class="form-control",size=32)}}
+                                </p>
+                                <p>{{ form.calculate(class="btn btn-primary btn-block") }}</p>
+                            </form>
+                        </div>
+                        <div class="col-md-9 col-sm-9">
+                            <p>
+                                {{ form.result.label }}
+                            </p>
+                            <p>{{ form.result.data}}</p>
+                        </div>
+    </div>
+</body>
 {% endblock %}

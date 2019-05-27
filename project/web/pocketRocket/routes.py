@@ -1,7 +1,7 @@
 from pocketRocket import app
 from flask import render_template, request, redirect, flash, url_for, Markup
 from werkzeug.urls import url_parse
-from pocketRocket.forms import rootAlgorithms, matrixAlgorithms
+from pocketRocket.forms import rootAlgorithms, matrixAlgorithms, interpolationAlgorithms
 from sympy import *
 import numpy as np
 from sympy.parsing.sympy_parser import parse_expr
@@ -11,6 +11,9 @@ from pocketRocket.methods.regla_falsa import regla_falsa
 from pocketRocket.methods.puntoFijo import puntoFijo
 from pocketRocket.methods.newton_raices_secante import secante, newton, multiple_roots
 from pocketRocket.methods.factorizaciondirecta import crout_method, doolittle_method, cholesky
+from pocketRocket.methods.sor import sor_method
+from pocketRocket.methods.steffenson import steff
+from pocketRocket.methods.vander_inter import vandermorde_method
 import os
 
 @app.route('/', methods=['GET'])
@@ -157,9 +160,18 @@ def muller():
     return render_template("muller.html")
 
 
-@app.route('/steffenson')
+@app.route('/steffenson', methods=['GET', 'POST'])
 def steffenson():
-    return render_template("steffenson.html")
+    form = rootAlgorithms()
+    if request.method == 'POST':
+        f_x = form.function.data
+        x_0 = form.x_0.data
+        tol = form.tol.data
+        n = form.n_max.data
+        result = steff(f_x, x_0, tol, n)
+        form.result.data = result
+
+    return render_template("steffenson.html", form=form)
 
 
 @app.route('/gaussSimple')
@@ -180,10 +192,6 @@ def gauss_partialpivot():
 def lu_simple_gaussian():
     return render_template("lu_simple_gaussian.html")
 
-
-@app.route('/pa')
-def pa():
-    return render_template("pa_factorization.html")
 
 
 @app.route('/luPivoting')
@@ -238,9 +246,20 @@ def jacobi():
 def gauss_seidel():
     return render_template("gauss_seidel.html")
 
-@app.route('/sor')
+@app.route('/sor', methods=['GET', 'POST'])
 def sor():
-    return render_template("sor.html")
+    form = matrixAlgorithms()
+    if request.method == 'POST':
+        matrix_a = np.matrix(form.matrix_a.data)
+        matrix_a = np.array(matrix_a)
+        b_solution = form.b_solution.data.split(" ")
+        b_solution = [int(x) for x in b_solution]
+        tol = form.tol.data
+        w_sor = form.w_sor.data
+        result = sor_method(matrix_a, b_solution, tol, w_sor)
+        form.result.data = result
+
+    return render_template("sor.html", form=form)
 
 
 @app.route('/lagrange')
@@ -253,9 +272,16 @@ def newton_interpolation():
     return render_template("newton_interpolation.html")
 
 
-@app.route('/vandermorde')
+@app.route('/vandermorde', methods=['GET', 'POST'])
 def vandermorde():
-    return render_template("vandermorde.html")
+    form = interpolationAlgorithms()
+    if request.method == 'POST':
+        x_points = form.x_points.data.split(" ")
+        y_points = form.y_points.data.split(" ")
+        result = vandermorde_method(x_points, y_points)
+        form.result.data = result
+
+    return render_template("vandermorde.html", form=form)
 
 
 @app.route('/splines')

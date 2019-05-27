@@ -108,4 +108,4 @@ n = 4
 
 #crout(K,n)
 #oolittle_method(K,n)
-cholesky(K,n)
+#cholesky(K,n)
