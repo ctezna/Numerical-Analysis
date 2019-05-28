@@ -305,7 +305,7 @@ def gauss_seidel():
         result = instance.gaussSeidel()
         form.result.data = result
 
-    return render_template("gauss_seidel.html", form=form l)
+    return render_template("gauss_seidel.html", form=form)
 
 
 @app.route('/sor', methods=['GET', 'POST'])

@@ -40,12 +40,80 @@
                                 <p>{{ form.calculate(class="btn btn-primary btn-block") }}</p>
                             </form>
                         </div>
-                        <div class="col-md-9 col-sm-9">
+                    <div class="col-md-9 col-sm-9">
                             <p>
                                 {{ form.result.label }}
                             </p>
-                            <p>{{ form.result.data}}</p>
+                        <div class="table-responsive">
+                            <table id="resultTable" class="table table-sm table-striped table-bordered table-hover table-condensed">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th id="one">Iteration</th>
+                                        <th>Xl</th>
+                                        <th>f(x)</th>
+                                        <th>Xr</th>
+                                        <th id="one">Error</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button class="btn btn-primary" onclick="exportTableToCSV('result_bisection.csv')" style="float:right">Exportar</button>
                         </div>
-        </div>
+                    </div>
     </body>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+
+            // CSV file
+        csvFile = new Blob([csv], {type: "text/csv"});
+
+        // Download link
+        downloadLink = document.createElement("a");
+
+        // File name
+        downloadLink.download = filename;
+
+        // Create a link to the file
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+
+        // Hide download link
+        downloadLink.style.display = "none";
+
+        // Add the link to DOM
+        document.body.appendChild(downloadLink);
+
+        // Click download link
+        downloadLink.click();
+    }
+    function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+        
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+            
+            for (var j = 0; j < cols.length; j++) 
+                row.push(cols[j].innerText.toString().replace(',', ' - ').replace('ñ', 'ni').replace('ó', 'o'));
+            
+            csv.push(row.join(","));        
+        }
+
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    }
+</script>
 {% endblock %}
