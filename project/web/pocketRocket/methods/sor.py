@@ -20,7 +20,8 @@ def sor_method(A, b, tol, w):
 	 		if j != i:
 	 			dominancia += fabs(A[i][j])
 	 	if A[i][i] < dominancia:
-	 		exit('La matriz no converge')
+			return {}
+	 		#exit('La matriz no converge')
 
 	while (normaInfVector(minus(Xk1,Xk)) / float(normaInfVector(Xk1))) > tol:
 		Xk[:] = Xk1[:]
