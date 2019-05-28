@@ -21,6 +21,9 @@ from pocketRocket.methods.totalPivoting import totalPivoting
 from pocketRocket.methods.elimGaussPivPar import gaussPivPar
 from pocketRocket.methods.jacobi import jacobiClass
 from pocketRocket.methods.seidel import seidelClass
+from pocketRocket.methods.muller import muller_method
+from pocketRocket.methods.lagrange_interpolacion import lagrange_method
+from pocketRocket.methods.newton_interpolacion import newton_inter
 import os
 
 @app.route('/', methods=['GET'])
@@ -46,9 +49,11 @@ def bisection():
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
         result = biseccion(parser, inter_a, inter_b, n, tol)
-        form.result.data = result
+        result = zip(*[i for i in result.values()])
+        print (list(result)[0][0])
+        #form.result.data = result
 
-    return render_template("bisection.html", form=form)
+    return render_template("bisection.html", form=form, result=result)
 
 
 @app.route('/incrementalSearch', methods=['GET', 'POST'])
@@ -157,14 +162,26 @@ def multiple_roots():
     return render_template("multiple_roots.html", form=form)
 
 
-@app.route('/aitken')
+@app.route('/aitken', methods=['GET', 'POST'])
 def aitken():
+    form 
     return render_template("aitken.html")
 
 
-@app.route('/muller')
+@app.route('/muller', methods=['GET', 'POST'])
 def muller():
-    return render_template("muller.html")
+    form = rootAlgorithms()
+    if request.method == 'POST':
+        f_x = form.function.data
+        x_0 = form.x_0.data
+        x_1 = form.x_1.data
+        x_2 = form.x_2.data
+        x = symbols('x', real=True)
+        parser = parse_expr(f_x, locals())
+        result = muller_method(x_0, x_1, x_2, parser)
+        form.result.data =  result
+
+    return render_template("muller.html", form=form)
 
 
 @app.route('/steffenson', methods=['GET', 'POST'])
@@ -278,6 +295,7 @@ def lucholeskypivoting():
 
     return render_template("cholesky.html", form=form)
 
+
 @app.route('/jacobi', methods=['GET', 'POST'])
 def jacobi():
     form = matrixAlgorithms()
@@ -324,14 +342,30 @@ def sor():
     return render_temb_solutionplate("sor.html", form=form)
 
 
-@app.route('/lagrange')
+@app.route('/lagrange', methods=['GET', 'POST'])
 def lagrange():
-    return render_template("lagrange.html")
+    form = interpolationAlgorithms()
+    if request.method == 'POST':
+        value = form.value.data
+        x_points = form.x_points.data.split(" ")
+        y_points = form.y_points.data.split(" ")
+        result = lagrange_method(value, x_points, y_points)
+        form.result.data = result
+
+    return render_template("lagrange.html", form=form)
 
 
-@app.route('/newtonPoly')
+@app.route('/newtonPoly', methods=['GET', 'POST'])
 def newton_interpolation():
-    return render_template("newton_interpolation.html")
+    form = interpolationAlgorithms()
+    if request.method == 'POST':
+        n_max = form.n_max.data
+        x_points = form.x_points.data.split(" ")
+        y_points = form.y_points.data.split(" ")
+        result = newton_inter(n_max, x_points, y_points)
+        form.result.data = result
+
+    return render_template("newton_interpolation.html", form=form)
 
 
 @app.route('/vandermorde', methods=['GET', 'POST'])

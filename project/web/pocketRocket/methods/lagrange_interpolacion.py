@@ -7,8 +7,11 @@ Parámetros:
     x -- vector con los x's
     y -- vector los x's evaluados en la función.
 """
-def lagrange(valor,x,y):
-
+def lagrange_method(valor,x,y):
+    pol_list = []
+    valor = float(valor)
+    x = [float(i) for i in x]
+    y = [float(i) for i in y]
     pol = ""
     G = Function('G')
     F = Function('F')
@@ -28,6 +31,8 @@ def lagrange(valor,x,y):
         termino += ")"
         termino = termino.replace(")(",") * (")
         F = parse_expr(termino)
+        pol_str = ("\n L" + str(k) + "(x) = " + termino.replace("((","(").replace("))",")") + " = " + str(expand(F)))
+        pol_list.append(pol_str)
         print("\n L" + str(k) + "(x) = " + termino.replace("((","(").replace("))",")") + " = " + str(expand(F)))
         toReplace = "L" + str(k) + "(x) = "
         pol += "(" + str(expand(F)) + ")*" + str(y[k])
@@ -39,6 +44,7 @@ def lagrange(valor,x,y):
     print (G)
     print ("\nResultado")
     print ("f(",valor,") = ",result)
+    return {'PI': G, 'result': result, 'pol': pol_list}
 
 
-lagrange(4,[-1,0,3,4],[15.5,3,8,1])
+#agrange(4,[-1,0,3,4],[15.5,3,8,1])

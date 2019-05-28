@@ -1,6 +1,7 @@
 # Python3 Program to find root of
 # a function, f(x)
 import math
+from sympy import symbols, sympify
 
 MAX_ITERATIONS = 10000
 
@@ -10,16 +11,23 @@ def f(x):
 
 
 
-def Muller(a, b, c):
+def muller_method(a, b, c, f):
+    a = float(a)
+    b = float(b)
+    c = float(c)
+    x = symbols('x', real=True)
     res = 0
     i = 0
 
     while (True):
         # Calculating various constants
         # required to calculate x3
-        f1 = f(a)
-        f2 = f(b)
-        f3 = f(c)
+        f1 = sympify(f).subs(x, a)
+        f2 = sympify(f).subs(x, b)
+        f3 = sympify(f).subs(x, c)
+        #f1 = f(a)
+        #f2 = f(b)
+        #f3 = f(c)
         d1 = f1 - f3
         d2 = f2 - f3
         h1 = a - c
@@ -55,6 +63,7 @@ def Muller(a, b, c):
 
     if (i <= MAX_ITERATIONS):
         print ("The value of the root is", round(res, 4)) 
+    
+    return {'root': round(res, 4)}
 
-def main(a=0, b = 1, c = 2):
-    Muller(a,b,c)
+#muller_method(0,1,2)

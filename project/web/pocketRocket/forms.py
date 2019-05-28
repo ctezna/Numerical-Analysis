@@ -9,6 +9,7 @@ class rootAlgorithms(FlaskForm):
     g_function = StringField('g(x)')
     x_0 = StringField('X0')
     x_1 = StringField('X1')
+    x_2 = StringField('X2')
     inter_h = StringField('h')
     inter_a = StringField('a')
     inter_b = StringField('b')
