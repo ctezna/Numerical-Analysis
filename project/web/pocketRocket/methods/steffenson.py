@@ -63,7 +63,12 @@ def steff(f,x0,tol,maxiter):
     Two versions of Steffensen's method implemented in the code shown below can be found using the Aitken's delta-squared process for accelerating convergence of a sequence & the genaral equation for Steffensen's method. To compare the two formulas, notice that xn_genral = x_atk - xn_atk . This method assumes starting with a linearly convergent sequence and increases the rate of convergence of that sequence.  
     REF: http://en.wikipedia.org/wiki/Steffensen's_method
     """
+    data = {"N": [], "xi": [], "root": []}
     roots=[]
+    x_list = []
+    cont = 0
+    #x_list = []
+    #n = 0
     for i in range(1,maxiter):
         
         roots.append(x0)
@@ -75,6 +80,8 @@ def steff(f,x0,tol,maxiter):
         x = x1
         x2=x1 + eval(f)
         x_0=x0-((x1-x0)**2/(x2-2*x1+x0))
+        x_list.append(x_0)
+        #print(x_0)
         #print ("x0: %s x1: %s" % (str(evalu), str(evalu2)))
         """
         here is the genaral formula
@@ -86,10 +93,11 @@ def steff(f,x0,tol,maxiter):
         #print '%d: x_old(x0) = %f x_new(x) = %f error = %f percent num of signifficant digits in x: %d' % (i,x0,x,err,sigdigit(err))
         if err<=tol:
             #print 'converged to %e in %d iterations' % (x,i)
-            return {'roots': roots}
+            return {'N': [i for i in range(len(roots))], 'xi':x_list, 'roots': roots}
         x0=x_0
     #print 'failed to converge in %d iterations' % maxiter
-    return {'roots': roots}
+
+    return {'N': [i for i in range(len(roots))], 'xi':x_list, 'roots': roots}
 
 #roots=steff(f,.7)
 #print (roots)

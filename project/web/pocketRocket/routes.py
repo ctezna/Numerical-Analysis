@@ -24,6 +24,7 @@ from pocketRocket.methods.seidel import seidelClass
 from pocketRocket.methods.muller import muller_method
 from pocketRocket.methods.lagrange_interpolacion import lagrange_method
 from pocketRocket.methods.newton_interpolacion import newton_inter
+from pocketRocket.methods.secante import secante_method
 import os
 
 @app.route('/', methods=['GET'])
@@ -68,10 +69,9 @@ def incremental_search():
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
         result = busqueda_incremental(parser, x_0, h, n, tol)
-        result = zip(*[i for i in result.values()])
-        form.result.data = result
+        #form.result.data = result
 
-    return render_template("incremental_search.html", form=form, result=result)
+    return render_template("incremental_search.html", form=form)
 
 
 @app.route('/falsePosition', methods=['GET', 'POST'])
@@ -206,9 +206,10 @@ def steffenson():
         tol = form.tol.data
         n = form.n_max.data
         result = steff(f_x, x_0, tol, n)
-        form.result.data = result
+        #form.result.data = result
+        result = zip(*[i for i in result.values()])
 
-    return render_template("steffenson.html", form=form)
+    return render_template("steffenson.html", form=form, result=result)
 
 
 @app.route('/gaussSimple', methods=['GET', 'POST'])
