@@ -67,9 +67,10 @@ def incremental_search():
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
         result = busqueda_incremental(parser, x_0, h, n, tol)
+        result = zip(*[i for i in result.values()])
         form.result.data = result
 
-    return render_template("incremental_search.html", form=form)
+    return render_template("incremental_search.html", form=form, result=result)
 
 
 @app.route('/falsePosition', methods=['GET', 'POST'])
@@ -84,9 +85,10 @@ def false_position():
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
         result = regla_falsa(parser, x_0, x_1, tol, n)
+        result = zip(*[i for i in result.values()])
         form.result.data = result
 
-    return render_template("false_position.html", form=form)
+    return render_template("false_position.html", form=form, result=result)
 
 
 @app.route('/fixedPoint', methods=['GET', 'POST'])
@@ -102,9 +104,10 @@ def fixed_point():
         parser_f = parse_expr(f_x, locals())
         parser_g = parse_expr(g_x, locals())
         result = puntoFijo(parser_f, parser_g, x_0, tol, n)
+        result = zip(*[i for i in result.values()])
         form.result.data = result
 
-    return render_template("fixed_point.html", form=form)
+    return render_template("fixed_point.html", form=form, result=result)
 
 
 @app.route('/secant', methods=['GET', 'POST'])
@@ -119,9 +122,10 @@ def secant():
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
         result = secante(x_0, x_1, tol, n, parser)
+        result = zip(*[i for i in result.values()])
         form.result.data = result
 
-    return render_template("secant.html", form=form)
+    return render_template("secant.html", form=form, result=result)
 
 
 @app.route('/newton', methods=['GET', 'POST'])
@@ -137,9 +141,10 @@ def newton():
         parser_f = parse_expr(f_x, locals())
         parser_f_derivate = parse_expr(f_x_derivate, locals())
         result = newton_method(x_n, tol, n, parser_f, parser_f_derivate)
+        result = zip(*[i for i in result.values()])
         form.result.data = result
 
-    return render_template("newton.html", form=form)
+    return render_template("newton.html", form=form, result=result)
 
 
 @app.route('/multipleRoots', methods=['GET', 'POST'])
@@ -156,14 +161,15 @@ def multiple_roots():
         parser_f_derivate = parse_expr(f_x_derivate, locals())
         parser_f_derivate_2 = parse_expr(f_x_derivate_2, locals())
         result = multiple_roots_method(x_n, tol, parser_f, parser_f_derivate, parser_f_derivate_2)
+        result = zip(*[i for i in result.values()])
         form.result.data = result
 
-    return render_template("multiple_roots.html", form=form)
+    return render_template("multiple_roots.html", form=form, result=result)
 
 
 @app.route('/aitken', methods=['GET', 'POST'])
 def aitken():
-    form 
+    pass
     return render_template("aitken.html")
 
 
