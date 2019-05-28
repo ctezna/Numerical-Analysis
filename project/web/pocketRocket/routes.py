@@ -50,10 +50,13 @@ def bisection():
         parser = parse_expr(f_x, locals())
         result = biseccion(parser, inter_a, inter_b, n, tol)
         result = zip(*[i for i in result.values()])
-        print (list(result)[0][0])
+        result = list(result)
+        for i in result:
+            print(i[0])
         #form.result.data = result
+        return render_template("bisection.html", form=form, result=result)
 
-    return render_template("bisection.html", form=form, result=result)
+    return render_template("bisection.html", form=form)
 
 
 @app.route('/incrementalSearch', methods=['GET', 'POST'])

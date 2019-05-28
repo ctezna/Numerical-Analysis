@@ -13,8 +13,8 @@ import numpy as np
 
 #Metodo de Biseccion
 def biseccion(f, a, b, nmax, tol):
-    a = int(a)
-    b = int(b)
+    a = float(a)
+    b = float(b)
     nmax = float(nmax)
     tol = float(tol)
     #definicion de variables
@@ -32,7 +32,7 @@ def biseccion(f, a, b, nmax, tol):
     print("\n-------------------------------------------------------")
     print("iteracion | xi | xs | fcentro |error abs")
     print(cont,"       |  ", a,"|",b,"  |",fcentro,"|",err)
-    data = {'iter': [cont], 'xi': [a], 'xs': [b], 'fcentro': [fcentro], 'error': [err]}
+    data = {'iter': [cont], 'xi': [a], 'xs': [b], 'centro': [centro], 'fcentro': [fcentro],'error': [err]}
     #mientras no exeda el numero de iteraciones o el error no exeda la tolerancia, siga buscando una raiz
     while ((err >= tol) and (cont <= nmax)):
         if fant*fcentro < 0:
@@ -49,9 +49,10 @@ def biseccion(f, a, b, nmax, tol):
         data['iter'].append(cont)
         data['xi'].append(a)
         data['xs'].append(b)
+        data['centro'].append(centro)
         data['fcentro'].append(fcentro)
         data['error'].append(err)
-        print(cont, "|", a,"|",b,"|",fcentro,"|",err)
+        print(cont, "|", a,"|",b,"|",centro,"|",err)
 
     if(err < tol):
         print("\n err absoluto:",err)

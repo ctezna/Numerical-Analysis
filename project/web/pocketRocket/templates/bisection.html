@@ -50,19 +50,25 @@
                                     <tr>
                                         <th id="one">Iteration</th>
                                         <th>Xl</th>
-                                        <th>f(x)</th>
+                                        <th>Xi</th>
                                         <th>Xr</th>
+                                        <th>f(xi)</th>
                                         <th id="one">Error</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    {% if result %}
+                                        {% for i in result %}
+                                            <tr>
+                                                <td>{{i[0]}}</td>
+                                                <td>{{"%.4f"|format(i[1])}}</td>
+                                                <td>{{i[3]}}</td>
+                                                <td>{{"%.4f"|format(i[2])}}</td>
+                                                <td>{{i[4]}}</td>
+                                                <td>{{i[5]}}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endif %}
                                 </tbody>
                             </table>
                             <button class="btn btn-primary" onclick="exportTableToCSV('result_bisection.csv')" style="float:right">Exportar</button>
@@ -116,4 +122,7 @@
         downloadCSV(csv.join("\n"), filename);
     }
 </script>
+
+
+
 {% endblock %}
