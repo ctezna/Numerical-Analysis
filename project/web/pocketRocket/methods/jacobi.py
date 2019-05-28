@@ -45,7 +45,11 @@ class jacobiClass():
     
 
     def jacobi_method(self):
-        data = {'n': [], 'x0': [], 'x1': [], 'x2': [], 'x3': [], 'err': []}
+        data = {'n': [], 'err': []}
+        for i in range(len(self.totalResult)):
+            label = 'x%s' % str(i)
+            data[label] = []
+            
         major = []
         iters = []
         cont = 0

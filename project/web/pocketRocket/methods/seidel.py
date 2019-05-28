@@ -17,6 +17,7 @@ class seidelClass():
     def __init__(self, niter, tol, x0, a):
         self.niter = int(niter)
         self.tol = float(tol)
+        print(x0)
         self.x0 = [int(x) for x in x0]
         self.a = a.tolist()
         self.n = len(self.a)
@@ -51,7 +52,12 @@ class seidelClass():
     
 
     def gaussSeidel(self):
-        data = {'n': [], 'x0': [], 'x1': [], 'x2': [], 'x3': [], 'err': []}
+        data = {'n': [], 'err': []}
+
+        for i in range(len(self.totalResult)):
+            label = 'x%s' % str(i)
+            data[label] = []
+            
         iters = []
         major = []
         cont = 0
