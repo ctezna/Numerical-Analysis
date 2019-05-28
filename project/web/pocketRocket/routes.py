@@ -20,6 +20,7 @@ from pocketRocket.methods.elimGaussSimple import eliminacion
 from pocketRocket.methods.totalPivoting import totalPivoting
 from pocketRocket.methods.elimGaussPivPar import gaussPivPar
 from pocketRocket.methods.jacobi import jacobiClass
+from pocketRocket.methods.seidel import seidelClass
 import os
 
 @app.route('/', methods=['GET'])
@@ -228,7 +229,6 @@ def lu_simple_gaussian():
     return render_template("lu_simple_gaussian.html", form=form)
 
 
-
 @app.route('/luPivoting', methods=['GET', 'POST'])
 def lu_pivoting():
     form = matrixAlgorithms()
@@ -293,9 +293,19 @@ def jacobi():
     return render_template("jacobi.html", form=form)
 
 
-@app.route('/gaussSeidel')
+@app.route('/gaussSeidel', methods=['GET', 'POST'])
 def gauss_seidel():
-    return render_template("gauss_seidel.html")
+    form = matrixAlgorithms()
+    if request.method == 'POST':
+        matrix_a = np.matrix(form.matrix_a.data)
+        x_0 = form.x_0.data.split(" ")
+        n_max = form.n_max.data
+        tol = form.tol.data
+        instance = seidelClass(n_max, tol, x_0, matrix_a)
+        result = instance.gaussSeidel()
+        form.result.data = result
+
+    return render_template("gauss_seidel.html", form=form l)
 
 
 @app.route('/sor', methods=['GET', 'POST'])
