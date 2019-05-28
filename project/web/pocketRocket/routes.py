@@ -9,7 +9,7 @@ from pocketRocket.methods.bincremental import busqueda_incremental
 from pocketRocket.methods.biseccion import biseccion
 from pocketRocket.methods.regla_falsa import regla_falsa
 from pocketRocket.methods.puntoFijo import puntoFijo
-from pocketRocket.methods.newton_raices_secante import secante, newton, multiple_roots
+from pocketRocket.methods.newton_raices_secante import secante, newton_method, multiple_roots_method
 from pocketRocket.methods.factorizaciondirecta import crout_method, doolittle_method, cholesky
 from pocketRocket.methods.sor import sor_method
 from pocketRocket.methods.steffenson import steff
@@ -50,7 +50,6 @@ def bisection():
         parser = parse_expr(f_x, locals())
         result = biseccion(parser, inter_a, inter_b, n, tol)
         result = zip(*[i for i in result.values()])
-        print (list(result)[0][0])
         #form.result.data = result
 
     return render_template("bisection.html", form=form, result=result)
@@ -137,7 +136,7 @@ def newton():
         x = symbols('x', real=True)
         parser_f = parse_expr(f_x, locals())
         parser_f_derivate = parse_expr(f_x_derivate, locals())
-        result = newton(x_n, tol, n, f_x, f_x_derivate)
+        result = newton_method(x_n, tol, n, parser_f, parser_f_derivate)
         form.result.data = result
 
     return render_template("newton.html", form=form)
@@ -156,7 +155,7 @@ def multiple_roots():
         parser_f = parse_expr(f_x, locals())
         parser_f_derivate = parse_expr(f_x_derivate, locals())
         parser_f_derivate_2 = parse_expr(f_x_derivate_2, locals())
-        result = multipleRoots(x_n, tol, f_x, f_x_derivate, f_x_derivate_2)
+        result = multiple_roots_method(x_n, tol, parser_f, parser_f_derivate, parser_f_derivate_2)
         form.result.data = result
 
     return render_template("multiple_roots.html", form=form)
