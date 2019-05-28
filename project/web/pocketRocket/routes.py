@@ -215,6 +215,7 @@ def steffenson():
 @app.route('/gaussSimple', methods=['GET', 'POST'])
 def gauss_simple():
     form = matrixAlgorithms()
+    result=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         b_solution = form.b_solution.data.split(" ")
@@ -228,6 +229,7 @@ def gauss_simple():
 @app.route('/gaussTotalPivot', methods=['GET', 'POST'])
 def gauss_totalpivot():
     form = matrixAlgorithms()
+    result=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         instance = totalPivoting(matrix_a)
@@ -241,6 +243,7 @@ def gauss_totalpivot():
 @app.route('/gaussPartialPivot', methods=['GET', 'POST'])
 def gauss_partialpivot():
     form = matrixAlgorithms()
+    result=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         b_solution = form.b_solution.data.split(" ")
@@ -254,6 +257,7 @@ def gauss_partialpivot():
 @app.route('/luSimpleGaussian', methods=['GET', 'POST'])
 def lu_simple_gaussian():
     form = matrixAlgorithms()
+    result=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         n = form.n_max.data
@@ -268,6 +272,7 @@ def lu_simple_gaussian():
 @app.route('/luPivoting', methods=['GET', 'POST'])
 def lu_pivoting():
     form = matrixAlgorithms()
+    result=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         result = lu_decomposition(matrix_a)
@@ -279,6 +284,7 @@ def lu_pivoting():
 @app.route('/crout', methods=['GET', 'POST'])
 def crout():
     form = matrixAlgorithms()
+    result=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         matrix_a = np.array(matrix_a)
@@ -293,6 +299,7 @@ def crout():
 @app.route('/doolittle', methods=['GET', 'POST'])
 def doolittle():
     form = matrixAlgorithms()
+    result=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         matrix_a = np.array(matrix_a)
@@ -307,6 +314,7 @@ def doolittle():
 @app.route('/cholesky', methods=['GET', 'POST'])
 def lucholeskypivoting():
     form = matrixAlgorithms()
+    result=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         matrix_a = np.array(matrix_a)
@@ -321,6 +329,7 @@ def lucholeskypivoting():
 @app.route('/jacobi', methods=['GET', 'POST'])
 def jacobi():
     form = matrixAlgorithms()
+    result=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         x_0 = form.x_0.data.split(" ")
@@ -330,6 +339,7 @@ def jacobi():
         result = instance.jacobi_method()
         form.result.data = result
         result = zip(*[i for i in result.values()])
+        print(result)
 
     return render_template("jacobi.html", form=form, result=result)
 
@@ -337,6 +347,7 @@ def jacobi():
 @app.route('/gaussSeidel', methods=['GET', 'POST'])
 def gauss_seidel():
     form = matrixAlgorithms()
+    result=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         x_0 = form.x_0.data.split(" ")
@@ -353,6 +364,7 @@ def gauss_seidel():
 @app.route('/sor', methods=['GET', 'POST'])
 def sor():
     form = matrixAlgorithms()
+    result=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         matrix_a = np.array(matrix_a)
@@ -370,6 +382,7 @@ def sor():
 @app.route('/lagrange', methods=['GET', 'POST'])
 def lagrange():
     form = interpolationAlgorithms()
+    result=[]
     if request.method == 'POST':
         value = form.value.data
         x_points = form.x_points.data.split(" ")
@@ -383,6 +396,7 @@ def lagrange():
 @app.route('/newtonPoly', methods=['GET', 'POST'])
 def newton_interpolation():
     form = interpolationAlgorithms()
+    result=[]
     if request.method == 'POST':
         n_max = form.n_max.data
         x_points = form.x_points.data.split(" ")
@@ -396,6 +410,7 @@ def newton_interpolation():
 @app.route('/vandermorde', methods=['GET', 'POST'])
 def vandermorde():
     form = interpolationAlgorithms()
+    result=[]
     if request.method == 'POST':
         x_points = form.x_points.data.split(" ")
         y_points = form.y_points.data.split(" ")

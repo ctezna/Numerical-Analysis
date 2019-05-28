@@ -43,9 +43,82 @@
                             <p>
                                 {{ form.result.label }}
                             </p>
-                            <p>{{ form.result.data}}</p>
+                            <div class="table-responsive">
+                                    <table id="resultTable" class="table table-sm table-striped table-bordered table-hover table-condensed">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th id="one">Iteration</th>
+                                                <th>x0</th>
+                                                <th>x1</th>
+                                                <th>x2</th>
+                                                <th>x3</th>
+                                                <th>Error</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if result %}
+                                                {% for i in result %}
+                                                    <tr>
+                                                        <td>{{i[0]}}</td>
+                                                        <td>{{i[1]}}</td>
+                                                        <td>{{i[2]}}</td>
+                                                        <td>{{i[3]}}</td>
+                                                        <td>{{i[4]}}</td>
+                                                        <td>{{i[5]}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                    <button class="btn btn-primary" onclick="exportTableToCSV('result_bisection.csv')" style="float:right">Exportar</button>
+                                </div>
                         </div>
-            </div>
-    </div>
-</body>
+                </div>
+        </div>
+    </body>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        function downloadCSV(csv, filename) {
+            var csvFile;
+            var downloadLink;
+    
+                // CSV file
+            csvFile = new Blob([csv], {type: "text/csv"});
+    
+            // Download link
+            downloadLink = document.createElement("a");
+    
+            // File name
+            downloadLink.download = filename;
+    
+            // Create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+    
+            // Hide download link
+            downloadLink.style.display = "none";
+    
+            // Add the link to DOM
+            document.body.appendChild(downloadLink);
+    
+            // Click download link
+            downloadLink.click();
+        }
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("table tr");
+            
+            for (var i = 0; i < rows.length; i++) {
+                var row = [], cols = rows[i].querySelectorAll("td, th");
+                
+                for (var j = 0; j < cols.length; j++) 
+                    row.push(cols[j].innerText.toString().replace(',', ' - ').replace('ñ', 'ni').replace('ó', 'o'));
+                
+                csv.push(row.join(","));        
+            }
+    
+            // Download CSV file
+            downloadCSV(csv.join("\n"), filename);
+        }
+    </script>
 {% endblock %}
