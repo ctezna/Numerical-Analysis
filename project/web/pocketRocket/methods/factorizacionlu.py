@@ -4,6 +4,7 @@ import numpy as np
 #K = [[4,-2,1],[20,-7,12],[-8,13,17]]
 
 def lu_simple_gauss(A, m):
+    data = {'etapas': [], 'L': [], 'U':[]}
     matriz = np.zeros([m,m])
     u = np.zeros([m,m])
     l = np.zeros([m,m])
@@ -17,7 +18,7 @@ def lu_simple_gauss(A, m):
     #operaciones para hacer ceros debajo de la diagonal principal
 
     for k in range (0,m):
-        
+        data['etapas'].append(k)
         for r in range(0,m):
             if (k == r):
                 l[k,r]=1
@@ -27,8 +28,10 @@ def lu_simple_gauss(A, m):
                 for c in range (0,m):
                     matriz[r,c]=matriz[r,c]-(factor*matriz[k,c])
                     u[r,c]=matriz[r,c]
+        data['L'].append(l)
+        data['U'].append(u)
         
-    return {'L':l, 'U':u}     
+    return data    
         
 
 

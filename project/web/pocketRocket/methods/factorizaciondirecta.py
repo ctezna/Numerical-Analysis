@@ -4,6 +4,7 @@ import numpy as np
 #                   PYTHON 3.7 !!!
 
 def cholesky(A,n):
+    data = {'etapas': [], 'L': [], 'U':[]}
     L,U = inicializa(n,2)
 
     for k in range(n):
@@ -23,18 +24,23 @@ def cholesky(A,n):
                 suma3+= L[k][p]*U[p][j]
             U[k][j]= (A[k][j]-suma3)/(L[k][k])
         print("\nEtapa ",  k, ":" )
+        data['etapas'].append(k)
         print("\nMatriz L")
         print(L)
+        data['L'].append(L)
         print("\nMatriz U")
+        data['U'].append(U)
         print(U)
     print ("\n\n\n Prueba: (analiza con la matriz ingresada)\n", np.dot(L,U))
-    return {'L': L, 'U': U}
+    return data
 
 
 def crout_method(A,n):
+    data = {'etapas': [], 'L': [], 'U':[]}
     L,U = inicializa(n,1)
 
     for k in range(n):
+        data['etapas'].append(k)
         suma1 = 0.0
         for p in range(0,k):
             suma1 += L[k][p]*U[p][k]
@@ -50,9 +56,13 @@ def crout_method(A,n):
                 suma3 += L[k][p]*U[p][j]
             U[k][j]= (A[k][j]-suma3)/(L[k][k])
 
-    return {'L': L, 'U': U}
+        data['L'].append(L)
+        data['U'].append(U)
+
+    return data
 
 def doolittle_method(A,n):
+    data = {'etapas': [], 'L': [], 'U':[]}
     L,U = inicializa(n,0)
     for k in range(n):
         suma1 = 0.0
@@ -71,12 +81,16 @@ def doolittle_method(A,n):
                 suma3 += L[k][p]*U[p][j]
             U[k][j]= (A[k][j]-suma3)/(L[k][k])
         print("\nEtapa ",  k )
+        data['etapas'].append(k)
         print("\nL:\n")
         print(L)
         print("\nU:\n")
         print(U)#imprimir L  U y k etapa
+        data['L'].append(L)
+        data['U'].append(U)
     print ("\n\n\n Prueba: (analiza con la matriz ingresada)\n", np.dot(L,U))
-    return {'L': L,'U': U}
+
+    return data
 #Doolittle == 0, Crout == 1, Cholesky == 2
 def inicializa(n,metodo):
     L , U = [] , []

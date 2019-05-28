@@ -2,18 +2,21 @@ import sys
 import numpy as npy
 
 def eliminacion(A,b):
+    etapas = []
+    matriz_lista = []
     b = [float(x) for x in b]
     n = len(A)
     Ab = forma_matriz_aumentada(A,b)
-    print (Ab)
     for k in range(1,n):
         print("Etapa ",k)
+        etapas.append(k)
         for i in range(k,n):
             multiplicador = Ab[i][k-1]/float(Ab[k-1][k-1])
             for j in range(k,n+2):
                 Ab[i][j-1] = Ab[i][j-1] - multiplicador * Ab[k-1][j-1]
-        #print ("Matriz aumentada \n",npy.array(Ab))
-    return Ab
+        matriz_lista.append(Ab)
+        print ("Matriz aumentada \n",npy.array(Ab))
+    return {'etapas':etapas, 'matrix': matriz_lista}
 
 def forma_matriz_aumentada(A,b):
     new_A = A.tolist()

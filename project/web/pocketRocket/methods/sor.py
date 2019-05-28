@@ -5,7 +5,8 @@ def sor_method(A, b, tol, w):
 	n = len(A)
 	Xk = [0.0]*n
 	sumation = 0.0
-	data = {'Xk1': [], 'err': []}
+	cont = 0
+	data = {'N': [], 'Xk1': [], 'err': []}
 	for i in range(n):
 		if A[i][i] == 0:
 			exit('Los elementos A[i][i] deben ser diferentes de 0')
@@ -30,6 +31,8 @@ def sor_method(A, b, tol, w):
 			Xk1[i] = (float(w)/A[i][i])*(b[i] - sumation1 - sumation2) + (1-w)*Xk[i]
 		data['Xk1'].append(Xk1)
 		data['err'].append(err)
+		data['N'].append(cont)
+		cont += 1
 
 	return data
 

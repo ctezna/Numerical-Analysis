@@ -93,7 +93,7 @@ class totalPivoting():
             if(math.fabs(x[i]) < 10**-15):
                 x[i] = 0   
 
-        return {'solution': x}
+        return {'solution': x, 'matriz': self.a}
             
 
 

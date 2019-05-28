@@ -220,8 +220,9 @@ def gauss_simple():
         b_solution = form.b_solution.data.split(" ")
         result = eliminacion(matrix_a, b_solution)
         form.result.data = result
+        result = zip(*[i for i in result.values()])
 
-    return render_template("gauss_simple.html", form=form)
+    return render_template("gauss_simple.html", form=form, result=result)
 
 
 @app.route('/gaussTotalPivot', methods=['GET', 'POST'])
@@ -232,8 +233,9 @@ def gauss_totalpivot():
         instance = totalPivoting(matrix_a)
         result = instance.elimination()
         form.result.data = result
+        result = zip(*[i for i in result.values()])
 
-    return render_template("gauss_totalpivot.html", form=form)
+    return render_template("gauss_totalpivot.html", form=form, result=result)
 
 
 @app.route('/gaussPartialPivot', methods=['GET', 'POST'])
@@ -244,8 +246,9 @@ def gauss_partialpivot():
         b_solution = form.b_solution.data.split(" ")
         result = gaussPivPar(matrix_a, b_solution)
         form.result.data = result
+        result = zip(*[i for i in result.values()])
 
-    return render_template("gauss_partialpivot.html", form=form)
+    return render_template("gauss_partialpivot.html", form=form, result=result)
 
 
 @app.route('/luSimpleGaussian', methods=['GET', 'POST'])
@@ -256,10 +259,12 @@ def lu_simple_gaussian():
         n = form.n_max.data
         result = lu_simple_gauss(matrix_a, int(n))
         form.result.data = result
+        result = zip(*[i for i in result.values()])
 
-    return render_template("lu_simple_gaussian.html", form=form)
+    return render_template("lu_simple_gaussian.html", form=form, result=result)
 
 
+#Falta por implementar
 @app.route('/luPivoting', methods=['GET', 'POST'])
 def lu_pivoting():
     form = matrixAlgorithms()
@@ -280,8 +285,9 @@ def crout():
         n = form.n_max.data
         result = crout_method(matrix_a, int(n))
         form.result.data = result
+        result = zip(*[i for i in result.values()])
 
-    return render_template("crout.html", form=form)
+    return render_template("crout.html", form=form, result=result)
 
 
 @app.route('/doolittle', methods=['GET', 'POST'])
@@ -293,8 +299,9 @@ def doolittle():
         n = form.n_max.data
         result = doolittle_method(matrix_a, int(n))
         form.result.data = result
+        result = zip(*[i for i in result.values()])
 
-    return render_template("doolittle.html", form=form)
+    return render_template("doolittle.html", form=form, result=result)
 
 
 @app.route('/cholesky', methods=['GET', 'POST'])
@@ -306,8 +313,9 @@ def lucholeskypivoting():
         n = form.n_max.data
         result = cholesky(matrix_a, int(n))
         form.result.data = result
+        result = zip(*[i for i in result.values()])
 
-    return render_template("cholesky.html", form=form)
+    return render_template("cholesky.html", form=form, result=result)
 
 
 @app.route('/jacobi', methods=['GET', 'POST'])
@@ -321,8 +329,9 @@ def jacobi():
         instance = jacobiClass(n_max, tol, x_0, matrix_a)
         result = instance.jacobi_method()
         form.result.data = result
+        result = zip(*[i for i in result.values()])
 
-    return render_template("jacobi.html", form=form)
+    return render_template("jacobi.html", form=form, result=result)
 
 
 @app.route('/gaussSeidel', methods=['GET', 'POST'])
@@ -336,8 +345,9 @@ def gauss_seidel():
         instance = seidelClass(n_max, tol, x_0, matrix_a)
         result = instance.gaussSeidel()
         form.result.data = result
+        result = zip(*[i for i in result.values()])
 
-    return render_template("gauss_seidel.html", form=form)
+    return render_template("gauss_seidel.html", form=form, result=result)
 
 
 @app.route('/sor', methods=['GET', 'POST'])
@@ -352,8 +362,9 @@ def sor():
         w_sor = form.w_sor.data
         result = sor_method(matrix_a, b_solution, tol, w_sor)
         form.result.data = result
+        result = zip(*[i for i in result.values()])
 
-    return render_temb_solutionplate("sor.html", form=form)
+    return render_template("sor.html", form=form, result=result)
 
 
 @app.route('/lagrange', methods=['GET', 'POST'])
