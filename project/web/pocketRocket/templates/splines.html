@@ -9,5 +9,32 @@
 {% endblock %}
 
 {% block body %}
-
+<body class="text-center">
+    <div class="fluid-container">
+            <div class="row">
+                    <div class="col-md-3 col-sm-3">
+                        <br><br>
+                        <legend class="border-bottom mb-4">Splines</legend>
+                        <form action="{{ url_for('splines') }}" method="post">
+                            {{ form.hidden_tag() }}
+                            <p>
+                                {{ form.x_points.label }} 
+                                {{ form.x_points(class="form-control",size=32) }}
+                            </p>
+                            <p>
+                                {{ form.y_points.label }} 
+                                {{ form.y_points(class="form-control",size=32) }}
+                            </p>
+                            <p>{{ form.calculate(class="btn btn-primary btn-block") }}</p>
+                        </form>
+                    </div>
+                    <div class="col-md-9 col-sm-9">
+                        <p>
+                            {{ form.result.label }}
+                        </p>
+                        <p>{{ form.result.data}}</p>
+                    </div>
+            </div>
+    </div>
+</body>
 {% endblock %}

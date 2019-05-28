@@ -321,7 +321,7 @@ def sor():
         result = sor_method(matrix_a, b_solution, tol, w_sor)
         form.result.data = result
 
-    return render_template("sor.html", form=form)
+    return render_temb_solutionplate("sor.html", form=form)
 
 
 @app.route('/lagrange')
