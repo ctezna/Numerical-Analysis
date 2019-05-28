@@ -42,15 +42,16 @@ def absolute_err(x, x_n):
     return abs(x_n - x)
 
 
-def multiple_roots(x_n, tol, f, f_derivate_1, f_derivate_2):   
+def multiple_roots_method(x_n, tol, f, f_derivate_1, f_derivate_2):   
     x = symbols('x', real=True)
     tol = float(tol)
     x_n = float(x_n)
     f_x = sympify(f).subs(x, x_n)
     f_x_1 = sympify(f_derivate_1).subs(x, x_n)
     f_x_2 = sympify(f_derivate_2).subs(x, x_n)
-    data = {"Xn": [x_n], "f(x)": [f_x], "f(x)^1": [f_x_1], "f(x)^2": [f_x_2], "ER": [0], "EA": [0]}
+    data = {"N": [0], "Xn": [x_n], "f(x)": [f_x], "f(x)^1": [f_x_1], "f(x)^2": [f_x_2], "ER": [0], "EA": [0]}
     rel_err = 100000
+    cont = 1
 
     while f(x_n) != 0 and rel_err > tol:
         x_past = x_n
@@ -60,28 +61,35 @@ def multiple_roots(x_n, tol, f, f_derivate_1, f_derivate_2):
         f_x_2 = sympify(f_derivate_2).subs(x, x_n)
         abs_err = absolute_err(x_past, x_n)
         rel_err = relative_err(x_past, x_n)
+
+        data['N'].append(count)
         data["Xn"].append(x_n)
         data["f(x)"].append(f_x)
         data["f(x)^1"].append(f_x_1)
         data["f(x)^2"].append(f_x_2)
         data["ER"].append(rel_err)
         data["EA"].append(abs_err)
+        count += 1
 
     return data
 
-def newton(x_n, tol, n, f, f_derivate_1):
+def newton_method(x_n, tol, n, f, f_derivate_1):
     print("\n NEWTON")
-    x = symbols(x, real=True)
-    f_x = sympify(f).subs(x, x_n)
+    tol = float(tol)
+    x_n = float(x_n)
+    n = int(n)
+    x = symbols('x', real=True)
+    f = sympify(f)
+    f_x = f.subs(x, x_n)
     f_x_1 = sympify(f_derivate_1).subs(x, x_n)
-    data = {"Xn": [x_n], "f(x)": [f_x], "f(x)^1": [f_x_1], "ER": [0], "EA": [0]}
+    data = {"N": [0], "Xn": [x_n], "f(x)": [f_x], "f(x)^1": [f_x_1], "ER": [0], "EA": [0]}
     rel_err = 10000
     count = 1
     
-    while f(x_n) != 0 and count < n and rel_err > tol:
+    while f.subs(x, x_n) != 0 and count < n and rel_err > tol:
         x_past = x_n
         x_n = x_future_newton(f_x, f_x_1, x_n) #xn+1
-        f_x = sympify(f).subs(x. x_n)
+        f_x = sympify(f).subs(x, x_n)
         f_x_1 = sympify(f_derivate_1).subs(x, x_n)
         abs_err = absolute_err(x_past, x_n)
         rel_err = relative_err(x_past, x_n)
@@ -90,8 +98,8 @@ def newton(x_n, tol, n, f, f_derivate_1):
         data["f(x)^1"].append(f_x_1)
         data["ER"].append(rel_err)
         data["EA"].append(abs_err)
+        data['N'].append(count)
         count += 1
-        print("iteracion:",count,"valor ampliado xi:",x_n)
 
     return data
 
@@ -106,7 +114,7 @@ def secante(x_0, x_1, tol, n, f):
     x = symbols('x', real=True)
     f_x_0 = sympify(f).subs(x, x_0)
     f_x_1 = sympify(f).subs(x, x_1)
-    data = {"Xn": [x_0, x_1], "f(x)": [f_x_0, f_x_1], "ER": [0,0], "EA": [0,0]}
+    data = {"N": [], "Xn": [x_0, x_1], "f(x)": [f_x_0, f_x_1], "ER": [0,0], "EA": [0,0]}
     rel_err = 100000
     count = 1
     while sympify(f).subs(x, x_1) != 0 and count < n and rel_err > tol:
@@ -116,6 +124,7 @@ def secante(x_0, x_1, tol, n, f):
         f_x = sympify(f).subs(x, x_1)
         abs_err = absolute_err(x_0, x_1)
         rel_err = relative_err(x_0, x_1)
+        data["N"].append(count)
         data["Xn"].append(x_1)
         data["f(x)"].append(f_x)
         data["ER"].append(rel_err)
