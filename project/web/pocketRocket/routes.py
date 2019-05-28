@@ -40,6 +40,7 @@ def grapher():
 @app.route('/bisection', methods=['GET', 'POST'])
 def bisection():
     form = rootAlgorithms()
+    result = []
     if request.method == 'POST':
         inter_a = form.inter_a.data
         inter_b = form.inter_b.data
@@ -76,6 +77,7 @@ def incremental_search():
 @app.route('/falsePosition', methods=['GET', 'POST'])
 def false_position():
     form = rootAlgorithms()
+    result = []
     if request.method == 'POST':
         f_x = form.function.data
         x_0 = form.x_0.data
@@ -94,6 +96,7 @@ def false_position():
 @app.route('/fixedPoint', methods=['GET', 'POST'])
 def fixed_point():
     form = rootAlgorithms()
+    result = []
     if request.method == 'POST':
         f_x = form.function.data
         g_x = form.function_g.data
@@ -113,6 +116,7 @@ def fixed_point():
 @app.route('/secant', methods=['GET', 'POST'])
 def secant():
     form = rootAlgorithms()
+    result = []
     if request.method == 'POST':
         f_x = form.function.data
         x_0 = form.x_0.data
@@ -131,6 +135,7 @@ def secant():
 @app.route('/newton', methods=['GET', 'POST'])
 def newton():
     form = rootAlgorithms()
+    result = []
     if request.method == 'POST':
         f_x = form.function.data
         f_x_derivate = form.first_derivate.data
@@ -150,6 +155,7 @@ def newton():
 @app.route('/multipleRoots', methods=['GET', 'POST'])
 def multiple_roots():
     form = rootAlgorithms()
+    result = []
     if request.method == 'POST':
         f_x = form.function.data
         f_x_derivate = form.first_derivate.data
@@ -176,6 +182,7 @@ def aitken():
 @app.route('/muller', methods=['GET', 'POST'])
 def muller():
     form = rootAlgorithms()
+    result = []
     if request.method == 'POST':
         f_x = form.function.data
         x_0 = form.x_0.data
@@ -192,6 +199,7 @@ def muller():
 @app.route('/steffenson', methods=['GET', 'POST'])
 def steffenson():
     form = rootAlgorithms()
+    result = []
     if request.method == 'POST':
         f_x = form.function.data
         x_0 = form.x_0.data
