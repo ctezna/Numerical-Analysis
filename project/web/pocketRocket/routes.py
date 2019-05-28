@@ -25,7 +25,8 @@ from pocketRocket.methods.muller import muller_method
 from pocketRocket.methods.lagrange_interpolacion import lagrange_method
 from pocketRocket.methods.newton_interpolacion import newton_inter
 from pocketRocket.methods.secante import secante_method
-import os
+from pocketRocket.methods.spline1 import spline1_main
+from pocketRocket.methods.spline3 import spline3_main
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -125,7 +126,7 @@ def secant():
         n = form.n_max.data
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
-        result = secante(x_0, x_1, tol, n, parser)
+        result = secante_method(x_0, x_1, tol, n, parser)
         result = zip(*[i for i in result.values()])
         form.result.data = result
 
@@ -420,6 +421,27 @@ def vandermorde():
     return render_template("vandermorde.html", form=form)
 
 
-@app.route('/splines')
+@app.route('/splines', methods=['GET','POST'])
 def splines():
-    return render_template("splines.html")
+    form = interpolationAlgorithms()
+    if request.method == 'POST':
+        x_points = form.x_points.data.split(" ")
+        y_points = form.y_points.data.split(" ")
+        spline = int(form.spline.data)
+
+        if spline == 1:
+            result =  spline1_main(x_points, y_points)
+            form.result.data = result
+            result = zip(*[i for i in result.values()])
+        
+        elif spline == 2:
+            pass
+            #instance = splineQ(x_points, y_points)
+            #instance.quadratic()
+
+        else:
+            result = spline3_main(x_points, y_points)
+            form.result.data = result
+            result = zip(*[i for i in result.values()])
+
+    return render_template("splines.html", form=form)

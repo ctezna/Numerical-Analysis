@@ -55,19 +55,20 @@ def traza3natural(xi,yi):
     
     return(polinomio)
 
-# PROGRAMA de prueba
-# INGRESO , Datos de prueba
-xi = np.array([-1 , 0, 3, 4])
-fi = np.array([15.5, 3, 8, 1])
-resolucion = 10 # entre cada par de puntos
+def spline3_main(xi, fi):
+    xi = [float(x) for x in xi]
+    fi = [float(x) for x in fi]
+    polinomio = traza3natural(xi,fi)
+    n = len(xi)
+    print('Polinomios por tramos: ')
+    data = {'inter': [], 'poli': []}
 
-# PROCEDIMIENTO
-n = len(xi)
-# Obtiene los polinomios por tramos
-polinomio = traza3natural(xi,fi)
+    for tramo in range(1,n,1):
+        #print(' x = ['+str(xi[tramo-1])+','+str(xi[tramo])+']')
+        data['inter'].append(' x = ['+str(xi[tramo-1])+','+str(xi[tramo])+']')
+        data['poli'].append(str(polinomio[tramo-1]))
+        #print(str(polinomio[tramo-1]))
 
-# SALIDA
-print('Polinomios por tramos: ')
-for tramo in range(1,n,1):
-    print(' x = ['+str(xi[tramo-1])+','+str(xi[tramo])+']')
-    print(str(polinomio[tramo-1]))
+    return data
+
+#main()

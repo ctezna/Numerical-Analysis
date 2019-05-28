@@ -36,6 +36,7 @@ class interpolationAlgorithms(FlaskForm):
     n_max = StringField('n')
     x_points = StringField('x_points')
     y_points = StringField('y_points')
+    spline = StringField('spline')
     value = StringField('Value')
     result = TextAreaField('Result')
     calculate = SubmitField('Calculate')    
