@@ -3,9 +3,19 @@ import numpy as np
 
 #                   PYTHON 3.7 !!!
 
-def cholesky(A,n):
+def cholesky(A,n, b):
+    message = ""
     data = {'etapas': [], 'L': [], 'U':[]}
     L,U = inicializa(n,2)
+
+    if not is_square(A.tolist()):
+        message += "Should be a cuadratic Matrix"
+        return [], message
+
+    if np.linalg.det(A) == 0.0:
+        message += "Determinant = 0"
+        return [], message
+     
 
     for k in range(n):
         suma1 = 0
@@ -31,13 +41,24 @@ def cholesky(A,n):
         print("\nMatriz U")
         data['U'].append(U)
         print(U)
-    print ("\n\n\n Prueba: (analiza con la matriz ingresada)\n", np.dot(L,U))
-    return data
+    
+    #m = forma_matriz_aumentada(U, [float(x) for x in b])
+    #message = sustitucion_regresiva(m)
+    #print ("\n\n\n Prueba: (analiza con la matriz ingresada)\n", np.dot(L,U))
+    return data, message
 
 
-def crout_method(A,n):
+def crout_method(A,n,b):
     data = {'etapas': [], 'L': [], 'U':[]}
     L,U = inicializa(n,1)
+     
+    if not is_square(A.tolist()):
+        message += "Should be a cuadratic Matrix"
+        return [], message
+
+    if np.linalg.det(A) == 0.0:
+        message += "Determinant = 0"
+        return [], message
 
     for k in range(n):
         data['etapas'].append(k)
@@ -59,11 +80,24 @@ def crout_method(A,n):
         data['L'].append(L)
         data['U'].append(U)
 
-    return data
+    #m = forma_matriz_aumentada(U, [float(x) for x in b])
+    #message = sustitucion_regresiva(m)
 
-def doolittle_method(A,n):
+    return data, message
+
+
+def doolittle_method(A,n, b):
     data = {'etapas': [], 'L': [], 'U':[]}
     L,U = inicializa(n,0)
+     
+    if not is_square(A.tolist()):
+        message += "Should be a cuadratic Matrix"
+        return [], message
+
+    if np.linalg.det(A) == 0.0:
+        message += "Determinant = 0"
+        return [], message
+
     for k in range(n):
         suma1 = 0.0
         for p in range(0,k):
@@ -88,9 +122,13 @@ def doolittle_method(A,n):
         print(U)#imprimir L  U y k etapa
         data['L'].append(L)
         data['U'].append(U)
-    print ("\n\n\n Prueba: (analiza con la matriz ingresada)\n", np.dot(L,U))
 
-    return data
+    #print ("\n\n\n Prueba: (analiza con la matriz ingresada)\n", np.dot(L,U))
+    #m = forma_matriz_aumentada(U, [float(x) for x in b])
+    #message = sustitucion_regresiva(m)
+
+    return data, message
+
 #Doolittle == 0, Crout == 1, Cholesky == 2
 def inicializa(n,metodo):
     L , U = [] , []
@@ -105,6 +143,30 @@ def inicializa(n,metodo):
         U = [[0 for j in range(n)] for i in range(n)]
     return L,U
 
+
+def sustitucion_regresiva(Ab):
+    print(Ab)
+    n = len(Ab)
+    x = np.zeros(n)
+    x[n-1] = Ab[n-1][n]/float(Ab[n-1][n-1])
+    for i in range(n,0,-1):
+        sumatoria = 0
+        for p in range(i+1,n+1):
+            sumatoria += Ab[i-1][p-1]*x[p-1]
+            x[i-1] = (Ab[i-1][n]-sumatoria)/float(Ab[i-1][i-1])
+    return x
+
+
+def is_square (A):
+    return (all (len (row) == len (A) for row in A))
+
+
+def forma_matriz_aumentada(A,b):
+    new_A = A
+    for i in range(len(new_A)):
+        new_A[i].append(b[i])
+
+    return new_A
 
 #       PYTHON 3.7 !!!
 

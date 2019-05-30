@@ -1,5 +1,6 @@
 import math
 from prettytable import PrettyTable
+import numpy as np
 table = PrettyTable()
 
 a = [[4,-1,0,3],
@@ -15,9 +16,9 @@ initialValues = [1,1,1,1]
 class seidelClass():
 
     def __init__(self, niter, tol, x0, a):
+        self.message = ""
         self.niter = int(niter)
         self.tol = float(tol)
-        print(x0)
         self.x0 = [int(x) for x in x0]
         self.a = a.tolist()
         self.n = len(self.a)
@@ -51,8 +52,20 @@ class seidelClass():
         return x
     
 
+    def is_square (self, A):
+        return (all (len (row) == len (A) for row in A))
+
+
     def gaussSeidel(self):
         data = {'n': [], 'err': []}
+
+        if not self.is_square(self.a):
+            self.message += "Should be a cuadratic Matrix"
+            return [], self.message
+
+        if np.linalg.det(self.a) == 0.0:
+            self.message += "Determinant = 0"
+            return [], self.message
 
         for i in range(len(self.totalResult)):
             label = 'x%s' % str(i)
@@ -81,9 +94,10 @@ class seidelClass():
 
             data['err'].append(major)
         else:
+            self.message += "Failed!"
             print("Failed!")
         
-        return data
+        return data, self.message
 
 #instance = seidelClass(100,10**-7,initialValues, a)
 #instance.gaussSeidel()

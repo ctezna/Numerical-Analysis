@@ -10,49 +10,68 @@
 
 {% block body %}
 <body class="text-center">
-    <div class="fluid-container">
-            <div class="row">
-                    <div class="col-md-3 col-sm-3">
-                        <br><br>
-                        <legend class="border-bottom mb-4">Gaussian Elimination Total Pivoting</legend>
-                        <form action="{{ url_for('gauss_totalpivot') }}" method="post">
-                            {{ form.hidden_tag() }}
+        <div class="fluid-container">
+                <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                            <br><br>
+                            <legend class="border-bottom mb-4">Gaussian Elimination Total Pivoting</legend>
+                            <form action="{{ url_for('gauss_totalpivot') }}" method="post">
+                                    {{ form.hidden_tag() }}
+                                    <p>
+                                        {{ form.matrix_a.label }} 
+                                        {{ form.matrix_a(class="form-control",size=32) }}
+                                    </p>
+                                    <p>
+                                        {{ form.b_solution.label }} 
+                                        {{ form.b_solution(class="form-control",size=32) }}
+                                    </p>
+                                    <p>{{ form.calculate(class="btn btn-primary btn-block") }}</p>
+                                </form>
+                            <div class="container">
+                                    <a href="#" 
+                                        title="How to Fill Data" 
+                                        data-toggle="popover" 
+                                        data-trigger="hover" 
+                                        data-content="Function ex: exp(x)+2 <br /> a=integer ex: 0 <br /> b=integer ex: 1<br /> nmax=integer ex: 100 <br />tol=integer ex: 1e-7"
+                                        data-html="true">Help
+                                    </a>
+                                </div>
+                        </div>
+                        <div class="col-md-9 col-sm-9">
                             <p>
-                                {{ form.matrix_a.label }} 
-                                {{ form.matrix_a(class="form-control",size=32) }}
+                                {{ form.result.label }}
                             </p>
-                            <p>{{ form.calculate(class="btn btn-primary btn-block") }}</p>
-                        </form>
-                    </div>
-                    <div class="col-md-9 col-sm-9">
-                        <p>
-                            {{ form.result.label }}
-                        </p>
-                        <div class="table-responsive">
-                                <table id="resultTable" class="table table-sm table-striped table-bordered table-hover table-condensed">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th id="one">Solution</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% if result %}
-                                            {% for i in result %}
+                            <div class="table-responsive">
+                                    <table id="resultTable" class="table table-sm table-striped table-bordered table-hover table-condensed">
+                                            <thead class="thead-dark">
                                                 <tr>
-                                                    <td>{{i[0]}}</td>
+                                                    <th id="one">Stage</th>
+                                                    <th>A</th>
                                                 </tr>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </tbody>
-                                </table>
-                                <button class="btn btn-primary" onclick="exportTableToCSV('result_bisection.csv')" style="float:right">Exportar</button>
-                            </div>
+                                            </thead>
+                                            <tbody>
+                                                {% if result %}
+                                                    {% for i in result %}
+                                                        <tr>
+                                                            <td>{{i[0]}}</td>
+                                                            <td>{{i[1]}}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </tbody>
+                                        </table>
+                                    <button class="btn btn-primary" onclick="exportTableToCSV('result_gaussSimple.csv')" style="float:right">Exportar</button>
+                                    <button class="btn btn-primary" title="Solution" data-toggle="popover" data-trigger="hover" data-content="{{message}}" style="float:left">Solution</button>
+                                </div>
                     </div>
             </div>
     </div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 <script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();   
+    });
     function downloadCSV(csv, filename) {
         var csvFile;
         var downloadLink;

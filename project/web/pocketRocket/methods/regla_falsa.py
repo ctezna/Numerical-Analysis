@@ -11,12 +11,12 @@ def regla_falsa (f,x0,x1,tol,nmax):
     message = ""
 
     if x0 >= x1:
-        message += "Please check your values, something is wrong"
+        message += "--- Please check your values, something is wrong"
         data ={}
         return message, data
     
     if x0 < 0 or x1 < 0 or nmax < 0 or tol < 0:
-        message += "Please check your values, something is wrong"
+        message += "--- Please check your values, something is wrong"
         data ={}
         return message, data
 
@@ -79,11 +79,11 @@ def regla_falsa (f,x0,x1,tol,nmax):
                         message += "-- it's an aproximation to root: %s" % (str(xcentro))
                         print(err, "con error")
                     else:
-                        message += "Method failed"
+                        message += "--- Method failed"
                         print("el metodo fracaso")
                         return message, data
             else:
-                message += "Bad interval, please consider change it"
+                message += "--- Bad interval, please consider change it"
                 print("el intervalo no sirve")
     
     return message, data

@@ -1,9 +1,26 @@
+import numpy as np
+
+def is_square (A):
+    return (all (len (row) == len (A) for row in A))
+
+
 def gaussPivPar(A,b):
+  message = ""
+  matriz_list = []
+  etapas  = []
   A = A.tolist()
-  print(b)
   b = [int(x) for x in b]
   n = len(A)
   M = A
+
+  if not is_square(A):
+    message += "Should be a cuadratic matrix"
+    return [], message
+
+
+  if np.linalg.det(A) == 0.0:
+    message += "Determinant = 0"
+    return [], message
 
   i = 0
   for x in M:
@@ -12,6 +29,7 @@ def gaussPivPar(A,b):
 
   for k in range(n):
    print ("Iteracion: ", k)
+   etapas.append(k)
    for i in range(k,n):
      if abs(M[i][k]) > abs(M[k][k]):
         M[k], M[i] = M[i],M[k]
@@ -19,7 +37,7 @@ def gaussPivPar(A,b):
         pass
 
    for row in M:
-    print (row)
+    print (type(row))
    for j in range(k+1,n):
        q = float(M[j][k]) / M[k][k]
        for m in range(k, n+1):

@@ -12,9 +12,16 @@ def f(x):
 
 
 def muller_method(a, b, c, f):
+    message = ""
     a = float(a)
     b = float(b)
     c = float(c)
+
+    if a < 0 or b < 0 or c < 0:
+        message += "--- Please check your values, something is wrong"
+        data ={}
+        return message, data
+
     x = symbols('x', real=True)
     res = 0
     i = 0
@@ -36,6 +43,7 @@ def muller_method(a, b, c, f):
         a1 = (((d2 * pow(h1, 2)) - (d1 * pow(h2, 2))) / ((h1 * h2) * (h1 - h2)))
         a2 = (((d1 * h2) - (d2 * h1)) / ((h1 * h2) * (h1 - h2)))
         x = ((-2 * a0) / (a1 + abs(math.sqrt(a1 * a1 - 4 * a0 * a2))))
+        print(x)
         y = ((-2 * a0) / (a1 - abs(math.sqrt(a1 * a1 - 4 * a0 * a2))))
 
         # Taking the root which is
@@ -57,6 +65,7 @@ def muller_method(a, b, c, f):
         b = c
         c = res
         if (i > MAX_ITERATIONS):
+            message += "Root cannot be found using Muller's method"
             print ("Root cannot be found using" + "Muller’s method")
         break
 
@@ -64,6 +73,6 @@ def muller_method(a, b, c, f):
     if (i <= MAX_ITERATIONS):
         print ("The value of the root is", round(res, 4)) 
     
-    return {'root': round(res, 4)}
+    return message, [round(res,4)]
 
 #muller_method(0,1,2)

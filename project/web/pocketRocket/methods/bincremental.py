@@ -18,7 +18,7 @@ def busqueda_incremental(f, x0, paso, nmax, tol):
 
         return message, data
     r0 = sympify(f).subs(x,x0)
-    print(r0)
+    
     if (abs(r0) <= tol): #si f(x0) es raiz, retorne y termine el programa
 
         print(x0,"es raiz")

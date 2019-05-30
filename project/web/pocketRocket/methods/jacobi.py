@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 
 """a = [[4, -1,   0,  3],
@@ -12,6 +13,7 @@ totalResult = [[] for y in range(len(initialValues))]
 class jacobiClass():
 
     def __init__(self, niter, tol, x0, a):
+        self.message = ""
         self.niter = int(niter)
         self.tol = float(tol)
         self.x0 = [int(x) for x in x0]
@@ -42,10 +44,23 @@ class jacobiClass():
         for i in range(0,len(x1)):
             x.append(x1[i]-x0[i])
         return x
+
+
+    def is_square (self, A):
+        return (all (len (row) == len (A) for row in A))
     
 
     def jacobi_method(self):
         data = {'n': [], 'err': []}
+
+        if not self.is_square(self.a):
+            self.message += "Should be a cuadratic Matrix"
+            return [], self.message
+
+        if np.linalg.det(self.a) == 0.0:
+            self.message += "Determinant = 0"
+            return [], self.message
+
         for i in range(len(self.totalResult)):
             label = 'x%s' % str(i)
             data[label] = []
@@ -72,9 +87,10 @@ class jacobiClass():
                 data[label].append(self.totalResult[i])
             data['err'].append(major)
         else:
+            self.message += "Failed!"
             print("Failed!")
 
-        return data
+        return data, self.message
 
 #instance = jacobi(100,10**-7,initialValues, a)
 #print(instance.jacobi_method())

@@ -18,6 +18,7 @@ from pocketRocket.methods.factorizacionlu import lu_simple_gauss
 from pocketRocket.methods.factorizacionluparcial import lu_decomposition
 from pocketRocket.methods.elimGaussSimple import eliminacion
 from pocketRocket.methods.totalPivoting import totalPivoting
+from pocketRocket.methods.gaussPivTotal import eliminacion_gaussiana_pivoteo
 from pocketRocket.methods.elimGaussPivPar import gaussPivPar
 from pocketRocket.methods.jacobi import jacobiClass
 from pocketRocket.methods.seidel import seidelClass
@@ -83,7 +84,12 @@ def incremental_search():
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
         data = busqueda_incremental(parser, x_0, h, n, tol)
-        result = zip(*[i for i in data[1].values()])
+        
+        if len(data[1]):
+            result = zip(*[i for i in data[1].values()])
+        else:
+            result = ""
+
         message = data[0]
         #form.result.data = result
 
@@ -104,9 +110,13 @@ def false_position():
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
         data = regla_falsa(f_x, x_0, x_1, tol, n)
-        result = zip(*[i for i in data[1].values()])
+
+        if len(data[1]):
+            result = zip(*[i for i in data[1].values()])
+        else:
+            result = ""
+
         message = data[0]
-        print (message)
 
     return render_template("false_position.html", form=form, result=result, message=message)
 
@@ -115,6 +125,7 @@ def false_position():
 def fixed_point():
     form = rootAlgorithms()
     result = []
+    message = []
     if request.method == 'POST':
         f_x = form.function.data
         g_x = form.function_g.data
@@ -124,17 +135,25 @@ def fixed_point():
         x = symbols('x', real=True)
         parser_f = parse_expr(f_x, locals())
         parser_g = parse_expr(g_x, locals())
-        result = puntoFijo(parser_f, parser_g, x_0, tol, n)
-        result = zip(*[i for i in result.values()])
-        form.result.data = result
+        data = puntoFijo(f_x, g_x, parser_f, parser_g, x_0, tol, n)
+        
+        if len(data[1]):
+            result = zip(*[i for i in data[1].values()])
+        else:
+            result = ""
 
-    return render_template("fixed_point.html", form=form, result=result)
+        message = data[0]
+        
+
+    return render_template("fixed_point.html", form=form, result=result, message=message)
 
 
 @app.route('/secant', methods=['GET', 'POST'])
 def secant():
     form = rootAlgorithms()
     result = []
+    message = []
+
     if request.method == 'POST':
         f_x = form.function.data
         x_0 = form.x_0.data
@@ -143,17 +162,23 @@ def secant():
         n = form.n_max.data
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
-        result = secante_method(x_0, x_1, tol, n, parser)
-        result = zip(*[i for i in result.values()])
-        form.result.data = result
+        data = secante_method(x_0, x_1, tol, n, parser, f_x)
+               
+        if len(data[1]):
+            result = zip(*[i for i in data[1].values()])
+        else:
+            result = ""
 
-    return render_template("secant.html", form=form, result=result)
+        message = data[0]
+
+    return render_template("secant.html", form=form, result=result, message=message)
 
 
 @app.route('/newton', methods=['GET', 'POST'])
 def newton():
     form = rootAlgorithms()
     result = []
+    message = []
     if request.method == 'POST':
         f_x = form.function.data
         f_x_derivate = form.first_derivate.data
@@ -163,11 +188,16 @@ def newton():
         x = symbols('x', real=True)
         parser_f = parse_expr(f_x, locals())
         parser_f_derivate = parse_expr(f_x_derivate, locals())
-        result = newton_method(x_n, tol, n, parser_f, parser_f_derivate)
-        result = zip(*[i for i in result.values()])
-        form.result.data = result
+        data = newton_method(x_n, tol, n, parser_f, parser_f_derivate)
+               
+        if len(data[1]) > 0:
+            result = zip(*[i for i in data[1].values()])
+        else:
+            result = ""
 
-    return render_template("newton.html", form=form, result=result)
+        message = data[0]
+
+    return render_template("newton.html", form=form, result=result, message=message)
 
 
 @app.route('/multipleRoots', methods=['GET', 'POST'])
@@ -186,14 +216,19 @@ def multiple_roots():
         parser_f_derivate_2 = parse_expr(f_x_derivate_2, locals())
         result = multiple_roots_method(x_n, tol, parser_f, parser_f_derivate, parser_f_derivate_2)
         result = zip(*[i for i in result.values()])
-        form.result.data = result
+
+        if len(data[1]) > 0:
+            result = zip(*[i for i in data[1].values()])
+        else:
+            result = ""
+
+        message = data[0]
 
     return render_template("multiple_roots.html", form=form, result=result)
 
 
 @app.route('/aitken', methods=['GET', 'POST'])
 def aitken():
-    pass
     return render_template("aitken.html")
 
 
@@ -201,6 +236,7 @@ def aitken():
 def muller():
     form = rootAlgorithms()
     result = []
+    message = []
     if request.method == 'POST':
         f_x = form.function.data
         x_0 = form.x_0.data
@@ -209,9 +245,9 @@ def muller():
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
         result = muller_method(x_0, x_1, x_2, parser)
-        form.result.data =  result
+        
 
-    return render_template("muller.html", form=form)
+    return render_template("muller.html", form=form, result=result, message=message)
 
 
 @app.route('/steffenson', methods=['GET', 'POST'])
@@ -234,56 +270,78 @@ def steffenson():
 def gauss_simple():
     form = matrixAlgorithms()
     result=[]
+    message=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         b_solution = form.b_solution.data.split(" ")
-        result = eliminacion(matrix_a, b_solution)
-        form.result.data = result
-        result = zip(*[i for i in result.values()])
+        data = eliminacion(matrix_a, b_solution)
+        #form.result.data = result
+        result = zip(*[i for i in data[0].values()])
+        message = data[1]
 
-    return render_template("gauss_simple.html", form=form, result=result)
+    return render_template("gauss_simple.html", form=form, result=result, message=message)
 
 
 @app.route('/gaussTotalPivot', methods=['GET', 'POST'])
 def gauss_totalpivot():
     form = matrixAlgorithms()
     result=[]
+    message=""
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
-        instance = totalPivoting(matrix_a)
-        result = instance.elimination()
-        form.result.data = result
-        result = zip(*[i for i in result.values()])
+        b_solution = form.b_solution.data.split(" ")
+        data = eliminacion_gaussiana_pivoteo(matrix_a, b_solution, 1)
+        result = zip(*[i for i in data[0].values()])
 
-    return render_template("gauss_totalpivot.html", form=form, result=result)
+        if data[1]:
+            message += "%s \n" % (data[1])
+        else:
+            message = data[2]
+        
+
+    return render_template("gauss_totalpivot.html", form=form, result=result, message=message)
 
 
 @app.route('/gaussPartialPivot', methods=['GET', 'POST'])
 def gauss_partialpivot():
     form = matrixAlgorithms()
     result=[]
+    message=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         b_solution = form.b_solution.data.split(" ")
-        result = gaussPivPar(matrix_a, b_solution)
-        form.result.data = result
-        result = zip(*[i for i in result.values()])
+        data = gaussPivPar(matrix_a, b_solution)
+        #form.result.data = result
+        
+        if len(data[0]) > 0:
+            result = zip(*[i for i in data[0].values()])
+        else:
+            result = ""
 
-    return render_template("gauss_partialpivot.html", form=form, result=result)
+        message = data[1]
+
+    return render_template("gauss_partialpivot.html", form=form, result=result, message=message)
 
 
 @app.route('/luSimpleGaussian', methods=['GET', 'POST'])
 def lu_simple_gaussian():
     form = matrixAlgorithms()
     result=[]
+    message = []
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         n = form.n_max.data
-        result = lu_simple_gauss(matrix_a, int(n))
-        form.result.data = result
-        result = zip(*[i for i in result.values()])
+        b_solution = form.b_solution.data.split(" ")
+        data = lu_simple_gauss(matrix_a, int(n), b_solution)
+        
+        if len(data[0]):
+            result = zip(*[i for i in data[0].values()])
+        else:
+            result = ""
 
-    return render_template("lu_simple_gaussian.html", form=form, result=result)
+        message = data[1]
+
+    return render_template("lu_simple_gaussian.html", form=form, result=result, message=message)
 
 
 #Falta por implementar
@@ -303,80 +361,112 @@ def lu_pivoting():
 def crout():
     form = matrixAlgorithms()
     result=[]
+    message=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         matrix_a = np.array(matrix_a)
+        b_solution = form.b_solution.data.split(" ")
         n = form.n_max.data
-        result = crout_method(matrix_a, int(n))
-        form.result.data = result
-        result = zip(*[i for i in result.values()])
+        data = cholesky(matrix_a, int(n), b_solution)
 
-    return render_template("crout.html", form=form, result=result)
+        if len(data[0]):
+            result = zip(*[i for i in data[0].values()])
+        else:
+            result = ""
+
+        message = data[1]
+
+    return render_template("crout.html", form=form, result=result, message=message)
 
 
 @app.route('/doolittle', methods=['GET', 'POST'])
 def doolittle():
     form = matrixAlgorithms()
     result=[]
+    message=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         matrix_a = np.array(matrix_a)
+        b_solution = form.b_solution.data.split(" ")
         n = form.n_max.data
-        result = doolittle_method(matrix_a, int(n))
-        form.result.data = result
-        result = zip(*[i for i in result.values()])
+        data = cholesky(matrix_a, int(n), b_solution)
 
-    return render_template("doolittle.html", form=form, result=result)
+        if len(data[0]):
+            result = zip(*[i for i in data[0].values()])
+        else:
+            result = ""
+
+        message = data[1]
+
+    return render_template("doolittle.html", form=form, result=result, message=message)
 
 
 @app.route('/cholesky', methods=['GET', 'POST'])
 def lucholeskypivoting():
     form = matrixAlgorithms()
     result=[]
+    message=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         matrix_a = np.array(matrix_a)
+        b_solution = form.b_solution.data.split(" ")
         n = form.n_max.data
-        result = cholesky(matrix_a, int(n))
-        form.result.data = result
-        result = zip(*[i for i in result.values()])
+        data = cholesky(matrix_a, int(n), b_solution)
 
-    return render_template("cholesky.html", form=form, result=result)
+        if len(data[0]):
+            result = zip(*[i for i in data[0].values()])
+        else:
+            result = ""
+
+        message = data[1]
+
+    return render_template("cholesky.html", form=form, result=result, message=message)
 
 
 @app.route('/jacobi', methods=['GET', 'POST'])
 def jacobi():
     form = matrixAlgorithms()
     result=[]
+    message = []
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         x_0 = form.x_0.data.split(" ")
         n_max = form.n_max.data
         tol = form.tol.data
         instance = jacobiClass(n_max, tol, x_0, matrix_a)
-        result = instance.jacobi_method()
-        form.result.data = result
-        result = zip(*[i for i in result.values()])
-        print(result)
+        data = instance.jacobi_method()
+ 
+        if len(data[0]):
+            result = zip(*[i for i in data[0].values()])
+        else:
+            result = ""
 
-    return render_template("jacobi.html", form=form, result=result)
+        message = data[1]
+
+    return render_template("jacobi.html", form=form, result=result, message=message)
 
 
 @app.route('/gaussSeidel', methods=['GET', 'POST'])
 def gauss_seidel():
     form = matrixAlgorithms()
     result=[]
+    message=[]
     if request.method == 'POST':
         matrix_a = np.matrix(form.matrix_a.data)
         x_0 = form.x_0.data.split(" ")
         n_max = form.n_max.data
         tol = form.tol.data
         instance = seidelClass(n_max, tol, x_0, matrix_a)
-        result = instance.gaussSeidel()
-        form.result.data = result
-        result = zip(*[i for i in result.values()])
+        data = instance.gaussSeidel()
+ 
+        if len(data[0]):
+            result = zip(*[i for i in data[0].values()])
+        else:
+            result = ""
 
-    return render_template("gauss_seidel.html", form=form, result=result)
+        message = data[1]
+
+    return render_template("gauss_seidel.html", form=form, result=result, message=message)
 
 
 @app.route('/sor', methods=['GET', 'POST'])

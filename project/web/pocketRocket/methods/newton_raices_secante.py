@@ -74,15 +74,23 @@ def multiple_roots_method(x_n, tol, f, f_derivate_1, f_derivate_2):
     return data
 
 def newton_method(x_n, tol, n, f, f_derivate_1):
+    message = ""
     print("\n NEWTON")
     tol = float(tol)
     x_n = float(x_n)
     n = int(n)
+
+    if tol < 0  or x_n <= 0 or n < 0:
+        message += "--- Please check your values, something is wrong"
+        data ={}
+        return message, data
+
+
     x = symbols('x', real=True)
     f = sympify(f)
     f_x = f.subs(x, x_n)
     f_x_1 = sympify(f_derivate_1).subs(x, x_n)
-    data = {"N": [0], "Xn": [x_n], "f(x)": [f_x], "f(x)^1": [f_x_1], "ER": [0], "EA": [0]}
+    data = {"N": [0], "Xn": [round(x_n,4)], "f(x)": [round(f_x,4)], "f(x)^1": [round(f_x_1,4)], "ER": [0], "EA": [0]}
     rel_err = 10000
     count = 1
     
@@ -93,15 +101,17 @@ def newton_method(x_n, tol, n, f, f_derivate_1):
         f_x_1 = sympify(f_derivate_1).subs(x, x_n)
         abs_err = absolute_err(x_past, x_n)
         rel_err = relative_err(x_past, x_n)
-        data["Xn"].append(x_n)
-        data["f(x)"].append(f_x)
-        data["f(x)^1"].append(f_x_1)
-        data["ER"].append(rel_err)
-        data["EA"].append(abs_err)
+        data["Xn"].append(round(x_n,4))
+        data["f(x)"].append(round(f_x,4))
+        data["f(x)^1"].append(round(f_x_1,4))
+        err_round_rel = '%.2E' % Decimal(str(rel_err))
+        err_round_abs = '%.2E' % Decimal(str(abs_err))
+        data["ER"].append(err_round_rel)
+        data["EA"].append(err_round_abs)
         data['N'].append(count)
         count += 1
 
-    return data
+    return message, data
 
 
 

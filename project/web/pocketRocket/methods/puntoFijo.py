@@ -1,6 +1,6 @@
 from sympy import symbols, diff, pprint, factorial, ln, exp, sin, cos, log, sqrt, sympify
 import numpy as np
-
+from decimal import Decimal
 #(K^n/1-k) * (p1-p0)
 
 #para escoger que funcion es mejor, evaluo la funcion en los extremos del intervalo
@@ -11,7 +11,19 @@ import numpy as np
 
 # para sacar la g() se despeja la x de una de las variables
 
-def puntoFijo(f,g,x0,tol,nmax):
+def puntoFijo(f_string, g_string, f,g,x0,tol,nmax):
+    message = ""
+    data = {}
+
+    if "ln" in f_string and float(x0) <= 0:
+        message += "--- log can't take values <= 0"
+        return message, data
+
+    x = float(x0)
+    if eval(g_string) == 0:
+        message += "--- g(x0) can't be 0, please change x0"
+        return message, data
+    
     x0 = float(x0)
     tol = float(tol)
     nmax = float(nmax)
@@ -21,10 +33,12 @@ def puntoFijo(f,g,x0,tol,nmax):
     err1 = tol+1
     x = symbols('x', real=True)
     fx = sympify(f).subs(x, x0)
+
     print("\n-------------------------------------------------------")
     print("iteracion | xcentro | fxcentro |error abs")
     print(cont, "|", x0,"|",fx,"|",err1)
-    data = {'iter': [cont], 'xcentro': [x0], 'fcentro': [fx], 'error': [err1]}
+    err_round = '%.2E' % Decimal(str(err1))
+    data = {'iter': [cont], 'xcentro': [round(x0,4)], 'fcentro': [round(fx,4)], 'error': [err_round]}
     while((fx != 0) and (err1 > tol) and (cont < nmax) ):
         dx0 = sympify(g).subs(x, x0)
         fx = sympify(f).subs(x, dx0)
@@ -34,19 +48,23 @@ def puntoFijo(f,g,x0,tol,nmax):
         cont = cont+1
         print(cont, "|", x0,"|",fx,"|",err1)
         data['iter'].append(cont)
-        data['xcentro'].append(x0)
-        data['fcentro'].append(fx)
-        data['error'].append(err1)
+        data['xcentro'].append(round(x0,4))
+        data['fcentro'].append(round(fx,4))
+        err_round = '%.2E' % Decimal(str(err1))
+        data['error'].append(err_round)
     if(fx == 0):
         print("\n error:",err1)
         print(x0, "no es raiz")
+        message += "is not root: %s" % (str(x0))
     elif(err1 < tol):
         print("\n error:",err1)
         print(x0, "aproxima a la raiz")
+        message += "--- it's an aproximation: %s " %s (str(x0))
     else:
         print("\n el metodo fracaso")
+        message += "Method failed"
 
-    return data
+    return message, data
 
 def f(x): #fucnion originaĺ
     #print("exp(-x) - sin(4*x)")
