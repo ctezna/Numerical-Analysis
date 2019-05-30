@@ -48,15 +48,6 @@
                                       data-html="true">Help
                                   </a>
                             </div>
-                            <div class="container">
-                                    <a href="#" 
-                                      title="Results" 
-                                      data-toggle="popover" 
-                                      data-trigger="hover" 
-                                      data-content=""
-                                      data-html="true">Other Results
-                                </a>
-                        </div>
                         </div>
                     <div class="col-md-9 col-sm-9">
                             <p>
@@ -89,8 +80,8 @@
                                     {% endif %}
                                 </tbody>
                             </table>
-                            <button class="btn btn-primary" onclick="exportTableToCSV('result_bisection.csv')" style="float:right">Exportar</button>
-
+                            <button class="btn btn-primary" onclick="exportTableToCSV('result_bisection.csv')" style="float:right">Export</button>
+                            <button class="btn btn-primary" title="Results" data-toggle="popover" data-trigger="hover" data-content="" style="float:left">Results</button>
                         </div>
                     </div>
     </body>
