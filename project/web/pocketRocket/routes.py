@@ -34,6 +34,10 @@ def index():
     return render_template("plotter.html")
 
 
+@app.route('/proof')
+def proof():
+    return render_template("prueba.html")
+
 @app.route('/grapher', methods=['GET', 'POST'])
 def grapher():
     return render_template("plotter.html")
@@ -43,6 +47,7 @@ def grapher():
 def bisection():
     form = rootAlgorithms()
     result = []
+    message = []
     if request.method == 'POST':
         inter_a = form.inter_a.data
         inter_b = form.inter_b.data
@@ -51,11 +56,12 @@ def bisection():
         tol = form.tol.data
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
-        result = biseccion(parser, inter_a, inter_b, n, tol)
-        result = zip(*[i for i in result.values()])
-        #form.result.data = result
+        data = biseccion(parser, inter_a, inter_b, n, tol)
+        result = zip(*[i for i in data[1].values()])
+        message = data[0]
+        #form.result.data = result[1]
 
-    return render_template("bisection.html", form=form, result=result)
+    return render_template("bisection.html", form=form, result=result, message=message)
 
 
 @app.route('/incrementalSearch', methods=['GET', 'POST'])
