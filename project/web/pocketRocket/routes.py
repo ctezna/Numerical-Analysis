@@ -57,7 +57,12 @@ def bisection():
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
         data = biseccion(parser, inter_a, inter_b, n, tol)
-        result = zip(*[i for i in data[1].values()])
+
+        if len(data[1]):
+            result = zip(*[i for i in data[1].values()])
+        else:
+            result = ""
+
         message = data[0]
         #form.result.data = result[1]
 
@@ -67,6 +72,8 @@ def bisection():
 @app.route('/incrementalSearch', methods=['GET', 'POST'])
 def incremental_search():
     form = rootAlgorithms()
+    result = []
+    message = []
     if request.method == 'POST':
         f_x = form.function.data
         x_0 = form.x_0.data
@@ -75,16 +82,19 @@ def incremental_search():
         tol = form.tol.data
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
-        result = busqueda_incremental(parser, x_0, h, n, tol)
+        data = busqueda_incremental(parser, x_0, h, n, tol)
+        result = zip(*[i for i in data[1].values()])
+        message = data[0]
         #form.result.data = result
 
-    return render_template("incremental_search.html", form=form)
+    return render_template("incremental_search.html", form=form, result=result, message=message)
 
 
 @app.route('/falsePosition', methods=['GET', 'POST'])
 def false_position():
     form = rootAlgorithms()
     result = []
+    message = []
     if request.method == 'POST':
         f_x = form.function.data
         x_0 = form.x_0.data
@@ -93,11 +103,12 @@ def false_position():
         tol = form.tol.data
         x = symbols('x', real=True)
         parser = parse_expr(f_x, locals())
-        result = regla_falsa(parser, x_0, x_1, tol, n)
-        result = zip(*[i for i in result.values()])
-        form.result.data = result
+        data = regla_falsa(f_x, x_0, x_1, tol, n)
+        result = zip(*[i for i in data[1].values()])
+        message = data[0]
+        print (message)
 
-    return render_template("false_position.html", form=form, result=result)
+    return render_template("false_position.html", form=form, result=result, message=message)
 
 
 @app.route('/fixedPoint', methods=['GET', 'POST'])
