@@ -44,7 +44,7 @@
                             title="How to Fill Data" 
                             data-toggle="popover" 
                             data-trigger="hover" 
-                            data-content="Function ex: exp(x)+2 <br /> a=integer ex: 0 <br /> b=integer ex: 1<br /> nmax=integer ex: 100 <br />tol=integer ex: 1e-7"
+                            data-content="Function ex: exp(x)+2 <br /> x0=integer ex: 0 <br /> x1=integer ex: 1<br /> nmax=integer ex: 100 <br />tol=integer ex: 1e-7"
                             data-html="true">Help
                         </a>
                     </div>
@@ -85,7 +85,7 @@
     </body>
 
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
         $('[data-toggle="popover"]').popover();   
@@ -124,7 +124,5 @@
         downloadCSV(csv.join("\n"), filename);
     }
 </script>
-
-
 
 {% endblock %}
