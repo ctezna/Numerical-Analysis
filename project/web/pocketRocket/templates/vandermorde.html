@@ -12,26 +12,105 @@
 <body class="text-center">
         <div class="fluid-container">
                 <div class="row">
-                    <div class="col-md-3 col-sm-3">
+                        <div class="col-md-3 col-sm-3">
                             <br><br>
                             <legend class="border-bottom mb-4">Vandermorde</legend>
                             <form action="{{ url_for('vandermorde') }}" method="post">
-                                {{ form.hidden_tag() }}
-                                <p>
-                                    {{ form.x_points.label }} {{ form.x_points(class="form-control",size=32) }}
-                                </p>
-                                <p>
-                                    {{ form.y_points.label }} {{ form.y_points(class="form-control",size=32) }}
-                                </p>
-                                <p>{{ form.calculate(class="btn btn-primary btn-block") }}</p>
-                            </form>
+                                    {{ form.hidden_tag() }}
+                                    <p>
+                                        {{ form.x_points.label }} 
+                                        {{ form.x_points(class="form-control",size=32) }}
+                                    </p>
+                                    <p>
+                                        {{ form.y_points.label }} 
+                                        {{ form.y_points(class="form-control",size=32) }}
+                                    </p>
+                                    <p>{{ form.calculate(class="btn btn-primary btn-block") }}</p>
+                                </form>
+                            <div class="container">
+                                    <a href="#" 
+                                        title="How to Fill Data" 
+                                        data-toggle="popover" 
+                                        data-trigger="hover" 
+                                        data-content="Function ex: exp(x)+2 <br /> a=integer ex: 0 <br /> b=integer ex: 1<br /> nmax=integer ex: 100 <br />tol=integer ex: 1e-7"
+                                        data-html="true">Help
+                                    </a>
+                                </div>
                         </div>
                         <div class="col-md-9 col-sm-9">
                             <p>
                                 {{ form.result.label }}
                             </p>
-                            <p>{{ form.result.data}}</p>
-                        </div>
+                            <div class="table-responsive">
+                                    <table id="resultTable" class="table table-sm table-striped table-bordered table-hover table-condensed">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                        
+                                                    <th id="one">x vander</th>
+                                                    <th>y vander</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% if result %}
+                                                <tr>
+                                                    <td>{{result[0]}}</td>
+                                                    <td>{{result[1]}}</td>
+                                                </tr>
+                                                {% endif %}
+                                            </tbody>
+                                        </table>
+                                    <button class="btn btn-primary" onclick="exportTableToCSV('result_lagrange.csv')" style="float:right">Exportar</button>
+                                    <button class="btn btn-primary" title="Determinante" data-toggle="popover" data-trigger="hover" data-content="{{message}}" style="float:left">Solution</button>
+                                </div>
+                    </div>
+            </div>
     </div>
 </body>
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();   
+    });
+    function downloadCSV(csv, filename) {
+        var csvFile;
+        var downloadLink;
+
+            // CSV file
+        csvFile = new Blob([csv], {type: "text/csv"});
+
+        // Download link
+        downloadLink = document.createElement("a");
+
+        // File name
+        downloadLink.download = filename;
+
+        // Create a link to the file
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+
+        // Hide download link
+        downloadLink.style.display = "none";
+
+        // Add the link to DOM
+        document.body.appendChild(downloadLink);
+
+        // Click download link
+        downloadLink.click();
+    }
+    function exportTableToCSV(filename) {
+        var csv = [];
+        var rows = document.querySelectorAll("table tr");
+        
+        for (var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("td, th");
+            
+            for (var j = 0; j < cols.length; j++) 
+                row.push(cols[j].innerText.toString().replace(',', ' - ').replace('ñ', 'ni').replace('ó', 'o'));
+            
+            csv.push(row.join(","));        
+        }
+
+        // Download CSV file
+        downloadCSV(csv.join("\n"), filename);
+    }
+</script>
 {% endblock %}

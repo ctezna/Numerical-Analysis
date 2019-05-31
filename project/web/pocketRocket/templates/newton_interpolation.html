@@ -25,10 +25,6 @@
                                         {{ form.y_points.label }} 
                                         {{ form.y_points(class="form-control",size=32) }}
                                     </p>
-                                    <p>
-                                        {{ form.value.label }} 
-                                        {{ form.value(class="form-control",size=32) }}
-                                    </p>
                                     <p>{{ form.calculate(class="btn btn-primary btn-block") }}</p>
                                 </form>
                             <div class="container">
@@ -49,8 +45,14 @@
                                     <table id="resultTable" class="table table-sm table-striped table-bordered table-hover table-condensed">
                                             <thead class="thead-dark">
                                                 <tr>
-                                                    <th id="one">Interval</th>
-                                                    <th>Poli</th>
+                                                    <th id="one">N</th>
+                                                    <th>Xi</th>
+                                                    <th>F[Xi]</th>
+                                                    <th>Primera</th>
+                                                    <th>Segunda</th>
+                                                    <th>Tercera</th>
+                                                    <th>Cuarta</th>
+                                                    <th>Quinta</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -59,7 +61,10 @@
                                                         <tr>
                                                             <td>{{i[0]}}</td>
                                                             <td>{{i[1]}}</td>
-                                                        </tr>
+                                                            <td>{{i[2]}}</td>
+                                                            <td>{{i[3]}}</td>
+                                                            <td>{{i[4]}}</td> 
+                                                            <td>{{i[5]}}</td>                                                           </tr>
                                                     {% endfor %}
                                                 {% endif %}
                                             </tbody>

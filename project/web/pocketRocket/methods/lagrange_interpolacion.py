@@ -8,10 +8,17 @@ Parámetros:
     y -- vector los x's evaluados en la función.
 """
 def lagrange_method(valor,x,y):
+    message = ""
     pol_list = []
+    l = []
     valor = float(valor)
     x = [float(i) for i in x]
     y = [float(i) for i in y]
+
+    if not valid_data(x):
+        message += "Each x point must be different"
+        return {}, message
+        
     pol = ""
     G = Function('G')
     F = Function('F')
@@ -31,20 +38,31 @@ def lagrange_method(valor,x,y):
         termino += ")"
         termino = termino.replace(")(",") * (")
         F = parse_expr(termino)
-        pol_str = ("\n L" + str(k) + "(x) = " + termino.replace("((","(").replace("))",")") + " = " + str(expand(F)))
+        pol_str = (termino.replace("((","(").replace("))",")") + " = " + str(expand(F)))
         pol_list.append(pol_str)
-        print("\n L" + str(k) + "(x) = " + termino.replace("((","(").replace("))",")") + " = " + str(expand(F)))
+        l.append(k)
+        #print("\n L" + str(k) + "(x) = " + termino.replace("((","(").replace("))",")") + " = " + str(expand(F)))
         toReplace = "L" + str(k) + "(x) = "
         pol += "(" + str(expand(F)) + ")*" + str(y[k])
         if k != n-1:
             pol += " + "
         result += productoria*y[k]
     G = str(expand(pol))
-    print ("\nPolinomio interpolante")
-    print (G)
-    print ("\nResultado")
-    print ("f(",valor,") = ",result)
-    return {'PI': G, 'result': result, 'pol': pol_list}
+    #print ("\nPolinomio interpolante")
+    #print (G)
+    #print ("\nResultado")
+    #print ("f(",valor,") = ",result)
+    return {'PI': G, 'result': result, 'pol': pol_list, 'L': l}, message
+
+
+def valid_data(x_points):
+    for i in x_points:
+        count = x_points.count(i)
+
+        if count >= 2:
+            return False
+
+    return True
 
 
 #agrange(4,[-1,0,3,4],[15.5,3,8,1])

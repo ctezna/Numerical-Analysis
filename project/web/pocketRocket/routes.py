@@ -354,7 +354,7 @@ def lu_pivoting():
         result = lu_decomposition(matrix_a)
         form.result.data = result
 
-    return render_template("lu_pivoting.html", form=form, result=result)
+    return render_template("lu_pivoting.html", form=form)
 
 
 @app.route('/crout', methods=['GET', 'POST'])
@@ -490,7 +490,6 @@ def sor():
 
         message = data[1]
 
-
     return render_template("sor.html", form=form, result=result, message=message)
 
 
@@ -498,29 +497,62 @@ def sor():
 def lagrange():
     form = interpolationAlgorithms()
     result=[]
+    message=""
     if request.method == 'POST':
         value = form.value.data
         x_points = form.x_points.data.split(" ")
         y_points = form.y_points.data.split(" ")
-        result = lagrange_method(value, x_points, y_points)
-        form.result.data = result
-        print(result)
+        data = lagrange_method(value, x_points, y_points)
 
-    return render_template("lagrange.html", form=form, result=result)
+        message = data[1]
+
+        if message:
+            message = data[1]
+            result = []
+
+        else:
+            dict_data = data[0]
+            l_numbers = dict_data['L']
+            pol = dict_data['pol']
+            result = [l_numbers, pol]
+            result = zip(*[i for i in result])
+            message += "PI: %s \n" % str(dict_data['PI'])
+            message += "P(%s) = %s" % (str(value), str(dict_data['result']))
+
+    return render_template("lagrange.html", form=form, result=result, message=message)
 
 
 @app.route('/newtonPoly', methods=['GET', 'POST'])
 def newton_interpolation():
     form = interpolationAlgorithms()
     result=[]
+    message=""
     if request.method == 'POST':
-        n_max = form.n_max.data
         x_points = form.x_points.data.split(" ")
         y_points = form.y_points.data.split(" ")
-        result = newton_inter(n_max, x_points, y_points)
-        form.result.data = result
+        data = newton_inter(x_points, y_points)
 
-    return render_template("newton_interpolation.html", form=form, result=result)
+        message = data[1]
+
+        if message:
+            result = []
+        else:
+            final_data = []
+            dict_data = data[0]
+            numbers = dict_data['table']
+            n = dict_data['n']
+
+            
+            for i in range(len(n)):
+                index = ([n[i]] + numbers[i])
+                index = [float(x) for x in index]
+                final_data.append(index)
+
+            print(final_data)
+            result = final_data
+            message += dict_data['pol']
+
+    return render_template("newton_interpolation.html", form=form, result=result, message=message)
 
 
 @app.route('/vandermorde', methods=['GET', 'POST'])
@@ -530,25 +562,38 @@ def vandermorde():
     if request.method == 'POST':
         x_points = form.x_points.data.split(" ")
         y_points = form.y_points.data.split(" ")
-        result = vandermorde_method(x_points, y_points)
-        form.result.data = result
+        data = vandermorde_method(x_points, y_points)
+        message = data[1]
+        data_vander = data[0]
 
-    return render_template("vandermorde.html", form=form, result=result)
+        if len(data_vander) > 0:
+            data_vander = data[0]
+            result = [data_vander['x_vander'], data_vander['y_vander']]
+
+    return render_template("vandermorde.html", form=form, result=result, message=message)
 
 
 @app.route('/splines', methods=['GET','POST'])
 def splines():
     form = interpolationAlgorithms()
     result = []
+    message=[]
     if request.method == 'POST':
         x_points = form.x_points.data.split(" ")
         y_points = form.y_points.data.split(" ")
         spline = int(form.spline.data)
 
         if spline == 1:
-            result =  spline1_main(x_points, y_points)
-            form.result.data = result
-            result = zip(*[i for i in result.values()])
+            data =  spline1_main(x_points, y_points)
+            message = data[1]
+
+            if message:
+                result = []
+            else:
+                data_spline = data[0]
+                new_data = [data_spline['inter'], data_spline['poli']]
+                result = zip(*[i for i in new_data])
+
         
         elif spline == 2:
             pass
@@ -556,8 +601,14 @@ def splines():
             #instance.quadratic()
 
         else:
-            result = spline3_main(x_points, y_points)
-            form.result.data = result
-            result = zip(*[i for i in result.values()])
+            data = spline3_main(x_points, y_points)
+            message = data[1]
 
-    return render_template("splines.html", form=form, result=result)
+            if message:
+                result = []
+            else:
+                data_spline = data[0]
+                new_data = [data_spline['inter'], data_spline['poli']]
+                result = zip(*[i for i in new_data])
+
+    return render_template("splines.html", form=form, result=result, message=message)
