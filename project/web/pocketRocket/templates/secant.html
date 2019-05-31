@@ -18,7 +18,7 @@
                 <form action="{{ url_for('secant') }}" method="post">
                         {{ form.hidden_tag() }}
                         <p>
-                            {{ form.function.label }} {{ form.function(class="form-control",size=32) }}
+                            {{ form.function.label }} {{ form.function(id="function", oninput="plot();",class="form-control",size=32) }}
                             <small class="text-muted">
                                 {{'Use exp for euler function.'}}
                             </small><br>
@@ -79,50 +79,75 @@
                             <button class="btn btn-primary" onclick="exportTableToCSV('result_bisection.csv')" style="float:right">Export</button>
                             <button class="btn btn-primary" title="Results" data-toggle="popover" data-trigger="hover" data-content="{{message}}" style="float:left">Results</button>
                         </div>
+                        <section id="plot">
+                                <input type=number id="xMin" style="display:none;" value=-10 step=0.5 oninput="plot();">
+                                <input type=number id="xMax" style="display:none;" value=10 step=0.5 oninput="plot();">
+                                <input type=number id="yMin" style="display:none;" value=-10 step=0.5 oninput="plot();">
+                                <input type=number id="yMax" style="display:none;" value=10 step=0.5 oninput="plot();">
+                                <input type=color id="color" style="display:none;" onchange="plot();">
+                                <div id="myFunction"></div>
+                                <p>
+                                    <button class="btn btn-danger" id="hide" style="display: block-inline;" onclick="hidePlot();">Hide</button>
+                                    <button class="btn btn-info" id="show" style="display: none;" onclick="showPlot();">Show</button>
+                                </p>   
+                            </section>
                     </div>
                 </div>
             </div>
     </body>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>
-    $(document).ready(function(){
-        $('[data-toggle="popover"]').popover();   
-    });
-    function downloadCSV(csv, filename) {
-        var csvFile;
-        var downloadLink;
-            // CSV file
-        csvFile = new Blob([csv], {type: "text/csv"});
-        // Download link
-        downloadLink = document.createElement("a");
-        // File name
-        downloadLink.download = filename;
-        // Create a link to the file
-        downloadLink.href = window.URL.createObjectURL(csvFile);
-        // Hide download link
-        downloadLink.style.display = "none";
-        // Add the link to DOM
-        document.body.appendChild(downloadLink);
-        // Click download link
-        downloadLink.click();
-    }
-    function exportTableToCSV(filename) {
-        var csv = [];
-        var rows = document.querySelectorAll("table tr");
-        
-        for (var i = 0; i < rows.length; i++) {
-            var row = [], cols = rows[i].querySelectorAll("td, th");
-            
-            for (var j = 0; j < cols.length; j++) 
-                row.push(cols[j].innerText.toString().replace(',', ' - ').replace('ñ', 'ni').replace('ó', 'o'));
-            
-            csv.push(row.join(","));        
+    <script src="{{url_for('static', filename='js/plotter.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();   
+        });
+        function downloadCSV(csv, filename) {
+            var csvFile;
+            var downloadLink;
+                // CSV file
+            csvFile = new Blob([csv], {type: "text/csv"});
+            // Download link
+            downloadLink = document.createElement("a");
+            // File name
+            downloadLink.download = filename;
+            // Create a link to the file
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            // Hide download link
+            downloadLink.style.display = "none";
+            // Add the link to DOM
+            document.body.appendChild(downloadLink);
+            // Click download link
+            downloadLink.click();
         }
-        // Download CSV file
-        downloadCSV(csv.join("\n"), filename);
-    }
-</script>
+        function exportTableToCSV(filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("table tr");
+            
+            for (var i = 0; i < rows.length; i++) {
+                var row = [], cols = rows[i].querySelectorAll("td, th");
+                
+                for (var j = 0; j < cols.length; j++) 
+                    row.push(cols[j].innerText.toString().replace(',', ' - ').replace('ñ', 'ni').replace('ó', 'o'));
+                
+                csv.push(row.join(","));        
+            }
+            // Download CSV file
+            downloadCSV(csv.join("\n"), filename);
+        }
+    </script>
+    <script>
+        function hidePlot(){
+            document.getElementById("myFunction").style.display = "none";
+            document.getElementById("hide").style.display = "none";
+            document.getElementById("show").style.display = "inline";
+        }
+        function showPlot(){
+            document.getElementById("myFunction").style.display = "inline";
+            document.getElementById("show").style.display = "none";
+            document.getElementById("hide").style.display = "inline";
+        }
+    </script>
 
 {% endblock %}
