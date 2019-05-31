@@ -354,7 +354,7 @@ def lu_pivoting():
         result = lu_decomposition(matrix_a)
         form.result.data = result
 
-    return render_template("lu_pivoting.html", form=form)
+    return render_template("lu_pivoting.html", form=form, result=result)
 
 
 @app.route('/crout', methods=['GET', 'POST'])
@@ -504,8 +504,9 @@ def lagrange():
         y_points = form.y_points.data.split(" ")
         result = lagrange_method(value, x_points, y_points)
         form.result.data = result
+        print(result)
 
-    return render_template("lagrange.html", form=form)
+    return render_template("lagrange.html", form=form, result=result)
 
 
 @app.route('/newtonPoly', methods=['GET', 'POST'])
@@ -519,7 +520,7 @@ def newton_interpolation():
         result = newton_inter(n_max, x_points, y_points)
         form.result.data = result
 
-    return render_template("newton_interpolation.html", form=form)
+    return render_template("newton_interpolation.html", form=form, result=result)
 
 
 @app.route('/vandermorde', methods=['GET', 'POST'])
@@ -532,12 +533,13 @@ def vandermorde():
         result = vandermorde_method(x_points, y_points)
         form.result.data = result
 
-    return render_template("vandermorde.html", form=form)
+    return render_template("vandermorde.html", form=form, result=result)
 
 
 @app.route('/splines', methods=['GET','POST'])
 def splines():
     form = interpolationAlgorithms()
+    result = []
     if request.method == 'POST':
         x_points = form.x_points.data.split(" ")
         y_points = form.y_points.data.split(" ")
@@ -558,4 +560,4 @@ def splines():
             form.result.data = result
             result = zip(*[i for i in result.values()])
 
-    return render_template("splines.html", form=form)
+    return render_template("splines.html", form=form, result=result)
