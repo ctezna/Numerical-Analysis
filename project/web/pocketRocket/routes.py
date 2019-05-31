@@ -28,6 +28,7 @@ from pocketRocket.methods.newton_interpolacion import newton_inter
 from pocketRocket.methods.secante import secante_method
 from pocketRocket.methods.spline1 import spline1_main
 from pocketRocket.methods.spline3 import spline3_main
+from pocketRocket.methods.rm1 import multipleRoots_method
 
 @app.route('/', methods=['GET'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -204,27 +205,29 @@ def newton():
 def multiple_roots():
     form = rootAlgorithms()
     result = []
+    message=[]
     if request.method == 'POST':
         f_x = form.function.data
         f_x_derivate = form.first_derivate.data
         f_x_derivate_2 = form.second_derivate.data
+        n_max = form.n_max.data
         x_n = form.x_0.data
         tol = form.tol.data
         x = symbols('x', real=True)
         parser_f = parse_expr(f_x, locals())
         parser_f_derivate = parse_expr(f_x_derivate, locals())
         parser_f_derivate_2 = parse_expr(f_x_derivate_2, locals())
-        result = multiple_roots_method(x_n, tol, parser_f, parser_f_derivate, parser_f_derivate_2)
-        result = zip(*[i for i in result.values()])
+        data = multipleRoots_method(tol, x_n, n_max,parser_f,parser_f_derivate,parser_f_derivate_2)
+        print (data)
 
-        if len(data[1]) > 0:
-            result = zip(*[i for i in data[1].values()])
+        if len(data[0]) > 0:
+            result = zip(*[i for i in data[0].values()])
         else:
             result = ""
 
-        message = data[0]
+        message = data[1]
 
-    return render_template("multiple_roots.html", form=form, result=result)
+    return render_template("multiple_roots.html", form=form, result=result, message=message)
 
 
 @app.route('/aitken', methods=['GET', 'POST'])
