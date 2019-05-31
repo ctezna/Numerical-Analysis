@@ -480,11 +480,18 @@ def sor():
         b_solution = [int(x) for x in b_solution]
         tol = form.tol.data
         w_sor = form.w_sor.data
-        result = sor_method(matrix_a, b_solution, tol, w_sor)
-        form.result.data = result
-        result = zip(*[i for i in result.values()])
+        data = sor_method(matrix_a, b_solution, tol, w_sor)
 
-    return render_template("sor.html", form=form, result=result)
+
+        if len(data[0]):
+            result = zip(*[i for i in data[0].values()])
+        else:
+            result = ""
+
+        message = data[1]
+
+
+    return render_template("sor.html", form=form, result=result, message=message)
 
 
 @app.route('/lagrange', methods=['GET', 'POST'])
