@@ -35,6 +35,15 @@
                             </p>
                             <p>{{ form.calculate(class="btn btn-primary btn-block") }}</p>
                         </form>
+                        <div class="container">
+                                <a href="#" 
+                                    title="How to Fill Data" 
+                                    data-toggle="popover" 
+                                    data-trigger="hover" 
+                                    data-content="Function ex: exp(x)+2 <br /> a=integer ex: 0 <br /> b=integer ex: 1<br /> nmax=integer ex: 100 <br />tol=integer ex: 1e-7"
+                                    data-html="true">Help
+                                </a>
+                            </div>
                     </div>
                     <div class="col-md-9 col-sm-9">
                         <p>
@@ -62,14 +71,17 @@
                                     </tbody>
                                 </table>
                                 <button class="btn btn-primary" onclick="exportTableToCSV('result_bisection.csv')" style="float:right">Exportar</button>
+                                <button class="btn btn-primary" title="Results" data-toggle="popover" data-trigger="hover" data-content="{{message}}" style="float:left">Results</button>
                             </div>
                     </div>
             </div>
     </div>
 </body>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();   
+    });
     function downloadCSV(csv, filename) {
         var csvFile;
         var downloadLink;
